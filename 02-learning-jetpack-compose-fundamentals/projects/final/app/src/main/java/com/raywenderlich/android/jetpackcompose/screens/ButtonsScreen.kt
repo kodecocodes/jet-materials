@@ -34,27 +34,24 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
-import androidx.compose.Composable
-import androidx.compose.getValue
-import androidx.compose.setValue
-import androidx.compose.state
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Border
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.graphics.Color
-import androidx.ui.layout.Arrangement
-import androidx.ui.layout.Column
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.material.Button
-import androidx.ui.material.FloatingActionButton
-import androidx.ui.material.RadioGroup
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Favorite
-import androidx.ui.res.colorResource
-import androidx.ui.res.stringResource
-import androidx.ui.unit.dp
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.RadioButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
@@ -81,7 +78,7 @@ fun MyButton() {
   Button(
       onClick = {},
       backgroundColor = colorResource(id = R.color.colorPrimary),
-      border = Border(
+      border = BorderStroke(
           1.dp,
           color = colorResource(id = R.color.colorPrimaryDark)
       )
@@ -95,22 +92,19 @@ fun MyButton() {
 
 @Composable
 fun MyRadioGroup() {
-  val options = listOf(
-      stringResource(id = R.string.first),
-      stringResource(id = R.string.second),
-      stringResource(id = R.string.third)
-  )
+  val radioButtons = listOf(0, 1, 2)
 
-  var radioState by state { options.first() }
+  var isSelected by remember { mutableStateOf(radioButtons.first()) }
 
-  RadioGroup(
-      options = options,
-      radioColor = colorResource(id = R.color.colorPrimary),
-      selectedOption = radioState,
-      onSelectedChange = { selectedOption ->
-        radioState = selectedOption
-      }
-  )
+  Column {
+    radioButtons.forEach { index ->
+      RadioButton(
+          selectedColor = colorResource(id = R.color.colorPrimary),
+          selected = (index == isSelected),
+          onClick = { isSelected = index }
+      )
+    }
+  }
 }
 
 @Composable
@@ -119,6 +113,8 @@ fun MyFloatingActionButton() {
       onClick = {},
       backgroundColor = colorResource(id = R.color.colorPrimary),
       contentColor = Color.White,
-      icon = { Icon(Icons.Filled.Favorite) }
+      icon = {
+        Icon(Icons.Filled.Favorite)
+      }
   )
 }

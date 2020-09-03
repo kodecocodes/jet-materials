@@ -37,8 +37,8 @@ package com.raywenderlich.android.jetpackcompose.router
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.compose.*
-import androidx.ui.core.LifecycleOwnerAmbient
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LifecycleOwnerAmbient
 
 private val AmbientBackPressedDispatcher = staticAmbientOf<OnBackPressedDispatcherOwner?> { null }
 

@@ -32,8 +32,15 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerVersion "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
-    kotlinCompilerExtensionVersion "0.1.0-dev14"
+    kotlinCompilerVersion kotlin_version
+    kotlinCompilerExtensionVersion compose_version
+  }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    jvmTarget = "1.8"
+    freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
   }
 }
 
@@ -45,17 +52,19 @@ dependencies {
 
   // Support Libraries
   implementation 'androidx.appcompat:appcompat:1.2.0'
-  implementation 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
+  implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
 
   // Testing Dependencies
   testImplementation 'junit:junit:4.13'
-  androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+  androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
   // TUTORIAL DEPENDENCIES HERE
-
-  implementation 'androidx.ui:ui-core:0.1.0-dev14'
-  implementation 'androidx.ui:ui-tooling:0.1.0-dev14'
-  implementation 'androidx.ui:ui-layout:0.1.0-dev14'
-  implementation 'androidx.ui:ui-material:0.1.0-dev14'
+  implementation "androidx.compose.runtime:runtime:$compose_version"
+  implementation "androidx.compose.ui:ui:$compose_version"
+  implementation "androidx.compose.foundation:foundation-layout:$compose_version"
+  implementation "androidx.compose.material:material:$compose_version"
+  implementation "androidx.compose.material:material-icons-extended:$compose_version"
+  implementation "androidx.compose.foundation:foundation:$compose_version"
+  implementation "androidx.ui:ui-tooling:$compose_version"
 }

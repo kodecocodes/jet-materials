@@ -34,10 +34,10 @@
 
 package com.raywenderlich.android.jetpackcompose.app
 
-import androidx.compose.Composable
-import androidx.ui.animation.Crossfade
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Surface
+import androidx.compose.animation.Crossfade
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
 import com.raywenderlich.android.jetpackcompose.router.Screen
 import com.raywenderlich.android.jetpackcompose.screens.*
@@ -46,7 +46,6 @@ import com.raywenderlich.android.jetpackcompose.screens.*
 fun JetFundamentalsApp() {
   Surface(color = MaterialTheme.colors.background) {
     Crossfade(current = JetFundamentalsRouter.currentScreen) { screenState ->
-
       when (screenState.value) {
         is Screen.Navigation -> NavigationScreen()
         is Screen.Text -> TextScreen()

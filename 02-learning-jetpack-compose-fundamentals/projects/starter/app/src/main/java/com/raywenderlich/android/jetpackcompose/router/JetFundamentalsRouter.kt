@@ -33,8 +33,8 @@
  */
 package com.raywenderlich.android.jetpackcompose.router
 
-import androidx.compose.MutableState
-import androidx.compose.mutableStateOf
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 
 /**
  * Class defining the screens we have in the app.

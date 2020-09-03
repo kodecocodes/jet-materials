@@ -34,16 +34,13 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
-import androidx.compose.Composable
-import androidx.compose.getValue
-import androidx.compose.setValue
-import androidx.compose.state
-import androidx.ui.foundation.Text
-import androidx.ui.graphics.Color
-import androidx.ui.material.AlertDialog
-import androidx.ui.material.Button
-import androidx.ui.res.colorResource
-import androidx.ui.res.stringResource
+import androidx.compose.foundation.Text
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
@@ -62,11 +59,13 @@ fun AlertDialogScreen() {
 
 @Composable
 fun MyAlertDialog() {
-  var shouldShowDialog by state { true }
+
+  var shouldShowDialog by remember { mutableStateOf(true) }
+
 
   if (shouldShowDialog) {
     AlertDialog(
-        onCloseRequest = {
+        onDismissRequest = {
           shouldShowDialog = false
           JetFundamentalsRouter.navigateTo(Screen.Navigation)
         },
