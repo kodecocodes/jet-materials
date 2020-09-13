@@ -62,15 +62,15 @@ fun ExploreButtonsScreen() {
 
 @Composable
 fun MyButton() {
-  //todo add your code here
+  //TODO add your code here
 }
 
 @Composable
 fun MyRadioGroup() {
-  //todo add your code here
+  //TODO add your code here
 }
 
 @Composable
 fun MyFloatingActionButton() {
-  //todo add your code here
+  //TODO add your code here
 }
