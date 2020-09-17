@@ -49,7 +49,7 @@ fun ProgressIndicatorScreen() {
 
   Column(
       modifier = Modifier.fillMaxSize(),
-      horizontalGravity = Alignment.CenterHorizontally,
+      horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Center
   ) {
     //TODO add your code here

@@ -48,7 +48,7 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 fun TextScreen() {
   Column(
       modifier = Modifier.fillMaxSize(),
-      horizontalGravity = Alignment.CenterHorizontally,
+      horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Center
   ) {
     MyText()
