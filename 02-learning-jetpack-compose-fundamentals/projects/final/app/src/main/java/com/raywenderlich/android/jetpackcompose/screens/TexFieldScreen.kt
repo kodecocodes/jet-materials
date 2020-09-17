@@ -56,7 +56,7 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 fun TextFieldScreen() {
   Column(
       modifier = Modifier.fillMaxSize(),
-      horizontalGravity = Alignment.CenterHorizontally,
+      horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Center
   ) {
     MyTextField()

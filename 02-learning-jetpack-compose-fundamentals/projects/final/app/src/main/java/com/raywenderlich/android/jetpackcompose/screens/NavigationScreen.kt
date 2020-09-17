@@ -58,7 +58,7 @@ fun NavigationScreen() {
   ) {
     Column(
         verticalArrangement = Arrangement.Center,
-        horizontalGravity = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
       NavigationButton(stringResource(id = R.string.text), Screen.Text)

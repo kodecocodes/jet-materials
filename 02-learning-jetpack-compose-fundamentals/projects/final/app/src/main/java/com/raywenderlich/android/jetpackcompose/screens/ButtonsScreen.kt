@@ -60,7 +60,7 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun ExploreButtonsScreen() {
   Column(modifier = Modifier.fillMaxSize(),
-      horizontalGravity = Alignment.CenterHorizontally,
+      horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Center) {
 
     MyButton()
