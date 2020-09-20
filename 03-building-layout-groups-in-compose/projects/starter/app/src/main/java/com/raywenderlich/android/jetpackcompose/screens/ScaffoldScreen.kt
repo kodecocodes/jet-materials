@@ -51,16 +51,16 @@ fun ScaffoldScreen() {
 
 @Composable
 fun MyScaffold() {
-  //todo write your code here
+  //TODO write your code here
 }
 
 @Composable
 fun MyTopAppBar(scaffoldState: ScaffoldState) {
-  //todo write your code here
+  //TODO write your code here
 }
 
 @Composable
 fun MyBottomAppBar() {
-  //todo write your code here
+  //TODO write your code here
 }
 
