@@ -54,7 +54,7 @@ private val items = listOf(
     BookCategory(
         R.string.kotlin,
         listOf(
-            R.drawable.kotlin_courutines,
+            R.drawable.kotlin_coroutines,
             R.drawable.kotlin_aprentice
         )
     ),
