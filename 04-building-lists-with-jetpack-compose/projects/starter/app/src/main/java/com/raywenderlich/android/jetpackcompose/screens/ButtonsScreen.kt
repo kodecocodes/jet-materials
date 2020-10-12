@@ -99,7 +99,7 @@ fun MyRadioGroup() {
   Column {
     radioButtons.forEach { index ->
       RadioButton(
-          selectedColor = colorResource(id = R.color.colorPrimary),
+          color = colorResource(id = R.color.colorPrimary),
           selected = (index == isSelected),
           onClick = { isSelected = index }
       )
