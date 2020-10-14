@@ -53,24 +53,11 @@ private val items = listOf(
     Icons.Filled.ThumbUp,
     Icons.Filled.Build,
     Icons.Filled.ThumbUp,
-    Icons.Filled.Build,
-    Icons.Filled.Delete,
-    Icons.Filled.Home,
-    Icons.Filled.Close,
-    Icons.Filled.ThumbUp,
-    Icons.Filled.Build,
-    Icons.Filled.Delete,
-    Icons.Filled.Home,
-    Icons.Filled.Search,
-    Icons.Filled.ThumbUp,
-    Icons.Filled.Build,
-    Icons.Filled.Delete,
-    Icons.Filled.Home
 )
 
 @Composable
 fun GridScreen() {
-  GridView(columnCount = 2)
+  GridView(columnCount = 3)
 
   BackButtonHandler {
     JetFundamentalsRouter.navigateTo(Screen.Navigation)
