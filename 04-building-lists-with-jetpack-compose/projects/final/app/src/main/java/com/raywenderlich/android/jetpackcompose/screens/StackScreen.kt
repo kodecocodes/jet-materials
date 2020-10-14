@@ -35,7 +35,7 @@
 package com.raywenderlich.android.jetpackcompose.screens
 
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.Stack
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -58,7 +58,7 @@ fun StackScreen() {
 
 @Composable
 fun MyStack(modifier: Modifier = Modifier) {
-  Stack(modifier = modifier.fillMaxSize()) {
+  Box(modifier = modifier.fillMaxSize()) {
     Text(
         text = stringResource(id = R.string.first),
         fontSize = 22.sp,

@@ -37,10 +37,7 @@ package com.raywenderlich.android.jetpackcompose.screens
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyRowFor
 import androidx.compose.runtime.Composable
@@ -108,8 +105,7 @@ fun MyList() {
 
 @Composable
 fun ListItem(bookCategory: BookCategory, modifier: Modifier = Modifier) {
-  Column {
-    Spacer(modifier = modifier.height(8.dp))
+  Column(modifier = Modifier.padding(8.dp)) {
     Text(
         text = stringResource(bookCategory.categoryResourceId),
         fontSize = 22.sp,

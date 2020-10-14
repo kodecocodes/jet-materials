@@ -36,7 +36,7 @@ package com.raywenderlich.android.jetpackcompose.screens
 
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope.weight
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumnFor
@@ -65,24 +65,11 @@ private val items = listOf(
     Icons.Filled.ThumbUp,
     Icons.Filled.Build,
     Icons.Filled.ThumbUp,
-    Icons.Filled.Build,
-    Icons.Filled.Delete,
-    Icons.Filled.Home,
-    Icons.Filled.Close,
-    Icons.Filled.ThumbUp,
-    Icons.Filled.Build,
-    Icons.Filled.Delete,
-    Icons.Filled.Home,
-    Icons.Filled.Search,
-    Icons.Filled.ThumbUp,
-    Icons.Filled.Build,
-    Icons.Filled.Delete,
-    Icons.Filled.Home
 )
 
 @Composable
 fun GridScreen() {
-  GridView(columnCount = 2)
+  GridView(columnCount = 3)
 
   BackButtonHandler {
     JetFundamentalsRouter.navigateTo(Screen.Navigation)
@@ -132,12 +119,14 @@ fun RowItem(rowItems: List<IconResource>) {
 fun GridIcon(iconResource: IconResource) {
   val color = if (iconResource.isVisible) colorResource(R.color.colorPrimary) else Color.Transparent
 
-  Icon(asset = iconResource.vectorAsset,
-      tint = color,
-      modifier = Modifier
-          .size(80.dp, 80.dp)
-          .weight(1f)
-  )
+  with (RowScope) {
+    Icon(asset = iconResource.vectorAsset,
+            tint = color,
+            modifier = Modifier
+                    .size(80.dp, 80.dp)
+                    .weight(1f)
+    )
+  }
 }
 
 data class IconResource(val vectorAsset: VectorAsset, val isVisible: Boolean)
