@@ -16,7 +16,7 @@
   <string name="alert_dialog_title">"Alert Dialog"</string>
   <string name="row">"Row"</string>
   <string name="column">"Column"</string>
-  <string name="stack">"Stack"</string>
+  <string name="box">"Box"</string>
   <string name="surface">"Surface"</string>
   <string name="scaffold">"Scaffold"</string>
 </resources>

@@ -34,7 +34,7 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
-import androidx.compose.foundation.layout.Stack
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,8 +46,8 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun SurfaceScreen(modifier: Modifier = Modifier) {
 
-  Stack(modifier = modifier.fillMaxSize()) {
-    MySurface(modifier = modifier.gravity(Alignment.Center))
+  Box(modifier = modifier.fillMaxSize()) {
+    MySurface(modifier = modifier.align(Alignment.Center))
   }
 
   BackButtonHandler {

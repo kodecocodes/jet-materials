@@ -35,7 +35,7 @@
 package com.raywenderlich.android.jetpackcompose.screens
 
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.Stack
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,8 +48,8 @@ import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
 import com.raywenderlich.android.jetpackcompose.router.Screen
 
 @Composable
-fun StackScreen() {
-  MyStack()
+fun BoxScreen() {
+  MyBox()
 
   BackButtonHandler {
     JetFundamentalsRouter.navigateTo(Screen.Navigation)
@@ -57,23 +57,26 @@ fun StackScreen() {
 }
 
 @Composable
-fun MyStack(modifier: Modifier = Modifier) {
-  Stack(modifier = modifier.fillMaxSize()) {
+fun MyBox(
+  modifier: Modifier = Modifier,
+  contentModifier: Modifier = Modifier
+) {
+  Box(modifier = modifier.fillMaxSize()) {
     Text(
-        text = stringResource(id = R.string.first),
-        fontSize = 22.sp,
-        modifier = modifier.gravity(Alignment.TopStart)
+      text = stringResource(id = R.string.first),
+      fontSize = 22.sp,
+      modifier = contentModifier.align(Alignment.TopStart)
     )
 
     Text(
-        text = stringResource(id = R.string.second),
-        fontSize = 22.sp,
-        modifier = modifier.gravity(Alignment.Center)
+      text = stringResource(id = R.string.second),
+      fontSize = 22.sp,
+      modifier = contentModifier.align(Alignment.Center)
     )
     Text(
-        text = stringResource(id = R.string.third),
-        fontSize = 22.sp,
-        modifier = modifier.gravity(Alignment.BottomEnd)
+      text = stringResource(id = R.string.third),
+      fontSize = 22.sp,
+      modifier = contentModifier.align(Alignment.BottomEnd)
     )
   }
 }

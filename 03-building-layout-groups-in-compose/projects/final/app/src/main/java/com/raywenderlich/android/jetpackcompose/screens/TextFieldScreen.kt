@@ -34,15 +34,34 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
+
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
 import com.raywenderlich.android.jetpackcompose.router.Screen
 
 @Composable
-fun StackScreen() {
-  MyStack()
+fun TextFieldScreen() {
+  Column(
+    modifier = Modifier.fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center
+  ) {
+    MyTextField()
+  }
 
   BackButtonHandler {
     JetFundamentalsRouter.navigateTo(Screen.Navigation)
@@ -50,6 +69,16 @@ fun StackScreen() {
 }
 
 @Composable
-fun MyStack(modifier: Modifier = Modifier) {
-  //TODO write your code here
+fun MyTextField() {
+  val textValue = remember { mutableStateOf("") }
+
+  OutlinedTextField(
+    label = { Text(text = stringResource(id = R.string.email)) },
+    activeColor = colorResource(id = R.color.colorPrimary),
+    keyboardType = KeyboardType.Email,
+    value = textValue.value,
+    onValueChange = {
+      textValue.value = it
+    },
+  )
 }

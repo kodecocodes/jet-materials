@@ -47,6 +47,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.ui.tooling.preview.Preview
+import androidx.ui.tooling.preview.PreviewParameter
 import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
@@ -55,9 +56,9 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun TextScreen() {
   Column(
-      modifier = Modifier.fillMaxSize(),
-      horizontalGravity = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center
+    modifier = Modifier.fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center
   ) {
     MyText()
   }
@@ -67,13 +68,14 @@ fun TextScreen() {
   }
 }
 
-@Preview
 @Composable
+@Preview
 fun MyText() {
-  Text(text = stringResource(id = R.string.jetpack_compose),
-      fontStyle = FontStyle.Italic,
-      color = colorResource(id = R.color.colorPrimary),
-      fontSize = 30.sp,
-      fontWeight = FontWeight.Bold
+  Text(
+    text = stringResource(id = R.string.jetpack_compose),
+    fontStyle = FontStyle.Italic,
+    color = colorResource(id = R.color.colorPrimary),
+    fontSize = 30.sp,
+    fontWeight = FontWeight.Bold
   )
 }

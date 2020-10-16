@@ -35,12 +35,14 @@
 package com.raywenderlich.android.jetpackcompose.screens
 
 import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Text
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
@@ -60,35 +62,43 @@ fun MyScaffold() {
   val scaffoldState: ScaffoldState = rememberScaffoldState()
 
   Scaffold(
-      scaffoldState = scaffoldState,
-      contentColor = colorResource(id = R.color.colorPrimary),
-      bodyContent = { MyRow() },
-      topBar = { MyTopAppBar(scaffoldState = scaffoldState) },
-      bottomBar = { MyBottomAppBar() },
-      drawerContent = { MyColumn() }
+    scaffoldState = scaffoldState,
+    contentColor = colorResource(id = R.color.colorPrimary),
+    bodyContent = { MyRow() },
+    topBar = { MyTopAppBar(scaffoldState = scaffoldState) },
+    bottomBar = { MyBottomAppBar() },
+    drawerContent = { MyColumn() }
   )
 }
 
 @Composable
 fun MyTopAppBar(scaffoldState: ScaffoldState) {
   TopAppBar(
-      content = {
-        IconButton(
-            icon = {
-              Icon(
-                  Icons.Default.Menu,
-                  tint = Color.White
-              )
-            },
-            onClick = { scaffoldState.drawerState.open() }
-        )
-      },
-      backgroundColor = colorResource(id = R.color.colorPrimary)
+    navigationIcon = {
+      IconButton(
+        icon = {
+          Icon(
+            Icons.Default.Menu,
+            tint = Color.White
+          )
+        },
+        onClick = { scaffoldState.drawerState.open() }
+      )
+    },
+    title = {
+      Text(
+        text = stringResource(id = R.string.app_name),
+        color = Color.White
+      )
+    },
+    backgroundColor = colorResource(id = R.color.colorPrimary)
   )
 }
 
 @Composable
 fun MyBottomAppBar() {
-  BottomAppBar(content = {}, backgroundColor = colorResource(id = R.color.colorPrimary))
+  BottomAppBar(
+    content = {},
+    backgroundColor = colorResource(id = R.color.colorPrimary)
+  )
 }
-

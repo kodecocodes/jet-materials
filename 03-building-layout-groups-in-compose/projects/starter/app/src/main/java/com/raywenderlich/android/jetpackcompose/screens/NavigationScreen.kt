@@ -53,12 +53,12 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun NavigationScreen() {
   Surface(
-      color = Color.White,
-      modifier = Modifier.fillMaxSize()
+    color = Color.White,
+    modifier = Modifier.fillMaxSize()
   ) {
     Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalGravity = Alignment.CenterHorizontally
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
       NavigationButton(stringResource(id = R.string.text), Screen.Text)
@@ -68,7 +68,7 @@ fun NavigationScreen() {
       NavigationButton(stringResource(id = R.string.alert_dialog), Screen.AlertDialog)
       NavigationButton(stringResource(id = R.string.row), Screen.Row)
       NavigationButton(stringResource(id = R.string.column), Screen.Column)
-      NavigationButton(stringResource(id = R.string.stack), Screen.Stack)
+      NavigationButton(stringResource(id = R.string.box), Screen.Box)
       NavigationButton(stringResource(id = R.string.surface), Screen.Surface)
       NavigationButton(stringResource(id = R.string.scaffold), Screen.Scaffold)
     }
@@ -78,16 +78,16 @@ fun NavigationScreen() {
 @Composable
 fun NavigationButton(text: String, screen: Screen) {
   Button(
-      modifier = Modifier
-          .fillMaxWidth()
-          .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-      shape = RoundedCornerShape(4.dp),
-      backgroundColor = colorResource(id = R.color.colorPrimary),
-      onClick = { JetFundamentalsRouter.navigateTo(screen) }
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+    shape = RoundedCornerShape(4.dp),
+    backgroundColor = colorResource(id = R.color.colorPrimary),
+    onClick = { JetFundamentalsRouter.navigateTo(screen) }
   ) {
     Text(
-        text = text,
-        color = Color.White
+      text = text,
+      color = Color.White
     )
   }
 }

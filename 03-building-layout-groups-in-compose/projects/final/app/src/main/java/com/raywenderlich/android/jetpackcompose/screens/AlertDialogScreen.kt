@@ -37,7 +37,9 @@ package com.raywenderlich.android.jetpackcompose.screens
 import androidx.compose.foundation.Text
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -59,36 +61,30 @@ fun AlertDialogScreen() {
 
 @Composable
 fun MyAlertDialog() {
+  val shouldShowDialog = remember { mutableStateOf(true) }
 
-  var shouldShowDialog by remember { mutableStateOf(true) }
-
-
-  if (shouldShowDialog) {
+  if (shouldShowDialog.value) {
     AlertDialog(
-        onDismissRequest = {
-          shouldShowDialog = false
-          JetFundamentalsRouter.navigateTo(Screen.Navigation)
-        },
-        title = {
-          Text(text = stringResource(id = R.string.alert_dialog_title))
-        },
-        text = {
-          Text(text = stringResource(id = R.string.alert_dialog_text))
-        },
-        confirmButton = {
-          Button(
-              onClick = {
-                shouldShowDialog = false
-                JetFundamentalsRouter.navigateTo(Screen.Navigation)
-              },
-              backgroundColor = colorResource(id = R.color.colorPrimary)
-          ) {
-            Text(
-                text = stringResource(id = R.string.confirm),
-                color = Color.White
-            )
-          }
+      onDismissRequest = {
+        shouldShowDialog.value = false
+        JetFundamentalsRouter.navigateTo(Screen.Navigation)
+      },
+      title = { Text(text = stringResource(id = R.string.alert_dialog_title)) },
+      text = { Text(text = stringResource(id = R.string.alert_dialog_text)) },
+      confirmButton = {
+        Button(
+          onClick = {
+            shouldShowDialog.value = false
+            JetFundamentalsRouter.navigateTo(Screen.Navigation)
+          },
+          backgroundColor = colorResource(id = R.color.colorPrimary)
+        ) {
+          Text(
+            text = stringResource(id = R.string.confirm),
+            color = Color.White
+          )
         }
+      }
     )
   }
 }

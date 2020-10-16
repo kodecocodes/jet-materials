@@ -54,12 +54,12 @@ fun ProgressIndicatorScreen() {
 
   Column(
       modifier = Modifier.fillMaxSize(),
-      horizontalGravity = Alignment.CenterHorizontally,
+      horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Center
   ) {
     CircularProgressIndicator(
-        color = colorResource(id = R.color.colorPrimary),
-        strokeWidth = 5.dp
+      color = colorResource(id = R.color.colorPrimary),
+      strokeWidth = 5.dp
     )
     LinearProgressIndicator(progress = 0.5f)
   }
