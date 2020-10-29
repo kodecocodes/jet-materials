@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">JetReddit</string>
+  <string name="default_username">u/raywenderlich</string>
+  <string name="home">Home</string>
+  <string name="subreddits">Subreddits</string>
+  <string name="new_post">New Post</string>
+  <string name="my_profile">My Profile</string>
+  <string name="saved">Saved</string>
+  <string name="default_karma_amount">555</string>
+  <string name="karma">Karma</string>
+  <string name="default_reddit_age">10m 10d</string>
+  <string name="reddit_age">Reddit age</string>
+  <string name="settings">Settings</string>
+</resources>
