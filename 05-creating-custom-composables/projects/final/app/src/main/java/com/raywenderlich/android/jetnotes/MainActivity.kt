@@ -39,6 +39,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.platform.setContent
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModelFactory
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
+import com.raywenderlich.android.jetnotes.routing.Screen
+import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
+import com.raywenderlich.android.jetnotes.ui.components.AppDrawer
+import com.raywenderlich.android.jetnotes.ui.components.Note
 
 /**
  * Main activity for the app.
@@ -56,7 +63,22 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
 
     setContent {
-
+      JetNotesTheme {
+        val scaffoldState: ScaffoldState = rememberScaffoldState()
+        Scaffold(
+          scaffoldState = scaffoldState,
+          drawerContent = {
+            AppDrawer(
+              currentScreen = Screen.Notes, closeDrawerAction = {
+                scaffoldState.drawerState.close()
+              }
+            )
+          },
+          bodyContent = {
+            Note()
+          }
+        )
+      }
     }
   }
 }

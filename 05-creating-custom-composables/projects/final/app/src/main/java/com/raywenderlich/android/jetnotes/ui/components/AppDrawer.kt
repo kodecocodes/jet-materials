@@ -35,10 +35,8 @@ package com.raywenderlich.android.jetnotes.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
@@ -50,13 +48,15 @@ import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
 import androidx.compose.ui.graphics.vector.VectorAsset
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.material.Divider
+import androidx.compose.material.Surface
+import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.Switch
 import com.raywenderlich.android.jetnotes.theme.JetNotesThemeSettings
 import androidx.compose.material.icons.filled.Delete
 import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
+import androidx.compose.material.Divider
 
 @Composable
 fun AppDrawer(
@@ -89,14 +89,6 @@ fun AppDrawer(
   }
 }
 
-@Preview
-@Composable
-fun AppDrawerPreview() {
-  JetNotesTheme {
-    AppDrawer(Screen.Notes, {})
-  }
-}
-
 @Composable
 private fun AppDrawerHeader() {
   Row(modifier = Modifier.fillMaxWidth()) {
@@ -117,7 +109,6 @@ private fun ScreenNavigationButton(
   icon: VectorAsset, label: String, isSelected: Boolean, onClick: () -> Unit
 ) {
   val colors = MaterialTheme.colors
-
   // Define alphas for the image for two different states
   // of the button: selected/unselected
   val imageAlpha = if (isSelected) {
@@ -125,7 +116,6 @@ private fun ScreenNavigationButton(
   } else {
     0.6f
   }
-
   // Define color for the text for two different states
   // of the button: selected/unselected
   val textColor = if (isSelected) {
@@ -133,9 +123,8 @@ private fun ScreenNavigationButton(
   } else {
     colors.onSurface.copy(alpha = 0.6f)
   }
-
   // Define color for the background for two different states
-  // of the button: selected/unselected
+// of the button: selected/unselected
   val backgroundColor = if (isSelected) {
     colors.primary.copy(alpha = 0.12f)
   } else {
@@ -171,8 +160,7 @@ private fun ScreenNavigationButton(
 @Composable
 private fun LightDarkThemeItem() {
   Row(
-    Modifier
-      .padding(8.dp)
+    Modifier.padding(8.dp)
       .padding(top = 16.dp)
   ) {
     Text(
@@ -182,13 +170,20 @@ private fun LightDarkThemeItem() {
         .weight(1f)
         .padding(start = 8.dp, top = 8.dp, end = 8.dp)
     )
-
     Switch(
       checked = JetNotesThemeSettings.isDarkThemeEnabled, onCheckedChange =
       { JetNotesThemeSettings.isDarkThemeEnabled = it }, modifier = Modifier
         .padding(start = 8.dp, end = 8.dp)
         .align(alignment = Alignment.CenterVertically)
     )
+  }
+}
+
+@Preview
+@Composable
+fun AppDrawerPreview() {
+  JetNotesTheme {
+    AppDrawer(Screen.Notes, {})
   }
 }
 
@@ -205,10 +200,7 @@ fun AppDrawerHeaderPreview() {
 fun ScreenNavigationButtonPreview() {
   JetNotesTheme {
     ScreenNavigationButton(
-      icon = Icons.Filled.Home,
-      label = "Notes",
-      isSelected = true,
-      onClick = { }
+      icon = Icons.Filled.Home, label = "Notes", isSelected = true, onClick = { }
     )
   }
 }
