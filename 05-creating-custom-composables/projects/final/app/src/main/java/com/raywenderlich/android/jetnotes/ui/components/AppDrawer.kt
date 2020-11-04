@@ -161,7 +161,6 @@ private fun ScreenNavigationButton(
 private fun LightDarkThemeItem() {
   Row(
     Modifier.padding(8.dp)
-      .padding(top = 16.dp)
   ) {
     Text(
       text = "Turn on dark theme",

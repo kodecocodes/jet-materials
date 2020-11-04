@@ -69,7 +69,8 @@ class MainActivity : AppCompatActivity() {
           scaffoldState = scaffoldState,
           drawerContent = {
             AppDrawer(
-              currentScreen = Screen.Notes, closeDrawerAction = {
+              currentScreen = Screen.Notes,
+              closeDrawerAction = {
                 scaffoldState.drawerState.close()
               }
             )
