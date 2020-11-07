@@ -35,7 +35,7 @@
 package com.raywenderlich.android.jetpackcompose.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Stack
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
@@ -53,7 +53,7 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun SurfaceScreen(modifier: Modifier = Modifier) {
 
-  Stack(modifier = modifier.fillMaxSize()) {
+  Box(modifier = modifier.fillMaxSize()) {
     MySurface(modifier = modifier.align(Alignment.Center))
   }
 
@@ -65,11 +65,11 @@ fun SurfaceScreen(modifier: Modifier = Modifier) {
 @Composable
 fun MySurface(modifier: Modifier) {
   Surface(
-      modifier = modifier.size(100.dp),
-      color = Color.LightGray,
-      contentColor = colorResource(id = R.color.colorPrimary),
-      elevation = 1.dp,
-      border = BorderStroke(1.dp, Color.Black)
+    modifier = modifier.size(100.dp),
+    color = Color.LightGray,
+    contentColor = colorResource(id = R.color.colorPrimary),
+    elevation = 1.dp,
+    border = BorderStroke(1.dp, Color.Black)
   ) {
     MyColumn()
   }

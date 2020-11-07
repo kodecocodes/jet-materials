@@ -56,9 +56,8 @@ fun ScrollingScreen() {
 @Composable
 fun MyScrollingScreen() {
   ScrollableRow {
-
     Image(asset = imageResource(R.drawable.advanced_architecture_android))
     Image(asset = imageResource(R.drawable.kotlin_aprentice))
-    Image(asset = imageResource(R.drawable.kotlin_courutines))
+    Image(asset = imageResource(R.drawable.kotlin_coroutines))
   }
 }

@@ -55,36 +55,36 @@ import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
 import com.raywenderlich.android.jetpackcompose.router.Screen
 
 private val items = listOf(
-    BookCategory(
-        R.string.android,
-        listOf(
-            R.drawable.android_aprentice,
-            R.drawable.saving_data_android,
-            R.drawable.advanced_architecture_android
-        )
-    ),
-    BookCategory(
-        R.string.kotlin,
-        listOf(
-            R.drawable.kotlin_courutines,
-            R.drawable.kotlin_aprentice
-        )
-    ),
-    BookCategory(
-        R.string.swift,
-        listOf(
-            R.drawable.combine,
-            R.drawable.rx_swift,
-            R.drawable.swift_apprentice,
-        )
-    ),
-    BookCategory(
-        R.string.ios,
-        listOf(
-            R.drawable.core_data,
-            R.drawable.ios_apprentice,
-        )
+  BookCategory(
+    R.string.android,
+    listOf(
+      R.drawable.android_aprentice,
+      R.drawable.saving_data_android,
+      R.drawable.advanced_architecture_android
     )
+  ),
+  BookCategory(
+    R.string.kotlin,
+    listOf(
+      R.drawable.kotlin_coroutines,
+      R.drawable.kotlin_aprentice
+    )
+  ),
+  BookCategory(
+    R.string.swift,
+    listOf(
+      R.drawable.combine,
+      R.drawable.rx_swift,
+      R.drawable.swift_apprentice,
+    )
+  ),
+  BookCategory(
+    R.string.ios,
+    listOf(
+      R.drawable.core_data,
+      R.drawable.ios_apprentice,
+    )
+  )
 )
 
 @Composable
@@ -107,22 +107,28 @@ fun MyList() {
 fun ListItem(bookCategory: BookCategory, modifier: Modifier = Modifier) {
   Column(modifier = Modifier.padding(8.dp)) {
     Text(
-        text = stringResource(bookCategory.categoryResourceId),
-        fontSize = 22.sp,
-        fontWeight = FontWeight.Bold,
-        color = colorResource(id = R.color.colorPrimary)
+      text = stringResource(bookCategory.categoryResourceId),
+      fontSize = 22.sp,
+      fontWeight = FontWeight.Bold,
+      color = colorResource(id = R.color.colorPrimary),
+      modifier = Modifier.padding(start = 8.dp)
     )
+
     Spacer(modifier = modifier.height(8.dp))
 
     LazyRowFor(bookCategory.bookImageResources) {
-
-      Image(
-          modifier = modifier.size(170.dp, 200.dp),
-          asset = imageResource(id = it),
-          contentScale = ContentScale.Fit
-      )
+      BookImage(imageResource = it)
     }
   }
+}
+
+@Composable
+fun BookImage(imageResource: Int) {
+  Image(
+    modifier = Modifier.size(170.dp, 200.dp),
+    asset = imageResource(id = imageResource),
+    contentScale = ContentScale.Fit
+  )
 }
 
 data class BookCategory(@StringRes val categoryResourceId: Int, val bookImageResources: List<Int>)

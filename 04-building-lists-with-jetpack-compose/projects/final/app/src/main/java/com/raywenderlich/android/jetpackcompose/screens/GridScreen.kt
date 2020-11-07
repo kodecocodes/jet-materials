@@ -55,16 +55,16 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 import kotlin.math.ceil
 
 private val items = listOf(
-    Icons.Filled.Check,
-    Icons.Filled.Close,
-    Icons.Filled.ThumbUp,
-    Icons.Filled.Build,
-    Icons.Filled.Delete,
-    Icons.Filled.Home,
-    Icons.Filled.Close,
-    Icons.Filled.ThumbUp,
-    Icons.Filled.Build,
-    Icons.Filled.ThumbUp,
+  Icons.Filled.Check,
+  Icons.Filled.Close,
+  Icons.Filled.ThumbUp,
+  Icons.Filled.Build,
+  Icons.Filled.Delete,
+  Icons.Filled.Home,
+  Icons.Filled.Close,
+  Icons.Filled.ThumbUp,
+  Icons.Filled.Build,
+  Icons.Filled.ThumbUp,
 )
 
 @Composable
@@ -78,11 +78,8 @@ fun GridScreen() {
 
 @Composable
 fun GridView(columnCount: Int) {
-
   val itemSize = items.size
-
   val rowCount = ceil(itemSize.toFloat() / columnCount).toInt()
-
   val gridItems = mutableListOf<List<IconResource>>()
   var position = 0
 
@@ -117,14 +114,17 @@ fun RowItem(rowItems: List<IconResource>) {
 
 @Composable
 fun GridIcon(iconResource: IconResource) {
-  val color = if (iconResource.isVisible) colorResource(R.color.colorPrimary) else Color.Transparent
+  val color = if (iconResource.isVisible)
+    colorResource(R.color.colorPrimary)
+  else Color.Transparent
 
-  with (RowScope) {
-    Icon(asset = iconResource.vectorAsset,
-            tint = color,
-            modifier = Modifier
-                    .size(80.dp, 80.dp)
-                    .weight(1f)
+  with(RowScope) {
+    Icon(
+      asset = iconResource.vectorAsset,
+      tint = color,
+      modifier = Modifier
+        .size(80.dp, 80.dp)
+        .weight(1f)
     )
   }
 }

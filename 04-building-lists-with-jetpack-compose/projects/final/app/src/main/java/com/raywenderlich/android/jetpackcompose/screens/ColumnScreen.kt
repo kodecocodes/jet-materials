@@ -58,14 +58,16 @@ fun ColumnScreen() {
 
 @Composable
 fun MyColumn() {
-  Column(horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.SpaceEvenly,
-      modifier = Modifier.fillMaxSize()) {
+  Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.SpaceEvenly,
+    modifier = Modifier.fillMaxSize()
+  ) {
 
     THREE_ELEMENT_LIST.forEach { textResId ->
       Text(
-          text = stringResource(id = textResId),
-          fontSize = 22.sp
+        text = stringResource(id = textResId),
+        fontSize = 22.sp
       )
     }
   }
