@@ -34,20 +34,32 @@
 package com.raywenderlich.android.jetnotes.ui.components
 
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawShadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.theme.rwGreen
 
 @Composable
 fun Note() {
-  Row(modifier = Modifier.fillMaxWidth()) {
+  val backgroundShape: Shape = RoundedCornerShape(4.dp)
+  Row(
+    modifier = Modifier
+      .padding(8.dp)
+      .drawShadow(1.dp, backgroundShape)
+      .fillMaxWidth()
+      .background(Color.White, backgroundShape)
+  ) {
     ColorWidget(
       color = rwGreen,
       size = 40.dp,
