@@ -35,10 +35,7 @@ package com.raywenderlich.android.jetnotes.ui.components
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.runtime.Composable
@@ -58,6 +55,7 @@ fun Note() {
       .padding(8.dp)
       .drawShadow(1.dp, backgroundShape)
       .fillMaxWidth()
+      .preferredHeightIn(min = 64.dp)
       .background(Color.White, backgroundShape)
   ) {
     ColorWidget(
