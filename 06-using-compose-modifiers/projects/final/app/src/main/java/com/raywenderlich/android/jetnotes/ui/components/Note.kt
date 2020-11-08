@@ -39,6 +39,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawShadow
 import androidx.compose.ui.graphics.Color
@@ -61,17 +62,25 @@ fun Note() {
     ColorWidget(
       color = rwGreen,
       size = 40.dp,
-      padding = 4.dp,
-      border = 1.dp
+      border = 1.dp,
+      modifier = Modifier
+        .align(Alignment.CenterVertically)
+        .padding(start = 16.dp, end = 16.dp)
     )
-    Column(modifier = Modifier.weight(1f)) {
+    Column(
+      modifier = Modifier
+        .weight(1f)
+        .align(Alignment.CenterVertically)
+    ) {
       Text(text = "Title", maxLines = 1)
       Text(text = "Content", maxLines = 1)
     }
     Checkbox(
       checked = false,
       onCheckedChange = { },
-      modifier = Modifier.padding(start = 8.dp)
+      modifier = Modifier
+        .padding(16.dp)
+        .align(Alignment.CenterVertically)
     )
   }
 }

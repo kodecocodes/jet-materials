@@ -37,7 +37,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -53,13 +52,12 @@ import androidx.ui.tooling.preview.Preview
 fun ColorWidget(
   color: Color,
   size: Dp,
-  padding: Dp = 0.dp,
-  border: Dp
+  border: Dp,
+  modifier: Modifier = Modifier
 ) {
   Box(
-    modifier = Modifier
+    modifier = modifier
       .size(size)
-      .padding(padding)
       .clip(CircleShape)
       .background(color)
       .border(
@@ -78,7 +76,6 @@ fun ColorWidgetPreview() {
   ColorWidget(
     color = Color.Red,
     size = 40.dp,
-    padding = 0.dp,
     border = 2.dp
   )
 }
