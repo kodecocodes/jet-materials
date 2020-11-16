@@ -66,14 +66,7 @@ fun AppDrawer(closeDrawerAction: () -> Unit, modifier: Modifier = Modifier) {
           .background(color = MaterialTheme.colors.surface)
   ) {
     AppDrawerHeader()
-    Divider(
-        color = MaterialTheme.colors.onSurface.copy(alpha = .2f),
-        modifier = modifier.padding(
-            start = 16.dp,
-            end = 16.dp,
-            top = 16.dp
-        )
-    )
+
     AppDrawerBody(closeDrawerAction)
 
     AppDrawerFooter(modifier)
@@ -106,6 +99,15 @@ private fun AppDrawerHeader() {
 
     ProfileInfo()
   }
+
+  Divider(
+      color = MaterialTheme.colors.onSurface.copy(alpha = .2f),
+      modifier = Modifier.padding(
+          start = 16.dp,
+          end = 16.dp,
+          top = 16.dp
+      )
+  )
 }
 
 @Composable
@@ -117,44 +119,11 @@ fun ProfileInfo() {
   ) {
 
     val (karmaIcon, karmaAmount, karmaText, divider, ageIcon, ageAmount, ageText) = createRefs()
+
     val colors = MaterialTheme.colors
 
-    Icon(
-        asset = Icons.Filled.Star,
-        tint = Color.Blue,
-        modifier = Modifier
-            .constrainAs(karmaIcon) {
-              start.linkTo(parent.start)
-              top.linkTo(parent.top)
-              bottom.linkTo(parent.bottom)
-            }.padding(start = 16.dp)
-    )
-
-    Text(
-        text = stringResource(R.string.default_karma_amount),
-        color = colors.primaryVariant,
-        fontSize = 10.sp,
-        modifier = Modifier
-            .padding(start = 8.dp)
-            .constrainAs(karmaAmount) {
-              top.linkTo(karmaIcon.top)
-              start.linkTo(karmaIcon.end)
-              bottom.linkTo(karmaText.top)
-            }
-    )
-
-    Text(
-        text = stringResource(R.string.karma),
-        color = Color.Gray,
-        fontSize = 10.sp,
-        modifier = Modifier
-            .padding(start = 8.dp)
-            .constrainAs(karmaText) {
-              top.linkTo(karmaAmount.bottom)
-              start.linkTo(karmaIcon.end)
-              bottom.linkTo(karmaIcon.bottom)
-            }
-    )
+    createAbsoluteLeftBarrier()
+    ProfileInfoItem(this, null, karmaIcon, karmaAmount, karmaText, Icons.Filled.Star, R.string.default_karma_amount, R.string.karma)
 
     Divider(
         modifier = Modifier
@@ -169,41 +138,60 @@ fun ProfileInfo() {
         color = colors.onSurface.copy(alpha = .2f)
     )
 
+    ProfileInfoItem(this, divider, ageIcon, ageAmount, ageText, Icons.Filled.ShoppingCart, R.string.default_reddit_age_amount, R.string.reddit_age)
+  }
+}
+
+@Composable
+private fun ProfileInfoItem(
+    constraintLayoutScope: ConstraintLayoutScope,
+    startReference: ConstrainedLayoutReference?,
+    iconReference: ConstrainedLayoutReference,
+    amountReference: ConstrainedLayoutReference,
+    textReference: ConstrainedLayoutReference,
+    iconAsset: VectorAsset,
+    amountResourceId: Int,
+    textResourceId: Int
+) {
+  val colors = MaterialTheme.colors
+
+  with(constraintLayoutScope) {
+
+    val verticalGuideline = createGuidelineFromStart(0.5f)
+
     Icon(
-        asset = Icons.Filled.ShoppingCart,
-        tint = Color.Blue,
+        asset = iconAsset,
         modifier = Modifier
-            .padding(start = 16.dp)
-            .constrainAs(ageIcon) {
-              start.linkTo(divider.start)
-              top.linkTo(parent.top)
-              bottom.linkTo(parent.bottom)
+            .constrainAs(iconReference) {
+              start.linkTo(verticalGuideline)
+              top.linkTo(startReference?.top ?: parent.top)
+              bottom.linkTo(startReference?.bottom ?: parent.bottom)
             }
     )
 
     Text(
-        text = stringResource(R.string.default_reddit_age),
+        text = stringResource(amountResourceId),
         color = colors.primaryVariant,
         fontSize = 10.sp,
         modifier = Modifier
             .padding(start = 8.dp)
-            .constrainAs(ageAmount) {
-              top.linkTo(ageIcon.top)
-              start.linkTo(ageIcon.end)
-              bottom.linkTo(ageText.top)
+            .constrainAs(amountReference) {
+              top.linkTo(iconReference.top)
+              start.linkTo(iconReference.end)
+              bottom.linkTo(textReference.top)
             }
     )
 
     Text(
-        text = stringResource(R.string.reddit_age),
+        text = stringResource(textResourceId),
         color = Color.Gray,
         fontSize = 10.sp,
         modifier = Modifier
             .padding(start = 8.dp)
-            .constrainAs(ageText) {
-              top.linkTo(ageAmount.bottom)
-              start.linkTo(ageIcon.end)
-              bottom.linkTo(ageIcon.bottom)
+            .constrainAs(textReference) {
+              top.linkTo(amountReference.bottom)
+              start.linkTo(iconReference.end)
+              bottom.linkTo(iconReference.bottom)
             }
     )
   }
@@ -321,9 +309,8 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
     )
 
     Image(
-        asset = vectorResource(id = R.drawable.ic_baseline_brightness_3_24),
+        asset = vectorResource(id = R.drawable.ic_moon),
         modifier = modifier
-            .size(24.dp)
             .clickable(onClick = { changeTheme() })
             .constrainAs(darkModeButton) {
               end.linkTo(parent.end)

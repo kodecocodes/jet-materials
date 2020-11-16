@@ -44,11 +44,11 @@ class MainViewModelFactory(
     private val defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
-    override fun <T : ViewModel?> create(
-        key: String,
-        modelClass: Class<T>,
-        handle: SavedStateHandle
-    ): T {
-        return MainViewModel() as T
-    }
+  override fun <T : ViewModel?> create(
+      key: String,
+      modelClass: Class<T>,
+      handle: SavedStateHandle
+  ): T {
+    return MainViewModel() as T
+  }
 }
