@@ -66,14 +66,7 @@ fun AppDrawer(closeDrawerAction: () -> Unit, modifier: Modifier = Modifier) {
           .background(color = MaterialTheme.colors.surface)
   ) {
     AppDrawerHeader()
-    Divider(
-        color = MaterialTheme.colors.onSurface.copy(alpha = .2f),
-        modifier = modifier.padding(
-            start = 16.dp,
-            end = 16.dp,
-            top = 16.dp
-        )
-    )
+
     AppDrawerBody(closeDrawerAction)
 
     AppDrawerFooter(modifier)
@@ -90,6 +83,20 @@ private fun AppDrawerHeader() {
 
 @Composable
 fun ProfileInfo() {
+  //TODO add your code here
+}
+
+@Composable
+private fun ProfileInfoItem(
+    constraintLayoutScope: ConstraintLayoutScope,
+    startReference: ConstrainedLayoutReference?,
+    iconReference: ConstrainedLayoutReference,
+    amountReference: ConstrainedLayoutReference,
+    textReference: ConstrainedLayoutReference,
+    iconAsset: VectorAsset,
+    amountResourceId: Int,
+    textResourceId: Int
+){
   //TODO add your code here
 }
 

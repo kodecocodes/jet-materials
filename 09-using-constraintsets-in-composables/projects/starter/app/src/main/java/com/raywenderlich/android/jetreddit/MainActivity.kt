@@ -36,8 +36,6 @@ package com.raywenderlich.android.jetreddit
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.platform.setContent
-import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
-import com.raywenderlich.android.jetreddit.viewmodel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 

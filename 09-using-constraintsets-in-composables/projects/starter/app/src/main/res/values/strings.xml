@@ -8,7 +8,7 @@
   <string name="saved">Saved</string>
   <string name="default_karma_amount">555</string>
   <string name="karma">Karma</string>
-  <string name="default_reddit_age">10m 10d</string>
+  <string name="default_reddit_age_amount">10m 10d</string>
   <string name="reddit_age">Reddit age</string>
   <string name="settings">Settings</string>
 </resources>
