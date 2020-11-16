@@ -122,7 +122,6 @@ fun ProfileInfo() {
 
     val colors = MaterialTheme.colors
 
-    createAbsoluteLeftBarrier()
     ProfileInfoItem(this, null, karmaIcon, karmaAmount, karmaText, Icons.Filled.Star, R.string.default_karma_amount, R.string.karma)
 
     Divider(
@@ -156,17 +155,15 @@ private fun ProfileInfoItem(
   val colors = MaterialTheme.colors
 
   with(constraintLayoutScope) {
-
-    val verticalGuideline = createGuidelineFromStart(0.5f)
-
     Icon(
         asset = iconAsset,
+        tint = Color.Blue,
         modifier = Modifier
             .constrainAs(iconReference) {
-              start.linkTo(verticalGuideline)
+              start.linkTo(startReference?.start ?: parent.start)
               top.linkTo(startReference?.top ?: parent.top)
               bottom.linkTo(startReference?.bottom ?: parent.bottom)
-            }
+            }.padding(start = 16.dp)
     )
 
     Text(
