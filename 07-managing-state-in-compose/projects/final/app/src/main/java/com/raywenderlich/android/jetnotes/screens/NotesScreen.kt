@@ -33,13 +33,15 @@
  */
 package com.raywenderlich.android.jetnotes.screens
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.runtime.Composable
-import com.raywenderlich.android.jetnotes.ui.components.TopAppBar
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.raywenderlich.android.jetnotes.domain.model.NoteModel
+import com.raywenderlich.android.jetnotes.ui.components.Note
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 
 @Composable
 fun NotesScreen(viewModel: MainViewModel) {
-  TopAppBar(title = "JetNotes", icon = Icons.Filled.List, onIconClick = {})
 }

@@ -33,8 +33,13 @@
  */
 package com.raywenderlich.android.jetnotes.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.raywenderlich.android.jetnotes.data.repository.Repository
+import com.raywenderlich.android.jetnotes.domain.model.NoteModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * View model used for storing the global app state.
@@ -43,4 +48,21 @@ import com.raywenderlich.android.jetnotes.data.repository.Repository
  */
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
+//  val notesNotInThrash: LiveData<List<NoteModel>> by lazy {
+//    repository.getAllNotesNotInThrash()
+//  }
+
+  fun onCreateNewNoteClick() {
+    // TODO - Open SaveNoteScreen
+  }
+
+  fun onNoteClick(note: NoteModel) {
+    // TODO - Open SaveNoteScreen in Edit mode
+  }
+
+  fun onNoteCheckedChange(note: NoteModel) {
+    viewModelScope.launch(Dispatchers.Default) {
+      repository.insertNote(note)
+    }
+  }
 }
