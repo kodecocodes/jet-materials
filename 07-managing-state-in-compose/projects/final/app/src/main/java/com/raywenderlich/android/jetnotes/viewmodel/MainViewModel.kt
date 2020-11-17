@@ -48,9 +48,9 @@ import kotlinx.coroutines.launch
  */
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-//  val notesNotInThrash: LiveData<List<NoteModel>> by lazy {
-//    repository.getAllNotesNotInThrash()
-//  }
+  val notesNotInThrash: LiveData<List<NoteModel>> by lazy {
+    repository.getAllNotesNotInThrash()
+  }
 
   fun onCreateNewNoteClick() {
     // TODO - Open SaveNoteScreen
