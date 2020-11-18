@@ -45,7 +45,7 @@ data class NoteDbModel(
   @ColumnInfo(name = "can_be_checked_off") val canBeCheckedOff: Boolean,
   @ColumnInfo(name = "is_checked_off") val isCheckedOff: Boolean,
   @ColumnInfo(name = "color_id") val colorId: Long,
-  @ColumnInfo(name = "in_trash") val isInThrash: Boolean
+  @ColumnInfo(name = "in_trash") val isInTrash: Boolean
 ) {
 
   companion object {
