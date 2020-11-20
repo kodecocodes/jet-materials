@@ -111,58 +111,72 @@ private fun AppDrawerHeader() {
 }
 
 @Composable
-fun ProfileInfo() {
+fun ProfileInfo(modifier: Modifier = Modifier) {
   ConstraintLayout(
-      modifier = Modifier
+      modifier = modifier
           .fillMaxWidth()
           .padding(top = 16.dp)
   ) {
 
-    val (karmaIcon, karmaAmount, karmaText, divider, ageIcon, ageAmount, ageText) = createRefs()
+    val (karmaItem, divider, ageItem) = createRefs()
 
     val colors = MaterialTheme.colors
 
-    ProfileInfoItem(this, null, karmaIcon, karmaAmount, karmaText, Icons.Filled.Star, R.string.default_karma_amount, R.string.karma)
+    ProfileInfoItem(
+        Icons.Filled.Star,
+        R.string.default_karma_amount,
+        R.string.karma,
+        modifier = modifier.constrainAs(karmaItem) {
+          centerVerticallyTo(parent)
+          start.linkTo(parent.start)
+        }
+    )
 
     Divider(
-        modifier = Modifier
+        modifier = modifier
             .width(1.dp)
-            .height(28.dp)
             .constrainAs(divider) {
-              top.linkTo(karmaAmount.top)
-              bottom.linkTo(karmaText.bottom)
-              start.linkTo(parent.start)
-              end.linkTo(parent.end)
+              centerVerticallyTo(karmaItem)
+              centerHorizontallyTo(parent)
+              height = Dimension.fillToConstraints
             },
         color = colors.onSurface.copy(alpha = .2f)
     )
 
-    ProfileInfoItem(this, divider, ageIcon, ageAmount, ageText, Icons.Filled.ShoppingCart, R.string.default_reddit_age_amount, R.string.reddit_age)
+    ProfileInfoItem(
+        Icons.Filled.ShoppingCart,
+        R.string.default_reddit_age_amount,
+        R.string.reddit_age,
+        modifier = modifier.constrainAs(ageItem) {
+          start.linkTo(divider.end)
+          centerVerticallyTo(parent)
+        }
+    )
   }
 }
 
 @Composable
 private fun ProfileInfoItem(
-    constraintLayoutScope: ConstraintLayoutScope,
-    startReference: ConstrainedLayoutReference?,
-    iconReference: ConstrainedLayoutReference,
-    amountReference: ConstrainedLayoutReference,
-    textReference: ConstrainedLayoutReference,
     iconAsset: VectorAsset,
     amountResourceId: Int,
-    textResourceId: Int
+    textResourceId: Int,
+    modifier: Modifier
 ) {
   val colors = MaterialTheme.colors
 
-  with(constraintLayoutScope) {
+  ConstraintLayout(modifier = modifier) {
+
+    val (iconRef, amountRef, titleRef) = createRefs()
+
+    val itemModifier = Modifier
+
     Icon(
         asset = iconAsset,
         tint = Color.Blue,
-        modifier = Modifier
-            .constrainAs(iconReference) {
-              start.linkTo(startReference?.start ?: parent.start)
-              top.linkTo(startReference?.top ?: parent.top)
-              bottom.linkTo(startReference?.bottom ?: parent.bottom)
+        modifier = itemModifier
+            .constrainAs(iconRef) {
+              centerVerticallyTo(parent)
+              start.linkTo(parent.start)
             }.padding(start = 16.dp)
     )
 
@@ -170,12 +184,12 @@ private fun ProfileInfoItem(
         text = stringResource(amountResourceId),
         color = colors.primaryVariant,
         fontSize = 10.sp,
-        modifier = Modifier
+        modifier = itemModifier
             .padding(start = 8.dp)
-            .constrainAs(amountReference) {
-              top.linkTo(iconReference.top)
-              start.linkTo(iconReference.end)
-              bottom.linkTo(textReference.top)
+            .constrainAs(amountRef) {
+              top.linkTo(iconRef.top)
+              start.linkTo(iconRef.end)
+              bottom.linkTo(titleRef.top)
             }
     )
 
@@ -183,12 +197,12 @@ private fun ProfileInfoItem(
         text = stringResource(textResourceId),
         color = Color.Gray,
         fontSize = 10.sp,
-        modifier = Modifier
+        modifier = itemModifier
             .padding(start = 8.dp)
-            .constrainAs(textReference) {
-              top.linkTo(amountReference.bottom)
-              start.linkTo(iconReference.end)
-              bottom.linkTo(iconReference.bottom)
+            .constrainAs(titleRef) {
+              top.linkTo(amountRef.bottom)
+              start.linkTo(iconRef.end)
+              bottom.linkTo(iconRef.bottom)
             }
     )
   }
@@ -201,21 +215,23 @@ private fun ProfileInfoItem(
  */
 @Composable
 private fun AppDrawerBody(closeDrawerAction: () -> Unit) {
-  ScreenNavigationButton(
-      icon = Icons.Filled.AccountBox,
-      label = stringResource(R.string.my_profile),
-      onClickAction = {
-        closeDrawerAction()
-      }
-  )
+  Column {
+    ScreenNavigationButton(
+        icon = Icons.Filled.AccountBox,
+        label = stringResource(R.string.my_profile),
+        onClickAction = {
+          closeDrawerAction()
+        }
+    )
 
-  ScreenNavigationButton(
-      icon = Icons.Filled.Home,
-      label = stringResource(R.string.saved),
-      onClickAction = {
-        closeDrawerAction()
-      }
-  )
+    ScreenNavigationButton(
+        icon = Icons.Filled.Home,
+        label = stringResource(R.string.saved),
+        onClickAction = {
+          closeDrawerAction()
+        }
+    )
+  }
 }
 
 /**
@@ -300,8 +316,7 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
             .padding(start = 16.dp)
             .constrainAs(settingsText) {
               start.linkTo(settingsImage.end)
-              bottom.linkTo(settingsImage.bottom)
-              top.linkTo(settingsImage.top)
+              centerVerticallyTo(settingsImage)
             }
     )
 
@@ -312,7 +327,6 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
             .constrainAs(darkModeButton) {
               end.linkTo(parent.end)
               bottom.linkTo(settingsImage.bottom)
-              top.linkTo(settingsImage.top)
             },
         colorFilter = ColorFilter.tint(colors.primaryVariant)
     )
