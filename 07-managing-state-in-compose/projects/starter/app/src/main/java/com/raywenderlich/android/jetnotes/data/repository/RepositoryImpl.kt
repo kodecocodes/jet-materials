@@ -33,7 +33,6 @@
  */
 package com.raywenderlich.android.jetnotes.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -56,11 +55,11 @@ class RepositoryImpl(
   private val dbMapper: DbMapper
 ) : Repository {
 
-  private val notesNotInThrashLiveData: MutableLiveData<List<NoteModel>> by lazy {
+  private val notesNotInTrashLiveData: MutableLiveData<List<NoteModel>> by lazy {
     MutableLiveData<List<NoteModel>>()
   }
 
-  private val notesInThrashLiveData: MutableLiveData<List<NoteModel>> by lazy {
+  private val notesInTrashLiveData: MutableLiveData<List<NoteModel>> by lazy {
     MutableLiveData<List<NoteModel>>()
   }
 
@@ -91,15 +90,15 @@ class RepositoryImpl(
     }
   }
 
-  override fun getAllNotesNotInThrash(): LiveData<List<NoteModel>> = notesNotInThrashLiveData
+  override fun getAllNotesNotInTrash(): LiveData<List<NoteModel>> = notesNotInTrashLiveData
 
-  override fun getAllNotesInThrash(): LiveData<List<NoteModel>> = notesInThrashLiveData
+  override fun getAllNotesInTrash(): LiveData<List<NoteModel>> = notesInTrashLiveData
 
-  private fun getAllNotesDependingOnThrashStateSync(inThrash: Boolean): List<NoteModel> {
+  private fun getAllNotesDependingOnTrashStateSync(inTrash: Boolean): List<NoteModel> {
     val colorDbModels: Map<Long, ColorDbModel> = colorDao.getAllSync().map { it.id to it }.toMap()
-    val dbNotesNotInThrash: List<NoteDbModel> =
-      noteDao.getAllSync().filter { it.isInThrash == inThrash }
-    return dbMapper.mapNotes(dbNotesNotInThrash, colorDbModels)
+    val dbNotesNotInTrash: List<NoteDbModel> =
+      noteDao.getAllSync().filter { it.isInTrash == inTrash }
+    return dbMapper.mapNotes(dbNotesNotInTrash, colorDbModels)
   }
 
   override fun getNote(id: Long): LiveData<NoteModel> =
@@ -123,17 +122,17 @@ class RepositoryImpl(
     updateNotesLiveData()
   }
 
-  override fun moveNoteToThrash(noteId: Long) {
+  override fun moveNoteToTrash(noteId: Long) {
     val dbNote = noteDao.findByIdSync(noteId)
-    val newDbNote = dbNote.copy(isInThrash = true)
+    val newDbNote = dbNote.copy(isInTrash = true)
     noteDao.insert(newDbNote)
     updateNotesLiveData()
   }
 
-  override fun restoreNotesFromThrash(noteIds: List<Long>) {
-    val dbNotesInThrash = noteDao.getNotesByIdsSync(noteIds)
-    dbNotesInThrash.forEach {
-      val newDbNote = it.copy(isInThrash = false)
+  override fun restoreNotesFromTrash(noteIds: List<Long>) {
+    val dbNotesInTrash = noteDao.getNotesByIdsSync(noteIds)
+    dbNotesInTrash.forEach {
+      val newDbNote = it.copy(isInTrash = false)
       noteDao.insert(newDbNote)
     }
     updateNotesLiveData()
@@ -150,8 +149,8 @@ class RepositoryImpl(
   override fun getColorSync(id: Long): ColorModel = dbMapper.mapColor(colorDao.findByIdSync(id))
 
   private fun updateNotesLiveData() {
-    notesNotInThrashLiveData.postValue(getAllNotesDependingOnThrashStateSync(false))
-    val newNotesInThrashLiveData = getAllNotesDependingOnThrashStateSync(true)
-    notesInThrashLiveData.postValue(newNotesInThrashLiveData)
+    notesNotInTrashLiveData.postValue(getAllNotesDependingOnTrashStateSync(false))
+    val newNotesInTrashLiveData = getAllNotesDependingOnTrashStateSync(true)
+    notesInTrashLiveData.postValue(newNotesInTrashLiveData)
   }
 }
