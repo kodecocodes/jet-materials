@@ -52,6 +52,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetreddit.R
 import com.raywenderlich.android.jetreddit.theme.JetRedditThemeSettings
 
@@ -88,14 +89,10 @@ fun ProfileInfo() {
 
 @Composable
 private fun ProfileInfoItem(
-    constraintLayoutScope: ConstraintLayoutScope,
-    startReference: ConstrainedLayoutReference?,
-    iconReference: ConstrainedLayoutReference,
-    amountReference: ConstrainedLayoutReference,
-    textReference: ConstrainedLayoutReference,
     iconAsset: VectorAsset,
     amountResourceId: Int,
-    textResourceId: Int
+    textResourceId: Int,
+    modifier: Modifier
 ){
   //TODO add your code here
 }
@@ -166,4 +163,15 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
 
 private fun changeTheme() {
   JetRedditThemeSettings.isInDarkTheme.value = JetRedditThemeSettings.isInDarkTheme.value.not()
+}
+
+@Preview
+@Composable
+private fun ProfileInfoItemPreview() {
+    ProfileInfoItem(
+        Icons.Filled.ShoppingCart,
+        R.string.default_reddit_age_amount,
+        R.string.reddit_age,
+        Modifier
+    )
 }
