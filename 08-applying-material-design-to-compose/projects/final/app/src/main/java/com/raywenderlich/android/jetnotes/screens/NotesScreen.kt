@@ -33,15 +33,19 @@
  */
 package com.raywenderlich.android.jetnotes.screens
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
+import com.raywenderlich.android.jetnotes.routing.Screen
+import com.raywenderlich.android.jetnotes.ui.components.AppDrawer
 import com.raywenderlich.android.jetnotes.ui.components.Note
 import com.raywenderlich.android.jetnotes.ui.components.TopAppBar
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
@@ -53,18 +57,35 @@ fun NotesScreen(viewModel: MainViewModel) {
     .notesNotInTrash
     .observeAsState(listOf())
 
-  Column() {
-    TopAppBar(
-      title = "JetNotes",
-      icon = Icons.Filled.List,
-      onIconClick = {}
-    )
-    NotesList(
-      notes = notes,
-      onNoteCheckedChange = { viewModel.onNoteCheckedChange(it) },
-      onNoteClick = { viewModel.onNoteClick(it) }
-    )
-  }
+  val scaffoldState: ScaffoldState = rememberScaffoldState()
+
+  Scaffold(
+    topBar = {
+      TopAppBar(
+        title = "JetNotes",
+        icon = Icons.Filled.List,
+        onIconClick = { scaffoldState.drawerState.open() }
+      )
+    },
+    scaffoldState = scaffoldState,
+    drawerContent = {
+      AppDrawer(
+        currentScreen = Screen.Notes,
+        closeDrawerAction = { scaffoldState.drawerState.close() }
+      )
+    },
+    bodyContent = {
+      if (notes.isNotEmpty()) {
+        NotesList(
+          notes = notes,
+          onNoteCheckedChange = {
+            viewModel.onNoteCheckedChange(it)
+          },
+          onNoteClick = { viewModel.onNoteClick(it) }
+        )
+      }
+    }
+  )
 }
 
 @Composable
