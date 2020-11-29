@@ -45,13 +45,13 @@ import androidx.compose.runtime.setValue
 private val LightThemeColors = lightColors(
   primary = rwGreen,
   primaryVariant = rwGreenDark,
-  secondary = rwGreen
+  secondary = rwRed
 )
 
 private val DarkThemeColors = lightColors(
   primary = rwGreen,
   primaryVariant = rwGreenDark,
-  secondary = rwGreen
+  secondary = rwRed
 )
 
 /**
