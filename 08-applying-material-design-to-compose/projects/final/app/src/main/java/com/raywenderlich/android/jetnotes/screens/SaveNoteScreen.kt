@@ -33,6 +33,7 @@
  */
 package com.raywenderlich.android.jetnotes.screens
 
+import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
@@ -40,22 +41,106 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.raywenderlich.android.jetnotes.domain.model.ColorModel
-import com.raywenderlich.android.jetnotes.ui.components.ColorWidget
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.ui.tooling.preview.Preview
+import com.raywenderlich.android.jetnotes.R
+import com.raywenderlich.android.jetnotes.domain.model.ColorModel
+import com.raywenderlich.android.jetnotes.domain.model.NEW_NOTE_ID
+import com.raywenderlich.android.jetnotes.domain.model.NoteModel
+import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
+import com.raywenderlich.android.jetnotes.routing.Screen
+import com.raywenderlich.android.jetnotes.ui.components.ColorWidget
 import com.raywenderlich.android.jetnotes.util.fromHex
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 
 @Composable
 fun SaveNoteScreen(viewModel: MainViewModel) {
 
+  val noteEntry: NoteModel by viewModel.noteEntry
+    .observeAsState(NoteModel())
+
+  Scaffold(
+    topBar = {
+      val isEditingMode: Boolean = noteEntry.id != NEW_NOTE_ID
+      SaveNoteTopAppBar(
+        isEditingMode = isEditingMode,
+        onBackClick = { JetNotesRouter.navigateTo(Screen.Notes) },
+        onSaveNoteClick = { },
+        onOpenColorPickerClick = { },
+        onDeleteNoteClick = { }
+      )
+    },
+    bodyContent = {}
+  )
+}
+
+@Composable
+private fun SaveNoteTopAppBar(
+  isEditingMode: Boolean,
+  onBackClick: () -> Unit,
+  onSaveNoteClick: () -> Unit,
+  onOpenColorPickerClick: () -> Unit,
+  onDeleteNoteClick: () -> Unit
+) {
+  TopAppBar(
+    title = {
+      Text(
+        text = "Save Note",
+        color = MaterialTheme.colors.onPrimary
+      )
+    },
+    navigationIcon = {
+      IconButton(onClick = onBackClick) {
+        Icon(asset = Icons.Filled.ArrowBack)
+      }
+    },
+    actions = {
+      // Save note action icon
+      IconButton(onClick = onSaveNoteClick) {
+        Icon(
+          asset = Icons.Default.Check,
+          tint = MaterialTheme.colors.onPrimary
+        )
+      }
+
+      // Open color picker action icon
+      IconButton(onClick = onOpenColorPickerClick) {
+        Icon(
+          asset = vectorResource(
+            id = R.drawable.ic_baseline_color_lens_24
+          ),
+          tint = MaterialTheme.colors.onPrimary
+        )
+      }
+
+      // Delete action icon (show only in editing mode)
+      if (isEditingMode) {
+        IconButton(onClick = onDeleteNoteClick) {
+          Icon(
+            asset = Icons.Default.Delete,
+            tint = MaterialTheme.colors.onPrimary
+          )
+        }
+      }
+    }
+  )
 }
 
 @Composable
@@ -106,6 +191,18 @@ fun Color(
         .align(Alignment.CenterVertically)
     )
   }
+}
+
+@Preview
+@Composable
+fun SaveNoteTopAppBarPreview() {
+  SaveNoteTopAppBar(
+    isEditingMode = false,
+    onBackClick = {},
+    onSaveNoteClick = {},
+    onOpenColorPickerClick = {},
+    onDeleteNoteClick = {}
+  )
 }
 
 @Preview
