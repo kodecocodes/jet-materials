@@ -36,9 +36,16 @@ package com.raywenderlich.android.jetnotes
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Providers
 import androidx.compose.ui.platform.setContent
+import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
+import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.screens.NotesScreen
+import com.raywenderlich.android.jetnotes.screens.SaveNoteScreen
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
+import com.raywenderlich.android.jetnotes.util.BackPressedDispatcherAmbient
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModelFactory
 
@@ -59,8 +66,19 @@ class MainActivity : AppCompatActivity() {
 
     setContent {
       JetNotesTheme {
-        NotesScreen(viewModel = viewModel)
+        MainActivityScreen(viewModel = viewModel)
       }
+    }
+  }
+}
+
+@Composable
+private fun MainActivityScreen(viewModel: MainViewModel) {
+  Surface {
+    when (JetNotesRouter.currentScreen) {
+      is Screen.Notes -> NotesScreen(viewModel)
+      is Screen.SaveNote -> SaveNoteScreen(viewModel)
+      is Screen.Trash -> TODO()
     }
   }
 }

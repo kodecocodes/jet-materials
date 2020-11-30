@@ -51,6 +51,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.util.fromHex
+import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
+
+@Composable
+fun SaveNoteScreen(viewModel: MainViewModel) {
+
+}
 
 @Composable
 private fun ColorPicker(
