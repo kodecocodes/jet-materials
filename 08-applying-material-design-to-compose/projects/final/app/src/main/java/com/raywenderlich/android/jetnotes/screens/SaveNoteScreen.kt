@@ -46,6 +46,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.Switch
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
@@ -144,6 +145,28 @@ private fun SaveNoteTopAppBar(
 }
 
 @Composable
+private fun CanBeCheckedOffComponent(
+  isChecked: Boolean,
+  onCheckedChange: (Boolean) -> Unit
+) {
+  Row(
+    Modifier
+      .padding(8.dp)
+      .padding(top = 16.dp)
+  ) {
+    Text(
+      text = "Can note be checked off?",
+      modifier = Modifier.weight(1f)
+    )
+    Switch(
+      checked = isChecked,
+      onCheckedChange = onCheckedChange,
+      modifier = Modifier.padding(start = 8.dp)
+    )
+  }
+}
+
+@Composable
 private fun PickedColorComponent(color: ColorModel) {
   Row(
     Modifier
@@ -225,6 +248,12 @@ fun SaveNoteTopAppBarPreview() {
     onOpenColorPickerClick = {},
     onDeleteNoteClick = {}
   )
+}
+
+@Preview
+@Composable
+fun CanBeCheckedOffComponentPreview() {
+  CanBeCheckedOffComponent(false) {}
 }
 
 @Preview
