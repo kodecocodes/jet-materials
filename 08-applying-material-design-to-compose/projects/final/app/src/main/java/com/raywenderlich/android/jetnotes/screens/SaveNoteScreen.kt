@@ -41,12 +41,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.Switch
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
@@ -141,6 +137,24 @@ private fun SaveNoteTopAppBar(
         }
       }
     }
+  )
+}
+
+@Composable
+private fun ContentTextField(
+  modifier: Modifier = Modifier,
+  label: String,
+  text: String,
+  onTextChange: (String) -> Unit
+) {
+  TextField(
+    value = text,
+    onValueChange = onTextChange,
+    label = { Text(label) },
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = 8.dp),
+    backgroundColor = MaterialTheme.colors.surface
   )
 }
 
@@ -248,6 +262,12 @@ fun SaveNoteTopAppBarPreview() {
     onOpenColorPickerClick = {},
     onDeleteNoteClick = {}
   )
+}
+
+@Preview
+@Composable
+fun ContentTextFieldPreview() {
+  ContentTextField(label = "Title", text = "", onTextChange = {})
 }
 
 @Preview
