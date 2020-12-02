@@ -34,29 +34,24 @@
 package com.raywenderlich.android.jetnotes.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.VectorAsset
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
-import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
-import androidx.compose.ui.graphics.vector.VectorAsset
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.material.Surface
-import androidx.compose.foundation.clickable
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.Switch
-import com.raywenderlich.android.jetnotes.theme.JetNotesThemeSettings
-import androidx.compose.material.icons.filled.Delete
 import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
-import androidx.compose.material.Divider
+import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
+import com.raywenderlich.android.jetnotes.theme.JetNotesThemeSettings
 
 @Composable
 fun AppDrawer(

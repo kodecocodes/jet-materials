@@ -33,11 +33,11 @@
  */
 package com.raywenderlich.android.jetnotes.ui.components
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,6 +54,7 @@ import com.raywenderlich.android.jetnotes.theme.rwGreen
 @Composable
 fun Note() {
   val backgroundShape: Shape = RoundedCornerShape(4.dp)
+
   Row(
     modifier = Modifier
       .padding(8.dp)
@@ -62,13 +63,13 @@ fun Note() {
       .preferredHeightIn(min = 64.dp)
       .background(Color.White, backgroundShape)
   ) {
-    ColorWidget(
+    NoteColor(
       color = rwGreen,
       size = 40.dp,
       border = 1.dp,
       modifier = Modifier
         .align(Alignment.CenterVertically)
-        .padding(start = 16.dp, end = 16.dp)
+        .padding(start = 16.dp, end = 16.dp) // here
     )
     Column(
       modifier = Modifier
@@ -89,7 +90,7 @@ fun Note() {
         text = "Content",
         color = Color.Black.copy(alpha = 0.75f),
         maxLines = 1,
-        style = TextStyle(
+        style = TextStyle( // here
           fontWeight = FontWeight.Normal,
           fontSize = 14.sp,
           letterSpacing = 0.25.sp
