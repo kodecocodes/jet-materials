@@ -37,10 +37,7 @@ import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -84,7 +81,23 @@ fun SaveNoteScreen(viewModel: MainViewModel) {
         onDeleteNoteClick = { }
       )
     },
-    bodyContent = {}
+    bodyContent = {
+      BottomDrawerLayout(
+        drawerState = bottomDrawerState,
+        drawerContent = {
+          ColorPicker(
+            colors = colors,
+            onColorSelect = updateNoteEntryForColor
+          )
+        },
+        bodyContent = {
+          Content(
+            note = noteEntry,
+            onNoteChange = updateNoteEntry
+          )
+        }
+      )
+    }
   )
 }
 
@@ -138,6 +151,47 @@ private fun SaveNoteTopAppBar(
       }
     }
   )
+}
+
+@Composable
+private fun Content(
+  note: NoteModel,
+  onNoteChange: (NoteModel) -> Unit
+) {
+  Column(modifier = Modifier.fillMaxSize()) {
+    ContentTextField(
+      label = "Title",
+      text = note.title,
+      onTextChange = { newTitle ->
+        onNoteChange.invoke(note.copy(title = newTitle))
+      }
+    )
+
+    ContentTextField(
+      modifier = Modifier
+        .heightIn(max = 240.dp)
+        .padding(top = 16.dp),
+      label = "Body",
+      text = note.content,
+      onTextChange = { newContent ->
+        onNoteChange.invoke(note.copy(content = newContent))
+      }
+    )
+
+    val canBeCheckedOff: Boolean = note.isCheckedOff != null
+    CanBeCheckedOffComponent(
+      isChecked = canBeCheckedOff,
+      onCheckedChange = { canBeCheckedOffNewValue ->
+        val isCheckedOff: Boolean? =
+          if (canBeCheckedOffNewValue) false else null
+        onNoteChange.invoke(
+          note.copy(isCheckedOff = isCheckedOff)
+        )
+      }
+    )
+
+    PickedColorComponent(color = note.color)
+  }
 }
 
 @Composable
@@ -261,6 +315,15 @@ fun SaveNoteTopAppBarPreview() {
     onSaveNoteClick = {},
     onOpenColorPickerClick = {},
     onDeleteNoteClick = {}
+  )
+}
+
+@Preview
+@Composable
+fun ContentPreview() {
+  Content(
+    note = NoteModel(title = "Title", content = "content"),
+    onNoteChange = {}
   )
 }
 
