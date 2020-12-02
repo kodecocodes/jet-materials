@@ -65,6 +65,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   }
 
   fun onCreateNewNoteClick() {
+    _noteEntry.value = NoteModel()
     JetNotesRouter.navigateTo(Screen.SaveNote)
   }
 

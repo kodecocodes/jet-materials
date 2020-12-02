@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -63,6 +64,7 @@ import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.ui.components.ColorWidget
 import com.raywenderlich.android.jetnotes.util.fromHex
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
+import androidx.compose.runtime.savedinstancestate.savedInstanceState
 
 @Composable
 fun SaveNoteScreen(viewModel: MainViewModel) {
@@ -70,15 +72,23 @@ fun SaveNoteScreen(viewModel: MainViewModel) {
   val noteEntry: NoteModel by viewModel.noteEntry
     .observeAsState(NoteModel())
 
+  val colors: List<ColorModel> by viewModel.colors
+    .observeAsState(listOf())
+
+  val bottomDrawerState: BottomDrawerState =
+    rememberBottomDrawerState(BottomDrawerValue.Closed)
+
+  val moveNoteToTrashDialogShownState: MutableState<Boolean> = savedInstanceState { false }
+
   Scaffold(
     topBar = {
       val isEditingMode: Boolean = noteEntry.id != NEW_NOTE_ID
       SaveNoteTopAppBar(
         isEditingMode = isEditingMode,
         onBackClick = { JetNotesRouter.navigateTo(Screen.Notes) },
-        onSaveNoteClick = { },
-        onOpenColorPickerClick = { },
-        onDeleteNoteClick = { }
+        onSaveNoteClick = { viewModel.saveNote(noteEntry) },
+        onOpenColorPickerClick = { bottomDrawerState.open() },
+        onDeleteNoteClick = { moveNoteToTrashDialogShownState.value = true }
       )
     },
     bodyContent = {
@@ -87,16 +97,50 @@ fun SaveNoteScreen(viewModel: MainViewModel) {
         drawerContent = {
           ColorPicker(
             colors = colors,
-            onColorSelect = updateNoteEntryForColor
+            onColorSelect = { color ->
+              val newNoteEntry = noteEntry.copy(color = color)
+              viewModel.onNoteEntryChange(newNoteEntry)
+            }
           )
         },
         bodyContent = {
           Content(
             note = noteEntry,
-            onNoteChange = updateNoteEntry
+            onNoteChange = { updateNoteEntry ->
+              viewModel.onNoteEntryChange(updateNoteEntry)
+            }
           )
         }
       )
+
+      if (moveNoteToTrashDialogShownState.value) {
+        AlertDialog(
+          onDismissRequest = { moveNoteToTrashDialogShownState.value = false },
+          title = {
+            Text("Move note to trash?")
+          },
+          text = {
+            Text(
+              "Are you sure you want to " +
+                  "move this note to trash?"
+            )
+          },
+          confirmButton = {
+            TextButton(onClick = {
+              viewModel.moveNoteToTrash(noteEntry)
+            }) {
+              Text("Confirm")
+            }
+          },
+          dismissButton = {
+            TextButton(onClick = {
+              moveNoteToTrashDialogShownState.value = false
+            }) {
+              Text("Dismiss")
+            }
+          }
+        )
+      }
     }
   )
 }
