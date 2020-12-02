@@ -38,11 +38,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raywenderlich.android.jetnotes.data.repository.Repository
+import com.raywenderlich.android.jetnotes.domain.model.ColorModel
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
 import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * View model used for storing the global app state.
@@ -58,6 +60,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   private var _noteEntry = MutableLiveData(NoteModel())
   val noteEntry: LiveData<NoteModel> = _noteEntry
 
+  val colors: LiveData<List<ColorModel>> by lazy {
+    repository.getAllColors()
+  }
+
   fun onCreateNewNoteClick() {
     JetNotesRouter.navigateTo(Screen.SaveNote)
   }
@@ -70,6 +76,34 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   fun onNoteCheckedChange(note: NoteModel) {
     viewModelScope.launch(Dispatchers.Default) {
       repository.insertNote(note)
+    }
+  }
+
+  fun onNoteEntryChange(note: NoteModel) {
+    _noteEntry.value = note
+  }
+
+  fun saveNote(note: NoteModel) {
+    viewModelScope.launch(Dispatchers.Default) {
+      // Add/Update note in the database
+      repository.insertNote(note)
+
+      withContext(Dispatchers.Main) {
+        JetNotesRouter.navigateTo(Screen.Notes)
+
+        _noteEntry.value = NoteModel()
+      }
+    }
+  }
+
+  fun moveNoteToTrash(note: NoteModel) {
+    viewModelScope.launch(Dispatchers.Default) {
+      // Delete note in the database
+      repository.moveNoteToTrash(note.id)
+
+      withContext(Dispatchers.Main) {
+        JetNotesRouter.navigateTo(Screen.Notes)
+      }
     }
   }
 }
