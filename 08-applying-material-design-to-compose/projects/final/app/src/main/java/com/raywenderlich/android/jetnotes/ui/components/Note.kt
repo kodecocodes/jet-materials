@@ -38,7 +38,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
+import androidx.compose.material.ListItem
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,64 +62,36 @@ fun Note(
   onNoteClick: (NoteModel) -> Unit = {},
   onNoteCheckedChange: (NoteModel) -> Unit = {}
 ) {
-
-  val backgroundShape: Shape = RoundedCornerShape(4.dp)
-  Row(
+  Card(
+    shape = RoundedCornerShape(4.dp),
     modifier = Modifier
       .padding(8.dp)
-      .drawShadow(1.dp, backgroundShape)
-      .fillMaxWidth()
-      .preferredHeightIn(min = 64.dp)
-      .background(Color.White, backgroundShape)
-      .clickable(onClick = { onNoteClick.invoke(note) })
+      .fillMaxWidth(),
+    backgroundColor = MaterialTheme.colors.surface
   ) {
-    ColorWidget(
-      color = Color.fromHex(note.color.hex),
-      size = 40.dp,
-      border = 1.dp,
-      modifier = Modifier
-        .align(Alignment.CenterVertically)
-        .padding(start = 16.dp, end = 16.dp)
-    )
-    Column(
-      modifier = Modifier
-        .weight(1f)
-        .align(Alignment.CenterVertically)
-    ) {
-      Text(
-        text = note.title,
-        color = Color.Black,
-        maxLines = 1,
-        style = TextStyle(
-          fontWeight = FontWeight.Normal,
-          fontSize = 16.sp,
-          letterSpacing = 0.15.sp
+    ListItem(
+      text = { Text(text = note.title, maxLines = 1) },
+      secondaryText = { Text(text = note.content, maxLines = 1) },
+      icon = {
+        ColorWidget(
+          color = Color.fromHex(note.color.hex),
+          size = 40.dp,
+          border = 1.dp
         )
-      )
-      Text(
-        text = note.content,
-        color = Color.Black.copy(alpha = 0.75f),
-        maxLines = 1,
-        style = TextStyle(
-          fontWeight = FontWeight.Normal,
-          fontSize = 14.sp,
-          letterSpacing = 0.25.sp
-        )
-      )
-    }
-
-    if (note.isCheckedOff != null) {
-      Checkbox(
-        checked = note.isCheckedOff,
-        onCheckedChange = { isChecked ->
-          val newNote = note.copy(isCheckedOff = isChecked)
-          onNoteCheckedChange.invoke(newNote)
-        },
-        modifier = Modifier
-          .padding(16.dp)
-          .align(Alignment.CenterVertically)
-      )
-    }
+      },
+      trailing = {
+        if (note.isCheckedOff != null) {
+          Checkbox(
+            checked = note.isCheckedOff,
+            onCheckedChange = { isChecked ->
+              val newNote = note.copy(isCheckedOff = isChecked)
+              onNoteCheckedChange.invoke(newNote)
+            },
+            modifier = Modifier.padding(start = 8.dp)
+          )
+        }
+      },
+      modifier = Modifier.clickable { onNoteClick.invoke(note) })
   }
 }
 

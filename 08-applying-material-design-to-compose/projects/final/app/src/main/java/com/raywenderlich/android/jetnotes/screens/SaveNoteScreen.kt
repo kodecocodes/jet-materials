@@ -65,6 +65,7 @@ import com.raywenderlich.android.jetnotes.ui.components.ColorWidget
 import com.raywenderlich.android.jetnotes.util.fromHex
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import com.raywenderlich.android.jetnotes.util.backPressHandler
 
 @Composable
 fun SaveNoteScreen(viewModel: MainViewModel) {
@@ -79,6 +80,14 @@ fun SaveNoteScreen(viewModel: MainViewModel) {
     rememberBottomDrawerState(BottomDrawerValue.Closed)
 
   val moveNoteToTrashDialogShownState: MutableState<Boolean> = savedInstanceState { false }
+
+  backPressHandler(onBackPressed = {
+    if (bottomDrawerState.isOpen) {
+      bottomDrawerState.close()
+    } else {
+      JetNotesRouter.navigateTo(Screen.Notes)
+    }
+  })
 
   Scaffold(
     topBar = {

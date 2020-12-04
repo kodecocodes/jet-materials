@@ -65,8 +65,10 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
 
     setContent {
-      JetNotesTheme {
-        MainActivityScreen(viewModel = viewModel)
+      Providers(BackPressedDispatcherAmbient provides this) {
+        JetNotesTheme {
+          MainActivityScreen(viewModel = viewModel)
+        }
       }
     }
   }
@@ -78,7 +80,8 @@ private fun MainActivityScreen(viewModel: MainViewModel) {
     when (JetNotesRouter.currentScreen) {
       is Screen.Notes -> NotesScreen(viewModel)
       is Screen.SaveNote -> SaveNoteScreen(viewModel)
-      is Screen.Trash -> TODO()
+      is Screen.Trash -> {
+      }
     }
   }
 }

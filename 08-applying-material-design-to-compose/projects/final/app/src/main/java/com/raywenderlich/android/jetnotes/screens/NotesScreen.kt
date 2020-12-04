@@ -34,16 +34,12 @@
 package com.raywenderlich.android.jetnotes.screens
 
 import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Text
 import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -52,7 +48,6 @@ import com.raywenderlich.android.jetnotes.domain.model.NoteModel
 import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.ui.components.AppDrawer
 import com.raywenderlich.android.jetnotes.ui.components.Note
-import com.raywenderlich.android.jetnotes.ui.components.TopAppBar
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 
 @Composable
@@ -67,9 +62,19 @@ fun NotesScreen(viewModel: MainViewModel) {
   Scaffold(
     topBar = {
       TopAppBar(
-        title = "JetNotes",
-        icon = Icons.Filled.List,
-        onIconClick = { scaffoldState.drawerState.open() }
+        title = {
+          Text(
+            text = "JetNotes",
+            color = MaterialTheme.colors.onPrimary
+          )
+        },
+        navigationIcon = {
+          IconButton(onClick = {
+            scaffoldState.drawerState.open()
+          }) {
+            Icon(asset = Icons.Filled.List)
+          }
+        }
       )
     },
     scaffoldState = scaffoldState,

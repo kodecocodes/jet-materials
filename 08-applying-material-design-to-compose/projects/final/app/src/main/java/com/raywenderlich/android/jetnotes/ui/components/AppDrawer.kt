@@ -35,8 +35,8 @@ package com.raywenderlich.android.jetnotes.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
@@ -48,22 +48,24 @@ import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
 import androidx.compose.ui.graphics.vector.VectorAsset
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.material.Surface
 import androidx.compose.foundation.clickable
+import androidx.compose.material.*
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.Switch
 import com.raywenderlich.android.jetnotes.theme.JetNotesThemeSettings
 import androidx.compose.material.icons.filled.Delete
 import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
-import androidx.compose.material.Divider
 
 @Composable
 fun AppDrawer(
   currentScreen: Screen,
   closeDrawerAction: () -> Unit
 ) {
-  Column(modifier = Modifier.fillMaxSize()) {
+  Column(
+    modifier = Modifier
+      .fillMaxSize()
+      .background(MaterialTheme.colors.background)
+  ) {
     AppDrawerHeader()
     Divider(
       color = MaterialTheme
