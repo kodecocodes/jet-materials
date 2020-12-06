@@ -44,6 +44,7 @@ import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.screens.NotesScreen
 import com.raywenderlich.android.jetnotes.screens.SaveNoteScreen
+import com.raywenderlich.android.jetnotes.screens.TrashScreen
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
 import com.raywenderlich.android.jetnotes.util.BackPressedDispatcherAmbient
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
@@ -80,8 +81,7 @@ private fun MainActivityScreen(viewModel: MainViewModel) {
     when (JetNotesRouter.currentScreen) {
       is Screen.Notes -> NotesScreen(viewModel)
       is Screen.SaveNote -> SaveNoteScreen(viewModel)
-      is Screen.Trash -> {
-      }
+      is Screen.Trash -> TrashScreen(viewModel)
     }
   }
 }
