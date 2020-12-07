@@ -33,8 +33,6 @@
  */
 package com.raywenderlich.android.jetnotes.screens
 
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -72,7 +70,7 @@ fun NotesScreen(viewModel: MainViewModel) {
           IconButton(onClick = {
             scaffoldState.drawerState.open()
           }) {
-            Icon(asset = Icons.Filled.List)
+            Icon(imageVector = Icons.Filled.List)
           }
         }
       )
@@ -88,8 +86,8 @@ fun NotesScreen(viewModel: MainViewModel) {
     floatingActionButton = {
       FloatingActionButton(
         onClick = { viewModel.onCreateNewNoteClick() },
-        icon = { Icon(Icons.Filled.Add) },
-        contentColor = MaterialTheme.colors.background
+        contentColor = MaterialTheme.colors.background,
+        content = { Icon(Icons.Filled.Add) }
       )
     },
     bodyContent = {

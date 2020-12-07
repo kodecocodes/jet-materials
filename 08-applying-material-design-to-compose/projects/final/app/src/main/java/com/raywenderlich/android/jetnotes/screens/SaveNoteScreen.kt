@@ -33,9 +33,7 @@
  */
 package com.raywenderlich.android.jetnotes.screens
 
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -171,14 +169,14 @@ private fun SaveNoteTopAppBar(
     },
     navigationIcon = {
       IconButton(onClick = onBackClick) {
-        Icon(asset = Icons.Filled.ArrowBack)
+        Icon(imageVector = Icons.Filled.ArrowBack)
       }
     },
     actions = {
       // Save note action icon
       IconButton(onClick = onSaveNoteClick) {
         Icon(
-          asset = Icons.Default.Check,
+          imageVector = Icons.Default.Check,
           tint = MaterialTheme.colors.onPrimary
         )
       }
@@ -186,7 +184,7 @@ private fun SaveNoteTopAppBar(
       // Open color picker action icon
       IconButton(onClick = onOpenColorPickerClick) {
         Icon(
-          asset = vectorResource(
+          imageVector = vectorResource(
             id = R.drawable.ic_baseline_color_lens_24
           ),
           tint = MaterialTheme.colors.onPrimary
@@ -197,7 +195,7 @@ private fun SaveNoteTopAppBar(
       if (isEditingMode) {
         IconButton(onClick = onDeleteNoteClick) {
           Icon(
-            asset = Icons.Default.Delete,
+            imageVector = Icons.Default.Delete,
             tint = MaterialTheme.colors.onPrimary
           )
         }

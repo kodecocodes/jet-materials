@@ -33,8 +33,6 @@
  */
 package com.raywenderlich.android.jetnotes.screens
 
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
@@ -153,13 +151,13 @@ private fun TrashTopAppBar(
       if (areActionsVisible) {
         IconButton(onClick = onRestoreNotesClick) {
           Icon(
-            asset = vectorResource(id = R.drawable.ic_baseline_restore_from_trash_24),
+            imageVector = vectorResource(id = R.drawable.ic_baseline_restore_from_trash_24),
             tint = MaterialTheme.colors.onPrimary
           )
         }
         IconButton(onClick = onDeleteNotesClick) {
           Icon(
-            asset = vectorResource(id = R.drawable.ic_baseline_delete_forever_24),
+            imageVector = vectorResource(id = R.drawable.ic_baseline_delete_forever_24),
             tint = MaterialTheme.colors.onPrimary
           )
         }
