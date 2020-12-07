@@ -34,12 +34,14 @@
 package com.raywenderlich.android.jetnotes.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raywenderlich.android.jetnotes.data.repository.Repository
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * View model used for storing the global app state.
@@ -52,6 +54,11 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     repository.getAllNotesNotInTrash()
   }
 
+  val notesInThrash by lazy { repository.getAllNotesInTrash() }
+
+  private var _selectedNotes = MutableLiveData<List<NoteModel>>(listOf())
+  val selectedNotes: LiveData<List<NoteModel>> = _selectedNotes
+
   fun onCreateNewNoteClick() {
     // TODO - Open SaveNoteScreen
   }
@@ -63,6 +70,34 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   fun onNoteCheckedChange(note: NoteModel) {
     viewModelScope.launch(Dispatchers.Default) {
       repository.insertNote(note)
+    }
+  }
+
+  fun onNoteSelected(note: NoteModel) {
+    _selectedNotes.value = _selectedNotes.value!!.toMutableList().apply {
+      if (contains(note)) {
+        remove(note)
+      } else {
+        add(note)
+      }
+    }
+  }
+
+  fun restoreNotes(notes: List<NoteModel>) {
+    viewModelScope.launch(Dispatchers.Default) {
+      repository.restoreNotesFromTrash(notes.map { it.id })
+      withContext(Dispatchers.Main) {
+        _selectedNotes.value = listOf()
+      }
+    }
+  }
+
+  fun permanentlyDeleteNotes(notes: List<NoteModel>) {
+    viewModelScope.launch(Dispatchers.Default) {
+      repository.deleteNotes(notes.map { it.id })
+      withContext(Dispatchers.Main) {
+        _selectedNotes.value = listOf()
+      }
     }
   }
 }

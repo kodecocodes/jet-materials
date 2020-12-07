@@ -33,16 +33,17 @@
  */
 package com.raywenderlich.android.jetnotes.ui.components
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawShadow
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
@@ -64,7 +65,7 @@ fun Note(
   Row(
     modifier = Modifier
       .padding(8.dp)
-      .drawShadow(1.dp, backgroundShape)
+      .shadow(1.dp, backgroundShape)
       .fillMaxWidth()
       .preferredHeightIn(min = 64.dp)
       .background(Color.White, backgroundShape)
