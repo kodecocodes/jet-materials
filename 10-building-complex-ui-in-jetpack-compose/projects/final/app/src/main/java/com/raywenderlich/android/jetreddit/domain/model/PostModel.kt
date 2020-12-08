@@ -13,8 +13,6 @@ data class PostModel(
 
   companion object{
 
-    val DEFAULT_POST = PostModel("raywenderlich", "androiddev", "Check out this new book about Jetpack Compose from Raywenderlich!",
-        "Check out this new book about Jetpack Compose from Raywenderlich!", "5614", "523", PostType.TEXT, "4h")
-
+    val DEFAULT_POST = PostModel("raywenderlich", "digitalnomad", "My ocean view in Thailand. Laptop pic included!", "","5614", "523", PostType.IMAGE, "4h")
   }
 }

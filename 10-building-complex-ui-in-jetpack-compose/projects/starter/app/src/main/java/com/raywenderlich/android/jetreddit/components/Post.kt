@@ -227,6 +227,12 @@ fun PostAction(
 
 @Preview
 @Composable
+fun ArrowButtonPreview() {
+    ArrowButton({}, R.drawable.ic_baseline_arrow_upward_24)
+}
+
+@Preview
+@Composable
 fun PostActionPreview() {
   PostAction(
       vectorResourceId = R.drawable.ic_baseline_emoji_events_24,

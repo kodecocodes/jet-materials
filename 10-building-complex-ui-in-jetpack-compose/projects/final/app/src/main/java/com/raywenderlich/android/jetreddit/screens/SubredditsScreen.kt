@@ -111,18 +111,7 @@ fun SubredditsScreen(modifier: Modifier = Modifier) {
       ) {
         Subreddit(it)
       }
-
-      mainCommunities.forEach {
-        Community(text = stringResource(it))
-      }
-
-      Spacer(modifier = modifier.height(4.dp))
-
-      BackgroundText(stringResource(R.string.communities))
-
-      communities.forEach {
-        Community(text = stringResource(it))
-      }
+        Communities(modifier)
     }
   }
 }
@@ -245,7 +234,7 @@ fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: In
 
 @Composable
 fun Community(text: String, modifier: Modifier = Modifier) {
-  Row(modifier = modifier.padding(start = 16.dp, top = 16.dp)) {
+  Row(modifier = modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
     Image(
         imageResource(id = R.drawable.subreddit_placeholder),
         modifier
@@ -264,6 +253,21 @@ fun Community(text: String, modifier: Modifier = Modifier) {
   }
 }
 
+@Composable
+fun Communities(modifier: Modifier= Modifier){
+    mainCommunities.forEach {
+        Community(text = stringResource(it))
+    }
+
+    Spacer(modifier = modifier.height(4.dp))
+
+    BackgroundText(stringResource(R.string.communities))
+
+    communities.forEach {
+        Community(text = stringResource(it))
+    }
+}
+
 @Preview
 @Composable
 fun SubredditBodyPreview() {
@@ -279,5 +283,13 @@ fun SubredditPreview(){
 @Preview
 @Composable
 fun CommunityPreview(){
-  Community(">r/raywenderlich")
+  Community("r/raywenderlich")
+}
+
+@Preview
+@Composable
+fun CommunitiesPreview(){
+    Column {
+        Communities()
+    }
 }

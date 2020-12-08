@@ -37,9 +37,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -52,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetreddit.R
+import com.raywenderlich.android.jetreddit.components.BackgroundText
 import com.raywenderlich.android.jetreddit.models.SubredditModel
 
 val subreddits = listOf(
@@ -159,6 +158,11 @@ fun Community(text: String, modifier: Modifier = Modifier) {
   //TODO add your code here
 }
 
+@Composable
+fun Communities(modifier: Modifier= Modifier){
+    //TODO add your code here
+}
+
 @Preview
 @Composable
 fun SubredditBodyPreview() {
@@ -174,5 +178,13 @@ fun SubredditPreview() {
 @Preview
 @Composable
 fun CommunityPreview() {
-  Community(">r/raywenderlich")
+  Community("r/raywenderlich")
+}
+
+@Preview
+@Composable
+fun CommunitiesPreview(){
+    Column {
+        Communities()
+    }
 }
