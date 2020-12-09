@@ -159,8 +159,8 @@ fun Community(text: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Communities(modifier: Modifier= Modifier){
-    //TODO add your code here
+fun Communities(modifier: Modifier = Modifier) {
+  //TODO add your code here
 }
 
 @Preview
@@ -183,8 +183,8 @@ fun CommunityPreview() {
 
 @Preview
 @Composable
-fun CommunitiesPreview(){
-    Column {
-        Communities()
-    }
+fun CommunitiesPreview() {
+  Column {
+    Communities()
+  }
 }

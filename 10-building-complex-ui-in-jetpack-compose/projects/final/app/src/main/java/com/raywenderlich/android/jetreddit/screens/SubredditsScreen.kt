@@ -98,12 +98,12 @@ val communities = listOf(
 fun SubredditsScreen(modifier: Modifier = Modifier) {
   ScrollableColumn {
     Column {
-        Text(
-            modifier = modifier.padding(16.dp),
-            text = stringResource(R.string.recently_visited_subreddits),
-            fontSize = 12.sp,
-            style = MaterialTheme.typography.subtitle1
-        )
+      Text(
+          modifier = modifier.padding(16.dp),
+          text = stringResource(R.string.recently_visited_subreddits),
+          fontSize = 12.sp,
+          style = MaterialTheme.typography.subtitle1
+      )
 
       LazyRowFor(
           items = subreddits,
@@ -111,7 +111,7 @@ fun SubredditsScreen(modifier: Modifier = Modifier) {
       ) {
         Subreddit(it)
       }
-        Communities(modifier)
+      Communities(modifier)
     }
   }
 }
@@ -254,18 +254,18 @@ fun Community(text: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Communities(modifier: Modifier= Modifier){
-    mainCommunities.forEach {
-        Community(text = stringResource(it))
-    }
+fun Communities(modifier: Modifier = Modifier) {
+  mainCommunities.forEach {
+    Community(text = stringResource(it))
+  }
 
-    Spacer(modifier = modifier.height(4.dp))
+  Spacer(modifier = modifier.height(4.dp))
 
-    BackgroundText(stringResource(R.string.communities))
+  BackgroundText(stringResource(R.string.communities))
 
-    communities.forEach {
-        Community(text = stringResource(it))
-    }
+  communities.forEach {
+    Community(text = stringResource(it))
+  }
 }
 
 @Preview
@@ -276,20 +276,20 @@ fun SubredditBodyPreview() {
 
 @Preview
 @Composable
-fun SubredditPreview(){
+fun SubredditPreview() {
   Subreddit(SubredditModel.DEFAULT_SUBREDDIT)
 }
 
 @Preview
 @Composable
-fun CommunityPreview(){
+fun CommunityPreview() {
   Community("r/raywenderlich")
 }
 
 @Preview
 @Composable
-fun CommunitiesPreview(){
-    Column {
-        Communities()
-    }
+fun CommunitiesPreview() {
+  Column {
+    Communities()
+  }
 }
