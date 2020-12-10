@@ -34,9 +34,7 @@
 package com.raywenderlich.android.jetreddit.components
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -53,9 +51,9 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetreddit.R
 import com.raywenderlich.android.jetreddit.domain.model.PostModel
 import com.raywenderlich.android.jetreddit.domain.model.PostModel.Companion.DEFAULT_POST
@@ -123,7 +121,7 @@ fun MoreActionsMenu() {
   val iconButton = @Composable {
     IconButton(onClick = { expanded = true }) {
       Icon(
-          asset = Icons.Default.MoreVert,
+          imageVector = Icons.Default.MoreVert,
           tint = Color.DarkGray
       )
     }
@@ -187,7 +185,7 @@ fun TextContent(text: String) {
 fun ImageContent() {
   val imageAsset = imageResource(id = R.drawable.compose_place_holder)
   Image(
-      asset = imageResource(id = R.drawable.compose_place_holder),
+      bitmap = imageAsset,
       modifier = Modifier
           .fillMaxWidth()
           .aspectRatio(imageAsset.width.toFloat() / imageAsset.height),

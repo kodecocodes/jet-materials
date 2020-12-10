@@ -33,12 +33,11 @@
  */
 package com.raywenderlich.android.jetreddit.appdrawer
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
@@ -46,7 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.VectorAsset
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -83,7 +82,7 @@ private fun AppDrawerHeader() {
       horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Image(
-        asset = Icons.Filled.AccountCircle,
+        imageVector = Icons.Filled.AccountCircle,
         colorFilter = ColorFilter.tint(Color.LightGray),
         modifier = Modifier
             .padding(16.dp)
@@ -157,7 +156,7 @@ fun ProfileInfo(modifier: Modifier = Modifier) {
 
 @Composable
 private fun ProfileInfoItem(
-    iconAsset: VectorAsset,
+    iconAsset: ImageVector,
     amountResourceId: Int,
     textResourceId: Int,
     modifier: Modifier
@@ -171,7 +170,7 @@ private fun ProfileInfoItem(
     val itemModifier = Modifier
 
     Icon(
-        asset = iconAsset,
+        imageVector = iconAsset,
         tint = Color.Blue,
         modifier = itemModifier
             .constrainAs(iconRef) {
@@ -239,7 +238,7 @@ private fun AppDrawerBody(closeDrawerAction: () -> Unit) {
  */
 @Composable
 private fun ScreenNavigationButton(
-    icon: VectorAsset,
+    icon: ImageVector,
     label: String,
     onClickAction: () -> Unit,
     modifier: Modifier = Modifier
@@ -265,7 +264,7 @@ private fun ScreenNavigationButton(
           modifier = Modifier.fillMaxWidth()
       ) {
         Image(
-            asset = icon,
+            imageVector = icon,
             colorFilter = ColorFilter.tint(Color.Gray)
         )
         Spacer(Modifier.preferredWidth(16.dp))
@@ -303,7 +302,7 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
           start.linkTo(parent.start)
           bottom.linkTo(parent.bottom)
         },
-        asset = Icons.Default.Settings,
+        imageVector = Icons.Default.Settings,
         colorFilter = ColorFilter.tint(colors.primaryVariant)
     )
 
@@ -321,7 +320,7 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
     )
 
     Image(
-        asset = vectorResource(id = R.drawable.ic_moon),
+        imageVector = vectorResource(id = R.drawable.ic_moon),
         modifier = modifier
             .clickable(onClick = { changeTheme() })
             .constrainAs(darkModeButton) {
