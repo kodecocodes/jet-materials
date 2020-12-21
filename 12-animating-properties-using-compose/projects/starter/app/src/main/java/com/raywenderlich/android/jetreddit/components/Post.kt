@@ -52,9 +52,9 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetreddit.R
 import com.raywenderlich.android.jetreddit.domain.model.PostModel
 import com.raywenderlich.android.jetreddit.domain.model.PostModel.Companion.DEFAULT_POST

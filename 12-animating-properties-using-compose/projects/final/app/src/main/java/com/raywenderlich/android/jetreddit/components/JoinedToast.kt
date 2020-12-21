@@ -46,10 +46,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetreddit.R
 
 import androidx.compose.animation.*
+import androidx.compose.ui.tooling.preview.Preview
 
 @ExperimentalAnimationApi
 @Composable
