@@ -18,9 +18,21 @@
     android:stateListAnimator="@null"
     android:text="Start chatting"
     android:textColor="#FFFFFF"
+    android:textSize="16sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/subtitle" />
+
+  <ImageView
+    android:id="@+id/image"
+    android:layout_width="140dp"
+    android:layout_height="140dp"
+    android:src="@drawable/reddit_chat_image"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.4" />
 
   <ImageView
     android:id="@+id/backButton"
@@ -36,16 +48,20 @@
     app:layout_constraintTop_toTopOf="parent"
     app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
-  <ImageView
-    android:id="@+id/image"
-    android:layout_width="140dp"
-    android:layout_height="140dp"
-    android:src="@drawable/reddit_chat_image"
-    app:layout_constraintBottom_toBottomOf="parent"
+  <TextView
+    android:id="@+id/subtitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:gravity="center"
+    android:text="Get started by tapping the new  chat button here or on the someone's profile."
+    android:textColor="@color/black"
+    android:textSize="16sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.4" />
+    app:layout_constraintTop_toBottomOf="@+id/title" />
 
   <TextView
     android:id="@+id/title"
@@ -63,19 +79,13 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/image" />
 
-  <TextView
-    android:id="@+id/subtitle"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="8dp"
-    android:gravity="center"
-    android:text="Get started by tapping the new  chat button here or on the someone's profile."
-    android:textColor="@color/black"
-    android:textSize="16sp"
+  <androidx.compose.ui.platform.ComposeView
+    android:id="@+id/composeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginTop="16dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/title" />
+    app:layout_constraintTop_toBottomOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
