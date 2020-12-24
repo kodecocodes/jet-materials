@@ -34,9 +34,8 @@
 package com.raywenderlich.android.jetreddit
 
 
+import android.content.Intent
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -50,14 +49,15 @@ import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetreddit.appdrawer.AppDrawer
 import com.raywenderlich.android.jetreddit.routing.JetRedditRouter
 import com.raywenderlich.android.jetreddit.routing.Screen
-import com.raywenderlich.android.jetreddit.screens.AddScreen
-import com.raywenderlich.android.jetreddit.screens.HomeScreen
-import com.raywenderlich.android.jetreddit.screens.MyProfileScreen
-import com.raywenderlich.android.jetreddit.screens.SubredditsScreen
 import com.raywenderlich.android.jetreddit.theme.JetRedditTheme
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.ContextAmbient
+import com.raywenderlich.android.jetreddit.screens.*
 
 @ExperimentalAnimationApi
 @Composable
@@ -109,6 +109,7 @@ fun getTopBar(screenState: Screen, scaffoldState: ScaffoldState): @Composable ((
 @Composable
 fun TopAppBar(scaffoldState: ScaffoldState) {
 
+  val context = AmbientContext.current
   val colors = MaterialTheme.colors
 
   TopAppBar(
@@ -127,6 +128,18 @@ fun TopAppBar(scaffoldState: ScaffoldState) {
               Icons.Filled.AccountCircle,
               tint = Color.LightGray
           )
+        }
+      },
+      actions = {
+        if (JetRedditRouter.currentScreen.value == Screen.Home) {
+          IconButton(onClick = {
+            context.startActivity(Intent(context, ChatActivity::class.java))
+          }) {
+            Icon(
+                Icons.Filled.MailOutline,
+                tint = Color.LightGray
+            )
+          }
         }
       }
   )
