@@ -38,14 +38,14 @@
 
   <ImageView
     android:id="@+id/image"
-    android:layout_width="140dp"
-    android:layout_height="140dp"
-    android:src="@drawable/reddit_chat_image"
+    android:layout_width="180dp"
+    android:layout_height="180dp"
+    android:src="@drawable/chat_raywenderlich"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.4" />
+    app:layout_constraintVertical_bias="0.3" />
 
   <TextView
     android:id="@+id/title"

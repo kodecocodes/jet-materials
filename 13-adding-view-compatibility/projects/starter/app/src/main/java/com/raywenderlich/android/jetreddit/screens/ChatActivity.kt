@@ -20,7 +20,11 @@ class ChatActivity : AppCompatActivity() {
     }
 
     binding.button.setOnClickListener {
-      Toast.makeText(this, "Imaginary chat started!", Toast.LENGTH_SHORT).show()
+      showToast()
     }
+  }
+
+  private fun showToast() {
+    Toast.makeText(this, "Imaginary chat started!", Toast.LENGTH_SHORT).show()
   }
 }

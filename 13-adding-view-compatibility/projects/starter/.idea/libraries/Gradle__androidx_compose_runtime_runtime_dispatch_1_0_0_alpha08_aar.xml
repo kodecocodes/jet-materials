@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.compose.runtime:runtime-dispatch:1.0.0-alpha08@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/39271e094c04a5e65253bb223e7458fa/transformed/jetified-runtime-dispatch-1.0.0-alpha08/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/39271e094c04a5e65253bb223e7458fa/transformed/jetified-runtime-dispatch-1.0.0-alpha08/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/39271e094c04a5e65253bb223e7458fa/transformed/jetified-runtime-dispatch-1.0.0-alpha08/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.compose.runtime/runtime-dispatch/1.0.0-alpha08/3e0f741c7320386e6a8bc33c6ffa27c28fe9908a/runtime-dispatch-1.0.0-alpha08-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
