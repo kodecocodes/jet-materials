@@ -62,17 +62,17 @@ import com.raywenderlich.android.jetreddit.components.TextPost
 import com.raywenderlich.android.jetreddit.domain.model.PostModel
 import com.raywenderlich.android.jetreddit.domain.model.PostType
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
-import com.raywenderlich.android.jetreddit.views.TrendingView
+import com.raywenderlich.android.jetreddit.views.TrendingTopicView
 import java.util.*
 import kotlin.concurrent.schedule
 
 private val trendingItems = listOf(
-  TrendingModel("Compose Tutorial", R.drawable.jetpack_composer),
-  TrendingModel("Compose Animations", R.drawable.jetpack_compose_animations),
-  TrendingModel("Compose Migration", R.drawable.compose_migration_crop),
-  TrendingModel("DataStore Tutorial", R.drawable.data_storage),
-  TrendingModel("Android Animations", R.drawable.android_animations),
-  TrendingModel("Deep Links in Android", R.drawable.deeplinking),
+  TrendingTopicModel("Compose Tutorial", R.drawable.jetpack_composer),
+  TrendingTopicModel("Compose Animations", R.drawable.jetpack_compose_animations),
+  TrendingTopicModel("Compose Migration", R.drawable.compose_migration_crop),
+  TrendingTopicModel("DataStore Tutorial", R.drawable.data_storage),
+  TrendingTopicModel("Android Animations", R.drawable.android_animations),
+  TrendingTopicModel("Deep Links in Android", R.drawable.deeplinking),
 )
 
 @ExperimentalAnimationApi
@@ -104,7 +104,7 @@ fun HomeScreen(viewModel: MainViewModel) {
           itemContent = { item ->
             if (item.type == HomeScreenItemType.TRENDING) {
               TrendingItems(
-                trendingModels = trendingItems,
+                trendingTopics = trendingItems,
                 modifier = Modifier.padding(top = 16.dp, bottom = 6.dp)
               )
             } else if (item.post != null) {
@@ -144,7 +144,7 @@ private fun mapHomeScreenItems(posts: List<PostModel>): List<HomeScreenItem> {
 }
 
 @Composable
-private fun TrendingItems(trendingModels: List<TrendingModel>, modifier: Modifier = Modifier) {
+private fun TrendingItems(trendingTopics: List<TrendingTopicModel>, modifier: Modifier = Modifier) {
   Card(
     shape = MaterialTheme.shapes.large,
     modifier = modifier
@@ -175,9 +175,9 @@ private fun TrendingItems(trendingModels: List<TrendingModel>, modifier: Modifie
         contentPadding = PaddingValues(start = 16.dp, top = 8.dp, end = 16.dp),
         content = {
           itemsIndexed(
-            items = trendingModels,
+            items = trendingTopics,
             itemContent = { index, trendingModel ->
-              TrendingItem(trendingModel)
+              TrendingTopic(trendingModel)
               if (index != trendingItems.lastIndex) {
                 Spacer(modifier = Modifier.width(8.dp))
               }
@@ -190,20 +190,20 @@ private fun TrendingItems(trendingModels: List<TrendingModel>, modifier: Modifie
 }
 
 @Composable
-private fun TrendingItem(trendingModel: TrendingModel) {
+private fun TrendingTopic(trendingTopic: TrendingTopicModel) {
   val context = AmbientContext.current
-  val trendingView = remember(trendingModel) { TrendingView(context) }
+  val trendingView = remember(trendingTopic) { TrendingTopicView(context) }
 
   AndroidView(viewBlock = { trendingView }) {
-    it.text = trendingModel.text
-    it.image = trendingModel.imageRes
+    it.text = trendingTopic.text
+    it.image = trendingTopic.imageRes
   }
 }
 
 @Preview
 @Composable
 private fun PreviewTrendingItems() {
-  TrendingItems(trendingModels = trendingItems)
+  TrendingItems(trendingTopics = trendingItems)
 }
 
 private data class HomeScreenItem(
@@ -216,7 +216,7 @@ private enum class HomeScreenItemType {
   POST
 }
 
-private data class TrendingModel(
+private data class TrendingTopicModel(
   val text: String,
   @DrawableRes val imageRes: Int = 0
 )

@@ -41,7 +41,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.raywenderlich.android.jetreddit.R
 
-class TrendingView constructor(
+class TrendingTopicView constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
@@ -60,7 +60,7 @@ class TrendingView constructor(
     }
 
   init {
-    inflate(context, R.layout.view_trending, this)
+    inflate(context, R.layout.view_trending_topic, this)
     radius = resources.getDimension(R.dimen.trending_view_corner_radius)
 
     val width = resources.getDimensionPixelSize(R.dimen.trending_view_width)
