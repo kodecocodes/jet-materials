@@ -37,8 +37,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.platform.setContent
-import com.raywenderlich.android.jetnotes.screens.NotesScreen
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
+import com.raywenderlich.android.jetnotes.ui.screens.NotesScreen
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModelFactory
 

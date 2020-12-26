@@ -45,9 +45,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.VectorAsset
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
@@ -88,7 +88,7 @@ fun AppDrawer(
 private fun AppDrawerHeader() {
   Row(modifier = Modifier.fillMaxWidth()) {
     Image(
-      asset = Icons.Filled.Menu, colorFilter = ColorFilter
+      imageVector = Icons.Filled.Menu, colorFilter = ColorFilter
         .tint(MaterialTheme.colors.onSurface), modifier = Modifier.padding(16.dp)
     )
     Text(
@@ -101,7 +101,7 @@ private fun AppDrawerHeader() {
 
 @Composable
 private fun ScreenNavigationButton(
-  icon: VectorAsset, label: String, isSelected: Boolean, onClick: () -> Unit
+  icon: ImageVector, label: String, isSelected: Boolean, onClick: () -> Unit
 ) {
   val colors = MaterialTheme.colors
   // Define alphas for the image for two different states
@@ -139,7 +139,7 @@ private fun ScreenNavigationButton(
         .clickable(onClick = onClick).fillMaxWidth().padding(4.dp)
     ) {
       Image(
-        asset = icon,
+        imageVector = icon,
         colorFilter = ColorFilter.tint(textColor), alpha = imageAlpha
       )
       Spacer(Modifier.preferredWidth(16.dp))

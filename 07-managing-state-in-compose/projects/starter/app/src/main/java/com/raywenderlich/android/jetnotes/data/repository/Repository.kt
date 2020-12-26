@@ -44,9 +44,9 @@ interface Repository {
 
   // notes
 
-  fun getAllNotesNotInTrash(): LiveData<List<NoteModel>>
+  fun getAllNotesNotInThrash(): LiveData<List<NoteModel>>
 
-  fun getAllNotesInTrash(): LiveData<List<NoteModel>>
+  fun getAllNotesInThrash(): LiveData<List<NoteModel>>
 
   fun getNote(id: Long): LiveData<NoteModel>
 
@@ -56,9 +56,9 @@ interface Repository {
 
   fun deleteNotes(noteIds: List<Long>)
 
-  fun moveNoteToTrash(noteId: Long)
+  fun moveNoteToThrash(noteId: Long)
 
-  fun restoreNotesFromTrash(noteIds: List<Long>)
+  fun restoreNotesFromThrash(noteIds: List<Long>)
 
   // colors
 
