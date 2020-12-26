@@ -36,6 +36,7 @@ package com.raywenderlich.android.jetreddit.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.raywenderlich.android.jetreddit.R
@@ -50,6 +51,12 @@ class TrendingView constructor(
     set(value) {
       field = value
       findViewById<TextView>(R.id.text).text = value
+    }
+
+  var image: Int = 0
+    set(value) {
+      field = value
+      findViewById<ImageView>(R.id.image).setImageResource(value)
     }
 
   init {

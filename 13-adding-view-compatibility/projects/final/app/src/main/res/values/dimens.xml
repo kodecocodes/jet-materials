@@ -2,7 +2,7 @@
 <resources>
 
   <dimen name="trending_view_width">160dp</dimen>
-  <dimen name="trending_view_height">80dp</dimen>
+  <dimen name="trending_view_height">100dp</dimen>
   <dimen name="trending_view_corner_radius">8dp</dimen>
 
 </resources>

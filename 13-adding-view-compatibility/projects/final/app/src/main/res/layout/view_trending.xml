@@ -18,11 +18,11 @@
       android:layout_height="0dp"
       android:contentDescription="Trending Image"
       android:scaleType="centerCrop"
-      android:src="@drawable/jetpack_composer"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent"
+      tools:src="@drawable/jetpack_composer" />
 
     <View
       android:id="@+id/gradient"
@@ -37,6 +37,7 @@
       android:id="@+id/text"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:ellipsize="end"
       android:maxLines="1"
       android:paddingBottom="4dp"
       android:paddingEnd="8dp"
@@ -47,7 +48,6 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      android:ellipsize="end"
       tools:text="Jetpack Compose" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
