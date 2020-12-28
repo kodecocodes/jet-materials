@@ -81,8 +81,6 @@ fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel>
       by viewModel.allPosts.observeAsState(listOf())
 
-  val homeScreenItems = mapHomeScreenItems(posts)
-
   var joinedToastVisible by remember { mutableStateOf(false) }
 
   val onJoinClickAction: (Boolean) -> Unit = { joined ->
@@ -93,6 +91,8 @@ fun HomeScreen(viewModel: MainViewModel) {
       }
     }
   }
+
+  val homeScreenItems = mapHomeScreenItems(posts)
 
   Box(modifier = Modifier.fillMaxSize()) {
     LazyColumn(

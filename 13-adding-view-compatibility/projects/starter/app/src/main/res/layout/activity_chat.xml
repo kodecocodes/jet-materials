@@ -6,22 +6,6 @@
   android:layout_height="match_parent"
   tools:context=".screens.ChatActivity">
 
-  <androidx.appcompat.widget.AppCompatButton
-    android:id="@+id/button"
-    android:layout_width="wrap_content"
-    android:layout_height="48dp"
-    android:layout_marginTop="16dp"
-    android:background="@drawable/rounded_button"
-    android:backgroundTint="@color/colorPrimary"
-    android:paddingEnd="32dp"
-    android:paddingStart="32dp"
-    android:stateListAnimator="@null"
-    android:text="Start chatting"
-    android:textColor="#FFFFFF"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/subtitle" />
-
   <ImageView
     android:id="@+id/backButton"
     android:layout_width="40dp"
@@ -77,5 +61,21 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/title" />
+
+  <androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/rounded_button"
+    android:backgroundTint="@color/colorPrimary"
+    android:paddingEnd="32dp"
+    android:paddingStart="32dp"
+    android:stateListAnimator="@null"
+    android:text="Start chatting"
+    android:textColor="#FFFFFF"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/subtitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

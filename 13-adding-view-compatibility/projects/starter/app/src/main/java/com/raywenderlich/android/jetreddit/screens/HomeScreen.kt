@@ -35,31 +35,22 @@ package com.raywenderlich.android.jetreddit.screens
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetreddit.components.ImagePost
+import com.raywenderlich.android.jetreddit.components.JoinedToast
 import com.raywenderlich.android.jetreddit.components.TextPost
 import com.raywenderlich.android.jetreddit.domain.model.PostModel
 import com.raywenderlich.android.jetreddit.domain.model.PostType
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
-
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import java.util.*
 import kotlin.concurrent.schedule
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Alignment
-import com.raywenderlich.android.jetreddit.components.JoinedToast
 
 @ExperimentalAnimationApi
 @Composable
@@ -67,35 +58,46 @@ fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel>
       by viewModel.allPosts.observeAsState(listOf())
 
-  var visible by remember { mutableStateOf(false) }
+  var joinedToastVisible by remember { mutableStateOf(false) }
 
   val onJoinClickAction: (Boolean) -> Unit = { joined ->
-    visible = joined
-    if (visible) {
+    joinedToastVisible = joined
+    if (joinedToastVisible) {
       Timer().schedule(3000) {
-        visible = false
+        joinedToastVisible = false
       }
     }
   }
 
   Box(modifier = Modifier.fillMaxSize()) {
-    LazyColumnFor(
-        items = posts,
+    LazyColumn(
         modifier = Modifier
-            .background(color = MaterialTheme.colors.secondary)
-    ) {
-      if (it.type == PostType.TEXT) {
-        TextPost(it, onJoinButtonClick = onJoinClickAction)
-      } else {
-        ImagePost(it, onJoinButtonClick = onJoinClickAction)
-      }
-      Spacer(modifier = Modifier.height(6.dp))
-    }
+            .background(color = MaterialTheme.colors.secondary),
+        content = {
+          items(
+              items = posts,
+              itemContent = { post ->
+                if (post.type == PostType.TEXT) {
+                  TextPost(
+                      post = post,
+                      onJoinButtonClick = onJoinClickAction
+                  )
+                } else {
+                  ImagePost(
+                      post = post,
+                      onJoinButtonClick = onJoinClickAction
+                  )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+              }
+          )
+        }
+    )
 
     Box(modifier = Modifier
         .align(Alignment.BottomCenter)
         .padding(bottom = 16.dp)) {
-      JoinedToast(visible = visible)
+      JoinedToast(visible = joinedToastVisible)
     }
   }
 }
