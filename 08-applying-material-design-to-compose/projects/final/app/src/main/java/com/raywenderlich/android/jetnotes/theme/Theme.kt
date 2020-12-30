@@ -47,7 +47,7 @@ import androidx.compose.ui.graphics.Color
 private val LightThemeColors = lightColors(
   primary = rwGreen,
   primaryVariant = rwGreenDark,
-  secondary = rwRed
+  secondary = rwGreen
 )
 
 private val DarkThemeColors = darkColors(

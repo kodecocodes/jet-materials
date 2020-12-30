@@ -41,8 +41,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
 import com.raywenderlich.android.jetnotes.util.fromHex
 
@@ -63,7 +63,7 @@ fun Note(
       text = { Text(text = note.title, maxLines = 1) },
       secondaryText = { Text(text = note.content, maxLines = 1) },
       icon = {
-        ColorWidget(
+        NoteColor(
           color = Color.fromHex(note.color.hex),
           size = 40.dp,
           border = 1.dp

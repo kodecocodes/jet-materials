@@ -34,25 +34,24 @@
 package com.raywenderlich.android.jetnotes.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
-import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.clickable
-import androidx.compose.material.*
-import androidx.compose.material.icons.filled.Home
-import com.raywenderlich.android.jetnotes.theme.JetNotesThemeSettings
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
+import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
+import com.raywenderlich.android.jetnotes.theme.JetNotesThemeSettings
 
 @Composable
 fun AppDrawer(
@@ -89,10 +88,8 @@ fun AppDrawer(
 private fun AppDrawerHeader() {
   Row(modifier = Modifier.fillMaxWidth()) {
     Image(
-      imageVector = Icons.Filled.Menu,
-      colorFilter = ColorFilter
-        .tint(MaterialTheme.colors.onSurface),
-      modifier = Modifier.padding(16.dp)
+      imageVector = Icons.Filled.Menu, colorFilter = ColorFilter
+        .tint(MaterialTheme.colors.onSurface), modifier = Modifier.padding(16.dp)
     )
     Text(
       text = "JetNotes",

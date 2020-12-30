@@ -57,14 +57,14 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     repository.getAllNotesNotInTrash()
   }
 
+  val notesInTrash by lazy { repository.getAllNotesInTrash() }
+
   private var _noteEntry = MutableLiveData(NoteModel())
   val noteEntry: LiveData<NoteModel> = _noteEntry
 
   val colors: LiveData<List<ColorModel>> by lazy {
     repository.getAllColors()
   }
-
-  val notesInThrash by lazy { repository.getAllNotesInTrash() }
 
   private var _selectedNotes = MutableLiveData<List<NoteModel>>(listOf())
   val selectedNotes: LiveData<List<NoteModel>> = _selectedNotes
@@ -82,32 +82,6 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   fun onNoteCheckedChange(note: NoteModel) {
     viewModelScope.launch(Dispatchers.Default) {
       repository.insertNote(note)
-    }
-  }
-
-  fun onNoteEntryChange(note: NoteModel) {
-    _noteEntry.value = note
-  }
-
-  fun saveNote(note: NoteModel) {
-    viewModelScope.launch(Dispatchers.Default) {
-      repository.insertNote(note)
-
-      withContext(Dispatchers.Main) {
-        JetNotesRouter.navigateTo(Screen.Notes)
-
-        _noteEntry.value = NoteModel()
-      }
-    }
-  }
-
-  fun moveNoteToTrash(note: NoteModel) {
-    viewModelScope.launch(Dispatchers.Default) {
-      repository.moveNoteToTrash(note.id)
-
-      withContext(Dispatchers.Main) {
-        JetNotesRouter.navigateTo(Screen.Notes)
-      }
     }
   }
 
@@ -135,6 +109,32 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
       repository.deleteNotes(notes.map { it.id })
       withContext(Dispatchers.Main) {
         _selectedNotes.value = listOf()
+      }
+    }
+  }
+
+  fun onNoteEntryChange(note: NoteModel) {
+    _noteEntry.value = note
+  }
+
+  fun saveNote(note: NoteModel) {
+    viewModelScope.launch(Dispatchers.Default) {
+      repository.insertNote(note)
+
+      withContext(Dispatchers.Main) {
+        JetNotesRouter.navigateTo(Screen.Notes)
+
+        _noteEntry.value = NoteModel()
+      }
+    }
+  }
+
+  fun moveNoteToTrash(note: NoteModel) {
+    viewModelScope.launch(Dispatchers.Default) {
+      repository.moveNoteToTrash(note.id)
+
+      withContext(Dispatchers.Main) {
+        JetNotesRouter.navigateTo(Screen.Notes)
       }
     }
   }

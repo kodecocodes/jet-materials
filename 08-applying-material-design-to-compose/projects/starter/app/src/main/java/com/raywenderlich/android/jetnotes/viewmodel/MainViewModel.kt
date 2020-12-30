@@ -54,7 +54,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     repository.getAllNotesNotInTrash()
   }
 
-  val notesInThrash by lazy { repository.getAllNotesInTrash() }
+  val notesInTrash by lazy { repository.getAllNotesInTrash() }
 
   private var _selectedNotes = MutableLiveData<List<NoteModel>>(listOf())
   val selectedNotes: LiveData<List<NoteModel>> = _selectedNotes
@@ -72,6 +72,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
       repository.insertNote(note)
     }
   }
+
 
   fun onNoteSelected(note: NoteModel) {
     _selectedNotes.value = _selectedNotes.value!!.toMutableList().apply {
