@@ -64,38 +64,38 @@ import com.raywenderlich.android.jetreddit.components.BackgroundText
 import com.raywenderlich.android.jetreddit.models.SubredditModel
 
 val subreddits = listOf(
-    SubredditModel(
-        R.string.raywenderlich,
-        R.string.members_120k,
-        R.string.welcome_to_raywenderlich
-    ),
-    SubredditModel(
-        R.string.programming,
-        R.string.members_600k,
-        R.string.hello_programmers
-    ),
-    SubredditModel(
-        R.string.android,
-        R.string.members_400k,
-        R.string.welcome_to_android
-    ),
-    SubredditModel(
-        R.string.androiddev,
-        R.string.members_500k,
-        R.string.hello_android_devs
-    )
+  SubredditModel(
+    R.string.raywenderlich,
+    R.string.members_120k,
+    R.string.welcome_to_raywenderlich
+  ),
+  SubredditModel(
+    R.string.programming,
+    R.string.members_600k,
+    R.string.hello_programmers
+  ),
+  SubredditModel(
+    R.string.android,
+    R.string.members_400k,
+    R.string.welcome_to_android
+  ),
+  SubredditModel(
+    R.string.androiddev,
+    R.string.members_500k,
+    R.string.hello_android_devs
+  )
 )
 
 val mainCommunities = listOf(R.string.all, R.string.public_network)
 
 val communities = listOf(
-    R.string.digitalnomad,
-    R.string.covid19,
-    R.string.memes,
-    R.string.humor,
-    R.string.worldnews,
-    R.string.dogs,
-    R.string.cats
+  R.string.digitalnomad,
+  R.string.covid19,
+  R.string.memes,
+  R.string.humor,
+  R.string.worldnews,
+  R.string.dogs,
+  R.string.cats
 )
 
 @Composable
@@ -116,50 +116,50 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
 @Composable
 fun SubredditImage(modifier: Modifier) {
   Image(
-      painter = ColorPainter(Color.Blue),
-      modifier = modifier
-          .fillMaxWidth()
-          .height(30.dp)
+    painter = ColorPainter(Color.Blue),
+    modifier = modifier
+      .fillMaxWidth()
+      .height(30.dp)
   )
 }
 
 @Composable
 fun SubredditIcon(modifier: Modifier) {
   Icon(
-      modifier = modifier,
-      tint = Color.LightGray,
-      imageVector = vectorResource(id = R.drawable.ic_planet)
+    modifier = modifier,
+    tint = Color.LightGray,
+    imageVector = vectorResource(id = R.drawable.ic_planet)
   )
 }
 
 @Composable
 fun SubredditName(modifier: Modifier, @StringRes nameStringRes: Int) {
   Text(
-      fontWeight = FontWeight.Bold,
-      fontSize = 10.sp,
-      text = stringResource(nameStringRes),
-      color = MaterialTheme.colors.primaryVariant,
-      modifier = modifier.padding(4.dp)
+    fontWeight = FontWeight.Bold,
+    fontSize = 10.sp,
+    text = stringResource(nameStringRes),
+    color = MaterialTheme.colors.primaryVariant,
+    modifier = modifier.padding(4.dp)
   )
 }
 
 @Composable
 fun SubredditMembers(modifier: Modifier, @StringRes membersStringRes: Int) {
   Text(
-      fontSize = 8.sp,
-      text = stringResource(membersStringRes),
-      color = Color.Gray,
-      modifier = modifier
+    fontSize = 8.sp,
+    text = stringResource(membersStringRes),
+    color = Color.Gray,
+    modifier = modifier
   )
 }
 
 @Composable
 fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: Int) {
   Text(
-      fontSize = 8.sp,
-      text = stringResource(descriptionStringRes),
-      color = MaterialTheme.colors.primaryVariant,
-      modifier = modifier.padding(4.dp)
+    fontSize = 8.sp,
+    text = stringResource(descriptionStringRes),
+    color = MaterialTheme.colors.primaryVariant,
+    modifier = modifier.padding(4.dp)
   )
 }
 
@@ -169,8 +169,8 @@ fun Community(text: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Communities(modifier: Modifier = Modifier){
-    //TODO add your code here
+fun Communities(modifier: Modifier = Modifier) {
+  //TODO add your code here
 }
 
 @Preview
@@ -188,13 +188,13 @@ fun SubredditPreview() {
 @Preview
 @Composable
 fun CommunityPreview() {
-  Community("r/raywenderlich")
+  Community("r/raywenderlich.com")
 }
 
 @Preview
 @Composable
-fun CommunitiesPreview(){
-    Column {
-        Communities()
-    }
+fun CommunitiesPreview() {
+  Column {
+    Communities()
+  }
 }
