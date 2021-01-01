@@ -1,0 +1,29 @@
+<resources>
+  <string name="app_name">JetFundamentals</string>
+  <string name="jetpack_compose">Jetpack Compose</string>
+  <string name="text">"Text"</string>
+  <string name="text_field">"TextField"</string>
+  <string name="buttons">"Buttons"</string>
+  <string name="progress_indicators">"Progress"</string>
+  <string name="alert_dialog">"Alert Dialog"</string>
+  <string name="email">"Email"</string>
+  <string name="button_text">"This is a Button"</string>
+  <string name="first">"first"</string>
+  <string name="second">"second"</string>
+  <string name="third">"third"</string>
+  <string name="confirm">"Confirm"</string>
+  <string name="alert_dialog_text">"Jetpack Compose Alert Dialog!"</string>
+  <string name="alert_dialog_title">"Alert Dialog"</string>
+  <string name="row">"Row"</string>
+  <string name="column">"Column"</string>
+  <string name="box">"Box"</string>
+  <string name="surface">"Surface"</string>
+  <string name="scaffold">"Scaffold"</string>
+  <string name="scrolling">"Scrolling"</string>
+  <string name="list">"List"</string>
+  <string name="grid">"Grid"</string>
+  <string name="android">"Android"</string>
+  <string name="kotlin">"Kotlin"</string>
+  <string name="swift">"Swift"</string>
+  <string name="ios">"iOS"</string>
+</resources>
