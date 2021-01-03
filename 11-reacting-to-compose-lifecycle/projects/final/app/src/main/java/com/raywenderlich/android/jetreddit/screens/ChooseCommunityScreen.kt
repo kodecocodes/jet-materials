@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raywenderlich.android.jetreddit.R
+import com.raywenderlich.android.jetreddit.routing.BackButtonAction
 import com.raywenderlich.android.jetreddit.routing.JetRedditRouter
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
 import kotlinx.coroutines.Job
@@ -64,6 +65,10 @@ fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifie
         activeColor = MaterialTheme.colors.onSurface
     )
     SearchedCommunities(communities, viewModel, modifier)
+  }
+
+  BackButtonAction {
+    JetRedditRouter.goBack()
   }
 }
 
