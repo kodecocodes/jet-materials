@@ -103,7 +103,7 @@ fun HomeScreen(viewModel: MainViewModel) {
           items = homeScreenItems,
           itemContent = { item ->
             if (item.type == HomeScreenItemType.TRENDING) {
-              TrendingItems(
+              TrendingTopics(
                 trendingTopics = trendingItems,
                 modifier = Modifier.padding(top = 16.dp, bottom = 6.dp)
               )
@@ -144,7 +144,7 @@ private fun mapHomeScreenItems(posts: List<PostModel>): List<HomeScreenItem> {
 }
 
 @Composable
-private fun TrendingItems(trendingTopics: List<TrendingTopicModel>, modifier: Modifier = Modifier) {
+private fun TrendingTopics(trendingTopics: List<TrendingTopicModel>, modifier: Modifier = Modifier) {
   Card(
     shape = MaterialTheme.shapes.large,
     modifier = modifier
@@ -203,7 +203,7 @@ private fun TrendingTopic(trendingTopic: TrendingTopicModel) {
 @Preview
 @Composable
 private fun PreviewTrendingItems() {
-  TrendingItems(trendingTopics = trendingItems)
+  TrendingTopics(trendingTopics = trendingItems)
 }
 
 private data class HomeScreenItem(
