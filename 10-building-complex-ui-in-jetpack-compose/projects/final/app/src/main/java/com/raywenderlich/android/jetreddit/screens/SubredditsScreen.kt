@@ -55,6 +55,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -232,7 +233,8 @@ fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: In
     fontSize = 8.sp,
     text = stringResource(descriptionStringRes),
     color = MaterialTheme.colors.primaryVariant,
-    modifier = modifier.padding(4.dp)
+    modifier = modifier.padding(4.dp),
+    textAlign = TextAlign.Center
   )
 }
 

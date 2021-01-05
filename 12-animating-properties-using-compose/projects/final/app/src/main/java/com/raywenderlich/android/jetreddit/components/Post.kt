@@ -61,67 +61,77 @@ import com.raywenderlich.android.jetreddit.domain.model.PostModel.Companion.DEFA
 
 @Composable
 fun TextPost(
-    post: PostModel,
-    onJoinButtonClick: (Boolean) -> Unit = {} ){
+  post: PostModel,
+  onJoinButtonClick: (Boolean) -> Unit = {}
+) {
   Post(post, onJoinButtonClick) {
-    TextContent(post.text) }
-}
-@Composable
-fun ImagePost(
-    post: PostModel,
-    onJoinButtonClick: (Boolean) -> Unit = {} ){
-  Post(post, onJoinButtonClick) {
-    ImageContent()
+    TextContent(post.text)
   }
 }
+
+@Composable
+fun ImagePost(
+  post: PostModel,
+  onJoinButtonClick: (Boolean) -> Unit = {}
+) {
+  Post(post, onJoinButtonClick) {
+    ImageContent(post.image)
+  }
+}
+
 @Composable
 fun Post(
-    post: PostModel,
-    onJoinButtonClick: (Boolean) -> Unit = {},
-    contentComposable: @Composable () -> Unit = emptyContent()
-){
+  post: PostModel,
+  onJoinButtonClick: (Boolean) -> Unit = {},
+  content: @Composable () -> Unit = emptyContent()
+) {
   Card(shape = MaterialTheme.shapes.large) {
-    Column(modifier = Modifier.padding( top = 8.dp,
-        bottom = 8.dp) ){
+    Column(
+      modifier = Modifier.padding(
+        top = 8.dp,
+        bottom = 8.dp
+      )
+    ) {
       Header(post, onJoinButtonClick)
       Spacer(modifier = Modifier.height(4.dp))
-      contentComposable.invoke()
+      content.invoke()
       Spacer(modifier = Modifier.height(8.dp))
       PostActions(post)
-    } }
+    }
+  }
 }
 
 @Composable
 fun Header(
-    post: PostModel,
-    onJoinButtonClick: (Boolean) -> Unit = {}
+  post: PostModel,
+  onJoinButtonClick: (Boolean) -> Unit = {}
 ) {
   Row(
-      modifier = Modifier.padding(start = 16.dp),
-      verticalAlignment = Alignment.CenterVertically
+    modifier = Modifier.padding(start = 16.dp),
+    verticalAlignment = Alignment.CenterVertically
   ) {
     Image(
-        imageResource(id = R.drawable.subreddit_placeholder),
-        Modifier.size(40.dp)
-            .clip(CircleShape)
+      imageResource(id = R.drawable.subreddit_placeholder),
+      Modifier.size(40.dp)
+        .clip(CircleShape)
     )
     Spacer(modifier = Modifier.width(8.dp))
     Column(modifier = Modifier.weight(1f)) {
       Text(
-          text = stringResource(
-              R.string.subreddit_header,
-              post.subreddit
-          ),
-          fontWeight = FontWeight.Medium,
-          color = MaterialTheme.colors.primaryVariant
+        text = stringResource(
+          R.string.subreddit_header,
+          post.subreddit
+        ),
+        fontWeight = FontWeight.Medium,
+        color = MaterialTheme.colors.primaryVariant
       )
       Text(
-          text = stringResource(
-              R.string.post_header,
-              post.username,
-              post.postedTime
-          ),
-          color = Color.Gray
+        text = stringResource(
+          R.string.post_header,
+          post.username,
+          post.postedTime
+        ),
+        color = Color.Gray
       )
     }
     Spacer(modifier = Modifier.width(4.dp))
@@ -138,30 +148,30 @@ fun MoreActionsMenu() {
   val iconButton = @Composable {
     IconButton(onClick = { expanded = true }) {
       Icon(
-          imageVector = Icons.Default.MoreVert,
-          tint = Color.DarkGray
+        imageVector = Icons.Default.MoreVert,
+        tint = Color.DarkGray
       )
     }
   }
 
   DropdownMenu(
-      expanded = expanded,
-      onDismissRequest = { expanded = false },
-      toggle = iconButton
+    expanded = expanded,
+    onDismissRequest = { expanded = false },
+    toggle = iconButton
   ) {
     CustomDropdownMenuItem(
-        vectorResourceId = R.drawable.ic_baseline_bookmark_24,
-        text = "Save"
+      vectorResourceId = R.drawable.ic_baseline_bookmark_24,
+      text = "Save"
     )
   }
 }
 
 @Composable
 fun CustomDropdownMenuItem(
-    @DrawableRes vectorResourceId: Int,
-    color: Color = Color.Black,
-    text: String,
-    onClickAction: () -> Unit = {}
+  @DrawableRes vectorResourceId: Int,
+  color: Color = Color.Black,
+  text: String,
+  onClickAction: () -> Unit = {}
 ) {
   DropdownMenuItem(onClick = onClickAction) {
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -175,82 +185,82 @@ fun CustomDropdownMenuItem(
 @Composable
 fun Title(text: String) {
   Text(
-      text = text,
-      maxLines = 3,
-      fontWeight = FontWeight.Medium,
-      fontSize = 16.sp,
-      color = MaterialTheme.colors.primaryVariant,
-      modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+    text = text,
+    maxLines = 3,
+    fontWeight = FontWeight.Medium,
+    fontSize = 16.sp,
+    color = MaterialTheme.colors.primaryVariant,
+    modifier = Modifier.padding(start = 16.dp, end = 16.dp)
   )
 }
 
 @Composable
 fun TextContent(text: String) {
   Text(
-      modifier = Modifier.padding(
-          start = 16.dp,
-          end = 16.dp
-      ),
-      text = text,
-      color = Color.Gray,
-      fontSize = 12.sp,
-      maxLines = 3
+    modifier = Modifier.padding(
+      start = 16.dp,
+      end = 16.dp
+    ),
+    text = text,
+    color = Color.Gray,
+    fontSize = 12.sp,
+    maxLines = 3
   )
 }
 
 @Composable
-fun ImageContent() {
-  val imageAsset: ImageBitmap = imageResource(id = R.drawable.compose_place_holder)
+fun ImageContent(image: Int) {
+  val imageAsset: ImageBitmap = imageResource(id = image)
   Image(
-      bitmap = imageResource(id = R.drawable.compose_place_holder),
-      modifier = Modifier
-          .fillMaxWidth()
-          .aspectRatio(imageAsset.width.toFloat() / imageAsset.height),
-      contentScale = ContentScale.Crop
+    bitmap = imageAsset,
+    modifier = Modifier
+      .fillMaxWidth()
+      .aspectRatio(imageAsset.width.toFloat() / imageAsset.height),
+    contentScale = ContentScale.Crop
   )
 }
 
 @Composable
 fun PostActions(post: PostModel) {
   Row(
-      modifier = Modifier
-          .fillMaxWidth()
-          .padding(start = 16.dp, end = 16.dp),
-      horizontalArrangement = Arrangement.SpaceBetween,
-      verticalAlignment = Alignment.CenterVertically
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(start = 16.dp, end = 16.dp),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically
   ) {
     VotingAction(text = post.likes, onUpVoteAction = {}, onDownVoteAction = {})
     PostAction(
-        vectorResourceId = R.drawable.ic_baseline_comment_24,
-        text = post.comments,
-        onClickAction = {}
+      vectorResourceId = R.drawable.ic_baseline_comment_24,
+      text = post.comments,
+      onClickAction = {}
     )
     PostAction(
-        vectorResourceId = R.drawable.ic_baseline_share_24,
-        text = stringResource(R.string.share),
-        onClickAction = {}
+      vectorResourceId = R.drawable.ic_baseline_share_24,
+      text = stringResource(R.string.share),
+      onClickAction = {}
     )
     PostAction(
-        vectorResourceId = R.drawable.ic_baseline_emoji_events_24,
-        text = stringResource(R.string.award),
-        onClickAction = {}
+      vectorResourceId = R.drawable.ic_baseline_emoji_events_24,
+      text = stringResource(R.string.award),
+      onClickAction = {}
     )
   }
 }
 
 @Composable
 fun VotingAction(
-    text: String,
-    onUpVoteAction: () -> Unit,
-    onDownVoteAction: () -> Unit
+  text: String,
+  onUpVoteAction: () -> Unit,
+  onDownVoteAction: () -> Unit
 ) {
   Row(verticalAlignment = Alignment.CenterVertically) {
     ArrowButton(onUpVoteAction, R.drawable.ic_baseline_arrow_upward_24)
     Text(
-        text = text,
-        color = Color.Gray,
-        fontWeight = FontWeight.Medium,
-        fontSize = 12.sp
+      text = text,
+      color = Color.Gray,
+      fontWeight = FontWeight.Medium,
+      fontSize = 12.sp
     )
     ArrowButton(onDownVoteAction, R.drawable.ic_baseline_arrow_downward_24)
   }
@@ -260,25 +270,25 @@ fun VotingAction(
 fun ArrowButton(onClickAction: () -> Unit, arrowResourceId: Int) {
   IconButton(onClick = onClickAction, modifier = Modifier.size(30.dp)) {
     Icon(
-        vectorResource(arrowResourceId),
-        modifier = Modifier.size(20.dp),
-        tint = Color.Gray
+      vectorResource(arrowResourceId),
+      modifier = Modifier.size(20.dp),
+      tint = Color.Gray
     )
   }
 }
 
 @Composable
 fun PostAction(
-    @DrawableRes vectorResourceId: Int,
-    text: String,
-    onClickAction: () -> Unit
+  @DrawableRes vectorResourceId: Int,
+  text: String,
+  onClickAction: () -> Unit
 ) {
   Box(modifier = Modifier.clickable(onClick = onClickAction)) {
     Row(verticalAlignment = Alignment.CenterVertically) {
       Icon(
-          vectorResource(id = vectorResourceId),
-          tint = Color.Gray,
-          modifier = Modifier.size(20.dp)
+        vectorResource(id = vectorResourceId),
+        tint = Color.Gray,
+        modifier = Modifier.size(20.dp)
       )
       Spacer(modifier = Modifier.width(4.dp))
       Text(text = text, fontWeight = FontWeight.Medium, color = Color.Gray, fontSize = 12.sp)
@@ -290,9 +300,9 @@ fun PostAction(
 @Composable
 fun PostActionPreview() {
   PostAction(
-      vectorResourceId = R.drawable.ic_baseline_emoji_events_24,
-      text = stringResource(R.string.award),
-      onClickAction = {}
+    vectorResourceId = R.drawable.ic_baseline_emoji_events_24,
+    text = stringResource(R.string.award),
+    onClickAction = {}
   )
 }
 
@@ -328,6 +338,6 @@ fun TextPostPreview() {
 @Composable
 fun ImagePostPreview() {
   Post(DEFAULT_POST) {
-    ImageContent()
+    ImageContent(DEFAULT_POST.image)
   }
 }

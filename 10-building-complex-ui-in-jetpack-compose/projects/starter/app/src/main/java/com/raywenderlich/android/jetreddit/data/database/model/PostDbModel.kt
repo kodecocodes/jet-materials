@@ -75,7 +75,7 @@ data class PostDbModel(
       ),
       PostDbModel(
         5, "ps_guy", "playstation", "My PS5 just arrived!",
-        "", 56231, 823, 1, System.currentTimeMillis(), false
+        "", 56231, 823, 0, System.currentTimeMillis(), false
       )
     )
   }

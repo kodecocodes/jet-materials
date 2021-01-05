@@ -54,8 +54,8 @@ fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel> by viewModel.allPosts.observeAsState(listOf())
 
   LazyColumnFor(
-      items = posts,
-      modifier = Modifier.background(color = MaterialTheme.colors.secondary)
+    items = posts,
+    modifier = Modifier.background(color = MaterialTheme.colors.secondary)
   ) {
     if (it.type == PostType.TEXT) {
       TextPost(it)

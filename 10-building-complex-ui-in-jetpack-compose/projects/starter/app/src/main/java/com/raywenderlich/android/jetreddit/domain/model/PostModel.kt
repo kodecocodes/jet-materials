@@ -17,7 +17,7 @@ data class PostModel(
   companion object {
 
     val DEFAULT_POST = PostModel(
-      "raywenderlich.com",
+      "raywenderlich",
       "androiddev",
       "Watch this awesome Jetpack Compose course!",
       "",

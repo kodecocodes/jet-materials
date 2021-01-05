@@ -35,7 +35,6 @@ package com.raywenderlich.android.jetreddit.routing
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.res.stringResource
 import com.raywenderlich.android.jetreddit.R
 
 
@@ -53,11 +52,11 @@ sealed class Screen(val titleResId: Int) {
 
 object JetRedditRouter {
   var currentScreen: MutableState<Screen> = mutableStateOf(
-      Screen.Home
+    Screen.Home
   )
 
   private var previousScreen: MutableState<Screen> = mutableStateOf(
-      Screen.Home
+    Screen.Home
   )
 
   fun navigateTo(destination: Screen) {

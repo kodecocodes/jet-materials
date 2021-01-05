@@ -53,11 +53,11 @@ sealed class Screen(val titleResId: Int) {
 
 object JetRedditRouter {
   var currentScreen: MutableState<Screen> = mutableStateOf(
-      Screen.Home
+    Screen.Home
   )
 
   private var previousScreen: MutableState<Screen> = mutableStateOf(
-      Screen.Home
+    Screen.Home
   )
 
   fun navigateTo(destination: Screen) {

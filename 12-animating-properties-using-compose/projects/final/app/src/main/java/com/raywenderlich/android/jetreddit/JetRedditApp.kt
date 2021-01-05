@@ -35,8 +35,7 @@ package com.raywenderlich.android.jetreddit
 
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -57,8 +56,6 @@ import com.raywenderlich.android.jetreddit.screens.SubredditsScreen
 import com.raywenderlich.android.jetreddit.theme.JetRedditTheme
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
 
-import androidx.compose.animation.ExperimentalAnimationApi
-
 @ExperimentalAnimationApi
 @Composable
 fun JetRedditApp(viewModel: MainViewModel) {
@@ -74,23 +71,23 @@ private fun AppContent(viewModel: MainViewModel) {
   Crossfade(current = JetRedditRouter.currentScreen) { screenState: MutableState<Screen> ->
 
     Scaffold(
-        topBar = getTopBar(screenState.value, scaffoldState),
-        drawerContent = {
-          AppDrawer(
-              closeDrawerAction = { scaffoldState.drawerState.close() }
-          )
-        },
-        scaffoldState = scaffoldState,
-        bottomBar = {
-          BottomNavigationComponent(screenState = screenState)
-        },
-        bodyContent = {
-          MainScreenContainer(
-              modifier = Modifier.padding(bottom = 56.dp),
-              screenState = screenState,
-              viewModel = viewModel
-          )
-        }
+      topBar = getTopBar(screenState.value, scaffoldState),
+      drawerContent = {
+        AppDrawer(
+          closeDrawerAction = { scaffoldState.drawerState.close() }
+        )
+      },
+      scaffoldState = scaffoldState,
+      bottomBar = {
+        BottomNavigationComponent(screenState = screenState)
+      },
+      bodyContent = {
+        MainScreenContainer(
+          modifier = Modifier.padding(bottom = 56.dp),
+          screenState = screenState,
+          viewModel = viewModel
+        )
+      }
     )
   }
 }
@@ -112,32 +109,36 @@ fun TopAppBar(scaffoldState: ScaffoldState) {
   val colors = MaterialTheme.colors
 
   TopAppBar(
-      title = {
-        Text(
-            text = stringResource(JetRedditRouter.currentScreen.value.titleResId),
-            color = colors.primaryVariant
+    title = {
+      Text(
+        text = stringResource(JetRedditRouter.currentScreen.value.titleResId),
+        color = colors.primaryVariant
+      )
+    },
+    backgroundColor = colors.surface,
+    navigationIcon = {
+      IconButton(onClick = {
+        scaffoldState.drawerState.open()
+      }) {
+        Icon(
+          Icons.Filled.AccountCircle,
+          tint = Color.LightGray
         )
-      },
-      backgroundColor = colors.surface,
-      navigationIcon = {
-        IconButton(onClick = {
-          scaffoldState.drawerState.open()
-        }) {
-          Icon(
-              Icons.Filled.AccountCircle,
-              tint = Color.LightGray
-          )
-        }
       }
+    }
   )
 }
 
 @ExperimentalAnimationApi
 @Composable
-private fun MainScreenContainer(modifier: Modifier = Modifier, screenState: MutableState<Screen>, viewModel: MainViewModel) {
+private fun MainScreenContainer(
+  modifier: Modifier = Modifier,
+  screenState: MutableState<Screen>,
+  viewModel: MainViewModel
+) {
   Surface(
-      modifier = modifier,
-      color = MaterialTheme.colors.background
+    modifier = modifier,
+    color = MaterialTheme.colors.background
   ) {
     when (screenState.value) {
       Screen.Home -> HomeScreen(viewModel)
@@ -150,25 +151,25 @@ private fun MainScreenContainer(modifier: Modifier = Modifier, screenState: Muta
 
 @Composable
 private fun BottomNavigationComponent(
-    modifier: Modifier = Modifier,
-    screenState: MutableState<Screen>
+  modifier: Modifier = Modifier,
+  screenState: MutableState<Screen>
 ) {
   var selectedItem by remember { mutableStateOf(0) }
 
   val items = listOf(
-      NavigationItem(0, R.drawable.ic_baseline_home_24, Screen.Home),
-      NavigationItem(1, R.drawable.ic_baseline_format_list_bulleted_24, Screen.Subscriptions),
-      NavigationItem(2, R.drawable.ic_baseline_add_24, Screen.NewPost),
+    NavigationItem(0, R.drawable.ic_baseline_home_24, Screen.Home),
+    NavigationItem(1, R.drawable.ic_baseline_format_list_bulleted_24, Screen.Subscriptions),
+    NavigationItem(2, R.drawable.ic_baseline_add_24, Screen.NewPost),
   )
   BottomNavigation(modifier = modifier) {
     items.forEach {
       BottomNavigationItem(
-          icon = { Icon(vectorResource(id = it.vectorResourceId)) },
-          selected = selectedItem == it.index,
-          onClick = {
-            selectedItem = it.index
-            screenState.value = it.screen
-          }
+        icon = { Icon(vectorResource(id = it.vectorResourceId)) },
+        selected = selectedItem == it.index,
+        onClick = {
+          selectedItem = it.index
+          screenState.value = it.screen
+        }
       )
     }
   }
