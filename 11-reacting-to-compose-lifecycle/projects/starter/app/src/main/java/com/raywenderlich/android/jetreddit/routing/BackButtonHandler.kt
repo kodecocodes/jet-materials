@@ -6,7 +6,7 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.AmbientLifecycleOwner
 
-private val AmbientBackPressedDispatcher = staticAmbientOf<OnBackPressedDispatcher?> { null }
+private val BackPressedDispatcher = staticAmbientOf<OnBackPressedDispatcher?> { null }
 
 @Composable
 fun BackButtonHandler(

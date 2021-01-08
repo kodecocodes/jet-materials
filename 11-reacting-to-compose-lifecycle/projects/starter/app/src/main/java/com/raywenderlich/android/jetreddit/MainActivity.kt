@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
 
   private val viewModel: MainViewModel by viewModels(factoryProducer = {
     MainViewModelFactory(
-        this,
-        (application as JetRedditApplication).dependencyInjector.repository
+      this,
+      (application as JetRedditApplication).dependencyInjector.repository
     )
   })
 

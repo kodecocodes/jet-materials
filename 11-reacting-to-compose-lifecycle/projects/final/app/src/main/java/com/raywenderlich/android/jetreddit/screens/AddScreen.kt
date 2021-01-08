@@ -33,6 +33,7 @@
  */
 package com.raywenderlich.android.jetreddit.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -82,14 +83,14 @@ fun AddScreen(viewModel: MainViewModel) {
 @Composable
 private fun TitleTextField(text: String, onTextChange: (String) -> Unit) {
   TextField(
-      value = text,
-      onValueChange = onTextChange,
-      label = { Text(stringResource(R.string.title)) },
-      modifier = Modifier
-          .fillMaxWidth()
-          .padding(horizontal = 8.dp),
-      backgroundColor = MaterialTheme.colors.surface,
-      activeColor = MaterialTheme.colors.onSurface
+    value = text,
+    onValueChange = onTextChange,
+    label = { Text(stringResource(R.string.title)) },
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 8.dp),
+    backgroundColor = MaterialTheme.colors.surface,
+    activeColor = MaterialTheme.colors.onSurface
   )
 }
 
@@ -99,16 +100,16 @@ private fun TitleTextField(text: String, onTextChange: (String) -> Unit) {
 @Composable
 private fun BodyTextField(text: String, onTextChange: (String) -> Unit) {
   TextField(
-      value = text,
-      onValueChange = onTextChange,
-      label = { Text(stringResource(R.string.body_text)) },
-      modifier = Modifier
-          .fillMaxWidth()
-          .heightIn(max = 240.dp)
-          .padding(horizontal = 8.dp)
-          .padding(top = 16.dp),
-      backgroundColor = MaterialTheme.colors.surface,
-      activeColor = MaterialTheme.colors.onSurface,
+    value = text,
+    onValueChange = onTextChange,
+    label = { Text(stringResource(R.string.body_text)) },
+    modifier = Modifier
+      .fillMaxWidth()
+      .heightIn(max = 240.dp)
+      .padding(horizontal = 8.dp)
+      .padding(top = 16.dp),
+    backgroundColor = MaterialTheme.colors.surface,
+    activeColor = MaterialTheme.colors.onSurface,
   )
 }
 
@@ -118,47 +119,48 @@ private fun BodyTextField(text: String, onTextChange: (String) -> Unit) {
 @Composable
 private fun AddPostButton(isEnabled: Boolean, onSaveClicked: () -> Unit) {
   Button(
-      onClick = onSaveClicked,
-      enabled = isEnabled,
-      content = {
-        Text(
-            text = stringResource(R.string.save_post),
-            color = MaterialTheme.colors.onSurface
-        )
-      },
-      modifier = Modifier
-          .fillMaxWidth()
-          .heightIn(max = 240.dp)
-          .padding(horizontal = 8.dp)
-          .padding(top = 16.dp),
+    onClick = onSaveClicked,
+    enabled = isEnabled,
+    content = {
+      Text(
+        text = stringResource(R.string.save_post),
+        color = MaterialTheme.colors.onSurface
+      )
+    },
+    modifier = Modifier
+      .fillMaxWidth()
+      .heightIn(max = 240.dp)
+      .padding(horizontal = 8.dp)
+      .padding(top = 16.dp),
   )
 }
 
 @Composable
 private fun CommunityPicker(selectedCommunity: String) {
 
-  val selectedText = if (selectedCommunity.isEmpty()) stringResource(R.string.choose_community) else selectedCommunity
+  val selectedText =
+    if (selectedCommunity.isEmpty()) stringResource(R.string.choose_community) else selectedCommunity
 
   Row(
-      modifier = Modifier
-          .fillMaxWidth()
-          .heightIn(max = 240.dp)
-          .padding(horizontal = 8.dp)
-          .padding(top = 16.dp)
-          .clickable {
-            JetRedditRouter.navigateTo(Screen.ChooseCommunity)
-          },
+    modifier = Modifier
+      .fillMaxWidth()
+      .heightIn(max = 240.dp)
+      .padding(horizontal = 8.dp)
+      .padding(top = 16.dp)
+      .clickable {
+        JetRedditRouter.navigateTo(Screen.ChooseCommunity)
+      },
   ) {
     Image(
-        bitmap = imageResource(id = R.drawable.subreddit_placeholder),
-        modifier = Modifier
-            .size(24.dp)
-            .clip(CircleShape)
+      bitmap = imageResource(id = R.drawable.subreddit_placeholder),
+      modifier = Modifier
+        .size(24.dp)
+        .clip(CircleShape)
     )
 
     Text(
-        text = selectedText,
-        modifier = Modifier.padding(start = 8.dp)
+      text = selectedText,
+      modifier = Modifier.padding(start = 8.dp)
     )
   }
 }

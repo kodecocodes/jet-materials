@@ -52,11 +52,11 @@ class DependencyInjector(applicationContext: Context) {
   private val dbMapper: DbMapper = DbMapperImpl()
 
   private fun provideDatabase(applicationContext: Context): AppDatabase =
-      Room.databaseBuilder(
-          applicationContext,
-          AppDatabase::class.java,
-          AppDatabase.DATABASE_NAME
-      ).build()
+    Room.databaseBuilder(
+      applicationContext,
+      AppDatabase::class.java,
+      AppDatabase.DATABASE_NAME
+    ).build()
 
   private fun provideRepository(database: AppDatabase): Repository {
     val postDao = database.postDao()

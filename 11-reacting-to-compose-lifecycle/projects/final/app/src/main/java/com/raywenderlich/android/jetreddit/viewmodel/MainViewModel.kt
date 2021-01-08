@@ -51,7 +51,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
   val selectedCommunity: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
-  fun searchCommunities(searchedText: String){
+  fun searchCommunities(searchedText: String) {
     viewModelScope.launch(Dispatchers.Default) {
       subreddits.postValue(repository.getAllSubreddits(searchedText))
     }
@@ -59,7 +59,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
   fun savePost(post: PostModel) {
     viewModelScope.launch(Dispatchers.Default) {
-      repository.insert(post.copy(subreddit = selectedCommunity.value?: ""))
+      repository.insert(post.copy(subreddit = selectedCommunity.value ?: ""))
     }
   }
 }

@@ -6,15 +6,14 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.AmbientLifecycleOwner
 
-private val AmbientBackPressedDispatcher = staticAmbientOf<OnBackPressedDispatcher?> { null }
+private val BackPressedDispatcher = staticAmbientOf<OnBackPressedDispatcher?> { null }
 
 @Composable
 fun BackButtonHandler(
-    enabled: Boolean = true,
-    onBackPressed: () -> Unit
+  enabled: Boolean = true,
+  onBackPressed: () -> Unit
 ) {
-  val dispatcher = AmbientBackPressedDispatcher.current ?: return
-
+  val dispatcher = BackPressedDispatcher.current ?: return
   val backCallback = remember {
     object : OnBackPressedCallback(enabled) {
       override fun handleOnBackPressed() {
@@ -22,10 +21,8 @@ fun BackButtonHandler(
       }
     }
   }
-
   DisposableEffect(dispatcher) {
     dispatcher.addCallback(backCallback)
-
     onDispose {
       backCallback.remove()
     }
@@ -35,7 +32,9 @@ fun BackButtonHandler(
 @Composable
 fun BackButtonAction(onBackPressed: () -> Unit) {
   Providers(
-      AmbientBackPressedDispatcher provides (AmbientLifecycleOwner.current as ComponentActivity).onBackPressedDispatcher
+    BackPressedDispatcher provides (
+        AmbientLifecycleOwner.current as ComponentActivity
+        ).onBackPressedDispatcher
   ) {
     BackButtonHandler {
       onBackPressed.invoke()
