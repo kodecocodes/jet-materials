@@ -7,7 +7,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonConstants.defaultButtonColors
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,25 +52,26 @@ class ChatActivity : AppCompatActivity() {
 @ExperimentalMaterialApi
 @Composable
 private fun ComposeButton(onButtonClick: () -> Unit) {
-  val buttonColors = object : ButtonColors {
-
-    override fun backgroundColor(enabled: Boolean): Color = Color(0xFF006837)
-
-    override fun contentColor(enabled: Boolean): Color = Color.White
-  }
+  val buttonColors = defaultButtonColors(
+    backgroundColor = Color(0xFF006837),
+    contentColor = Color.White
+  )
 
   Button(
-      onClick = onButtonClick,
-      elevation = null,
-      shape = RoundedCornerShape(corner = CornerSize(24.dp)),
-      contentPadding = PaddingValues(start = 32.dp, end = 32.dp),
-      colors = buttonColors,
-      modifier = Modifier.height(48.dp)
+    onClick = onButtonClick,
+    elevation = null,
+    shape = RoundedCornerShape(corner = CornerSize(24.dp)),
+    contentPadding = PaddingValues(
+      start = 32.dp,
+      end = 32.dp
+    ),
+    colors = buttonColors,
+    modifier = Modifier.height(48.dp)
   ) {
     Text(
-        text = "Start chatting".toUpperCase(Locale.US),
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Medium
+      text = "Start chatting".toUpperCase(Locale.US),
+      fontSize = 16.sp,
+      fontWeight = FontWeight.Medium
     )
   }
 }
@@ -74,6 +79,6 @@ private fun ComposeButton(onButtonClick: () -> Unit) {
 @ExperimentalMaterialApi
 @Preview
 @Composable
-private fun PreviewComposeButton() {
+private fun ComposeButtonPreview() {
   ComposeButton { }
 }

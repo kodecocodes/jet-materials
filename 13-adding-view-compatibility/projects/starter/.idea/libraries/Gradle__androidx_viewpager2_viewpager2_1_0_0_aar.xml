@@ -4,8 +4,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f753a9330022d152048a66b92d93d136/transformed/jetified-viewpager2-1.0.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f753a9330022d152048a66b92d93d136/transformed/jetified-viewpager2-1.0.0/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f753a9330022d152048a66b92d93d136/transformed/jetified-viewpager2-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f753a9330022d152048a66b92d93d136/transformed/jetified-viewpager2-1.0.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f753a9330022d152048a66b92d93d136/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />

@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 
 class RepositoryImpl(private val postDao: PostDao, private val mapper: DbMapper) : Repository {
 
+  private var searchedText = ""
+
   private val allPostsLiveData: MutableLiveData<List<PostModel>> by lazy {
     MutableLiveData<List<PostModel>>()
   }
@@ -43,9 +45,21 @@ class RepositoryImpl(private val postDao: PostDao, private val mapper: DbMapper)
 
   override fun getAllOwnedPosts(): LiveData<List<PostModel>> = ownedPostsLiveData
 
-  private fun getAllPostsFromDatabase(): List<PostModel> = postDao.getAllPosts().map(mapper::mapPost)
+  override fun getAllSubreddits(searchedText: String): List<String> {
+    this.searchedText = searchedText
 
-  private fun getAllOwnedPostsFromDatabase(): List<PostModel> = postDao.getAllOwnedPosts("raywenderlich").map(mapper::mapPost)
+    if (searchedText.isNotEmpty()) {
+      return postDao.getAllSubreddits().filter { it.contains(searchedText) }
+    }
+
+    return postDao.getAllSubreddits()
+  }
+
+  private fun getAllPostsFromDatabase(): List<PostModel> =
+    postDao.getAllPosts().map(mapper::mapPost)
+
+  private fun getAllOwnedPostsFromDatabase(): List<PostModel> =
+    postDao.getAllOwnedPosts("raywenderlich").map(mapper::mapPost)
 
   override fun insert(post: PostModel) {
     postDao.insert(mapper.mapDbPost(post))

@@ -56,7 +56,7 @@ import kotlin.concurrent.schedule
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel>
-      by viewModel.allPosts.observeAsState(listOf())
+    by viewModel.allPosts.observeAsState(listOf())
 
   var joinedToastVisible by remember { mutableStateOf(false) }
 
@@ -71,32 +71,34 @@ fun HomeScreen(viewModel: MainViewModel) {
 
   Box(modifier = Modifier.fillMaxSize()) {
     LazyColumn(
-        modifier = Modifier
-            .background(color = MaterialTheme.colors.secondary),
-        content = {
-          items(
-              items = posts,
-              itemContent = { post ->
-                if (post.type == PostType.TEXT) {
-                  TextPost(
-                      post = post,
-                      onJoinButtonClick = onJoinClickAction
-                  )
-                } else {
-                  ImagePost(
-                      post = post,
-                      onJoinButtonClick = onJoinClickAction
-                  )
-                }
-                Spacer(modifier = Modifier.height(6.dp))
-              }
-          )
-        }
+      modifier = Modifier
+        .background(color = MaterialTheme.colors.secondary),
+      content = {
+        items(
+          items = posts,
+          itemContent = { post ->
+            if (post.type == PostType.TEXT) {
+              TextPost(
+                post = post,
+                onJoinButtonClick = onJoinClickAction
+              )
+            } else {
+              ImagePost(
+                post = post,
+                onJoinButtonClick = onJoinClickAction
+              )
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+          }
+        )
+      }
     )
 
-    Box(modifier = Modifier
+    Box(
+      modifier = Modifier
         .align(Alignment.BottomCenter)
-        .padding(bottom = 16.dp)) {
+        .padding(bottom = 16.dp)
+    ) {
       JoinedToast(visible = joinedToastVisible)
     }
   }

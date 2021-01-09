@@ -9,6 +9,8 @@ interface Repository {
 
   fun getAllOwnedPosts(): LiveData<List<PostModel>>
 
+  fun getAllSubreddits(searchedText: String): List<String>
+
   fun insert(post: PostModel)
 
   fun deleteAll()

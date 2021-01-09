@@ -67,19 +67,37 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 private val trendingItems = listOf(
-  TrendingTopicModel("Compose Tutorial", R.drawable.jetpack_composer),
-  TrendingTopicModel("Compose Animations", R.drawable.jetpack_compose_animations),
-  TrendingTopicModel("Compose Migration", R.drawable.compose_migration_crop),
-  TrendingTopicModel("DataStore Tutorial", R.drawable.data_storage),
-  TrendingTopicModel("Android Animations", R.drawable.android_animations),
-  TrendingTopicModel("Deep Links in Android", R.drawable.deeplinking),
+  TrendingTopicModel(
+    "Compose Tutorial",
+    R.drawable.jetpack_composer
+  ),
+  TrendingTopicModel(
+    "Compose Animations",
+    R.drawable.jetpack_compose_animations
+  ),
+  TrendingTopicModel(
+    "Compose Migration",
+    R.drawable.compose_migration_crop
+  ),
+  TrendingTopicModel(
+    "DataStore Tutorial",
+    R.drawable.data_storage
+  ),
+  TrendingTopicModel(
+    "Android Animations",
+    R.drawable.android_animations
+  ),
+  TrendingTopicModel(
+    "Deep Links in Android",
+    R.drawable.deeplinking
+  )
 )
 
 @ExperimentalAnimationApi
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel>
-      by viewModel.allPosts.observeAsState(listOf())
+    by viewModel.allPosts.observeAsState(listOf())
 
   var joinedToastVisible by remember { mutableStateOf(false) }
 
@@ -105,19 +123,29 @@ fun HomeScreen(viewModel: MainViewModel) {
             if (item.type == HomeScreenItemType.TRENDING) {
               TrendingTopics(
                 trendingTopics = trendingItems,
-                modifier = Modifier.padding(top = 16.dp, bottom = 6.dp)
+                modifier = Modifier.padding(
+                  top = 16.dp,
+                  bottom = 6.dp
+                )
               )
             } else if (item.post != null) {
               val post = item.post
               if (post.type == PostType.TEXT) {
-                TextPost(post, onJoinButtonClick = onJoinClickAction)
+                TextPost(
+                  post = post,
+                  onJoinButtonClick = onJoinClickAction
+                )
               } else {
-                ImagePost(post, onJoinButtonClick = onJoinClickAction)
+                ImagePost(
+                  post = post,
+                  onJoinButtonClick = onJoinClickAction
+                )
               }
               Spacer(modifier = Modifier.height(6.dp))
             }
           })
-      })
+      }
+    )
 
     Box(
       modifier = Modifier
@@ -129,22 +157,31 @@ fun HomeScreen(viewModel: MainViewModel) {
   }
 }
 
-private fun mapHomeScreenItems(posts: List<PostModel>): List<HomeScreenItem> {
+private fun mapHomeScreenItems(
+  posts: List<PostModel>
+): List<HomeScreenItem> {
   val homeScreenItems = mutableListOf<HomeScreenItem>()
 
   // Add Trending item
-  homeScreenItems.add(HomeScreenItem(HomeScreenItemType.TRENDING))
+  homeScreenItems.add(
+    HomeScreenItem(HomeScreenItemType.TRENDING)
+  )
 
   // Add Post items
   posts.forEach { post ->
-    homeScreenItems.add(HomeScreenItem(HomeScreenItemType.POST, post))
+    homeScreenItems.add(
+      HomeScreenItem(HomeScreenItemType.POST, post)
+    )
   }
 
   return homeScreenItems
 }
 
 @Composable
-private fun TrendingTopics(trendingTopics: List<TrendingTopicModel>, modifier: Modifier = Modifier) {
+private fun TrendingTopics(
+  trendingTopics: List<TrendingTopicModel>,
+  modifier: Modifier = Modifier
+) {
   Card(
     shape = MaterialTheme.shapes.large,
     modifier = modifier
@@ -172,13 +209,17 @@ private fun TrendingTopics(trendingTopics: List<TrendingTopicModel>, modifier: M
 
       // Horizontally scrollable Trending items
       LazyRow(
-        contentPadding = PaddingValues(start = 16.dp, top = 8.dp, end = 16.dp),
+        contentPadding = PaddingValues(
+          start = 16.dp,
+          top = 8.dp,
+          end = 16.dp
+        ),
         content = {
           itemsIndexed(
             items = trendingTopics,
             itemContent = { index, trendingModel ->
               TrendingTopic(trendingModel)
-              if (index != trendingItems.lastIndex) {
+              if (index != trendingTopics.lastIndex) {
                 Spacer(modifier = Modifier.width(8.dp))
               }
             }
@@ -192,7 +233,9 @@ private fun TrendingTopics(trendingTopics: List<TrendingTopicModel>, modifier: M
 @Composable
 private fun TrendingTopic(trendingTopic: TrendingTopicModel) {
   val context = AmbientContext.current
-  val trendingView = remember(trendingTopic) { TrendingTopicView(context) }
+  val trendingView = remember(trendingTopic) {
+    TrendingTopicView(context)
+  }
 
   AndroidView(viewBlock = { trendingView }) {
     it.text = trendingTopic.text
@@ -202,8 +245,19 @@ private fun TrendingTopic(trendingTopic: TrendingTopicModel) {
 
 @Preview
 @Composable
-private fun PreviewTrendingItems() {
+private fun TrendingItemsPreview() {
   TrendingTopics(trendingTopics = trendingItems)
+}
+
+@Preview
+@Composable
+private fun TrendingTopicPreview() {
+  TrendingTopic(
+    trendingTopic = TrendingTopicModel(
+      "Compose Animations",
+      R.drawable.jetpack_compose_animations
+    )
+  )
 }
 
 private data class HomeScreenItem(

@@ -12,7 +12,8 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.JetReddit"
     tools:ignore="GoogleAppIndexingWarning">
-
+    <activity android:name=".screens.ChatActivity"></activity>
+    <!-- Main Activity -->
     <activity
       android:name=".MainActivity"
       android:theme="@style/SplashTheme">
@@ -22,9 +23,6 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-
-    <activity android:name=".screens.ChatActivity"></activity>
-
   </application>
 
 </manifest>

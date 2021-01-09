@@ -27,7 +27,7 @@
   <string name="cats">r/cats</string>
   <string name="all">All</string>
   <string name="public_network">Reddit Public Access Network</string>
-  <string name="raywenderlich">r/raywenderlich</string>
+  <string name="raywenderlich">r/raywenderlich.com</string>
   <string name="members_120k">120k members</string>
   <string name="members_600k">600k members</string>
   <string name="members_400k">400k members</string>
@@ -35,8 +35,18 @@
   <string name="hello_android_devs">Hello Android devs!</string>
   <string name="welcome_to_android">Welcome to Android!</string>
   <string name="hello_programmers">Hello programers!</string>
-  <string name="welcome_to_raywenderlich">Welcome to raywenderlich!</string>
+  <string name="welcome_to_raywenderlich">Welcome to raywenderlich.com!</string>
   <string name="android">r/android</string>
   <string name="programming">r/programming</string>
   <string name="androiddev">r/androiddev</string>
+  <string name="title">An interesting title</string>
+  <string name="body_text">Your text post (optional)</string>
+  <string name="save_post">SAVE</string>
+  <string name="search">Search</string>
+  <string name="posts">Posts</string>
+  <string name="about">About</string>
+  <string name="verified_email">Verified Email</string>
+  <string name="gold_medal">Gold Medal</string>
+  <string name="top_comment">Top Comment</string>
+  <string name="choose_community">Choose a community</string>
 </resources>
