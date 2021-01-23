@@ -38,6 +38,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -55,11 +56,18 @@ import com.raywenderlich.android.jetnotes.util.fromHex
 
 @Composable
 fun Note(
+  modifier: Modifier = Modifier,
   note: NoteModel,
   onNoteClick: (NoteModel) -> Unit = {},
-  onNoteCheckedChange: (NoteModel) -> Unit = {}
+  onNoteCheckedChange: (NoteModel) -> Unit = {},
+  isSelected: Boolean = false
 ) {
   val backgroundShape: Shape = RoundedCornerShape(4.dp)
+
+  val background = if (isSelected)
+    Color.LightGray
+  else
+    MaterialTheme.colors.surface
 
   Row(
     modifier = Modifier
@@ -67,7 +75,7 @@ fun Note(
       .shadow(1.dp, backgroundShape)
       .fillMaxWidth()
       .preferredHeightIn(min = 64.dp)
-      .background(Color.White, backgroundShape)
+      .background(background, backgroundShape)
       .clickable(onClick = { onNoteClick(note) })
   ) {
     NoteColor(
