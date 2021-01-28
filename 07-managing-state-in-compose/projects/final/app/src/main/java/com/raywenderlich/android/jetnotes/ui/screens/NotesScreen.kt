@@ -1,7 +1,7 @@
 package com.raywenderlich.android.jetnotes.ui.screens
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
@@ -40,11 +40,16 @@ private fun NotesList(
   onNoteCheckedChange: (NoteModel) -> Unit,
   onNoteClick: (NoteModel) -> Unit
 ) {
-  LazyColumnFor(items = notes) { note ->
-    Note(
-      note = note,
-      onNoteClick = onNoteClick,
-      onNoteCheckedChange = onNoteCheckedChange
+  LazyColumn {
+    items(
+      items = notes,
+      itemContent = { note ->
+        Note(
+          note = note,
+          onNoteClick = onNoteClick,
+          onNoteCheckedChange = onNoteCheckedChange
+        )
+      }
     )
   }
 }
