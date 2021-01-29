@@ -34,8 +34,6 @@
 package com.raywenderlich.android.jetnotes.ui.components
 
 import androidx.compose.runtime.Composable
-import androidx.ui.tooling.preview.Preview
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -47,6 +45,8 @@ import com.raywenderlich.android.jetnotes.theme.rwGreen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Text
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun Note() {
