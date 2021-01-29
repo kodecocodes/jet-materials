@@ -34,7 +34,7 @@
 package com.raywenderlich.android.jetnotes.ui.screens
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
@@ -198,10 +198,17 @@ private fun Content(
       else -> throw IllegalStateException("Tab not supported - index: $selectedTab")
     }
 
-    LazyColumnFor(items = filteredNotes) { note ->
-      Note(
-        note = note,
-        onNoteClick = onNoteClick
+    LazyColumn {
+      items(
+        items = filteredNotes,
+        itemContent = { note ->
+          val isNoteSelected = selectedNotes.contains(note)
+          Note(
+            note = note,
+            onNoteClick = onNoteClick,
+            isSelected = isNoteSelected
+          )
+        }
       )
     }
   }
