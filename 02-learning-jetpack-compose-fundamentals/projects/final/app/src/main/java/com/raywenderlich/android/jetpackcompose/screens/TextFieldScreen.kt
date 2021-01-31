@@ -73,13 +73,7 @@ fun TextFieldScreen() {
 @Composable
 fun MyTextField() {
   val textValue = remember { mutableStateOf("") }
-  TextField(
-      value = textValue.value,
-      onValueChange = {
-        textValue.value = it
-      },
-      label = {}
-  )
+
   OutlinedTextField(
     label = { Text(text = stringResource(id = R.string.email)) },
     activeColor = colorResource(id = R.color.colorPrimary),
