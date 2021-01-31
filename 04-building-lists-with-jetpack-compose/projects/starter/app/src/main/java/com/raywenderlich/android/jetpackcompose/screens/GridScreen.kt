@@ -37,7 +37,7 @@ package com.raywenderlich.android.jetpackcompose.screens
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.VectorAsset
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
 import com.raywenderlich.android.jetpackcompose.router.Screen
@@ -79,4 +79,4 @@ fun GridIcon(iconResource: IconResource) {
   //TODO add your code here
 }
 
-data class IconResource(val vectorAsset: VectorAsset, val isVisible: Boolean)
+data class IconResource(val imageVector: ImageVector, val isVisible: Boolean)

@@ -36,10 +36,10 @@ package com.raywenderlich.android.jetpackcompose.screens
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.foundation.lazy.LazyRowFor
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -98,8 +98,13 @@ fun ListScreen() {
 
 @Composable
 fun MyList() {
-  LazyColumnFor(items = items) {
-    ListItem(it)
+  LazyColumn {
+    items(
+        items = items,
+        itemContent = {
+          ListItem(it)
+        }
+    )
   }
 }
 
@@ -116,8 +121,13 @@ fun ListItem(bookCategory: BookCategory, modifier: Modifier = Modifier) {
 
     Spacer(modifier = modifier.height(8.dp))
 
-    LazyRowFor(bookCategory.bookImageResources) {
-      BookImage(imageResource = it)
+    LazyRow {
+      items(
+        items = bookCategory.bookImageResources,
+        itemContent = {
+          BookImage(imageResource = it)
+        }
+      )
     }
   }
 }
@@ -126,7 +136,7 @@ fun ListItem(bookCategory: BookCategory, modifier: Modifier = Modifier) {
 fun BookImage(imageResource: Int) {
   Image(
     modifier = Modifier.size(170.dp, 200.dp),
-    asset = imageResource(id = imageResource),
+    bitmap = imageResource(id = imageResource),
     contentScale = ContentScale.Fit
   )
 }
