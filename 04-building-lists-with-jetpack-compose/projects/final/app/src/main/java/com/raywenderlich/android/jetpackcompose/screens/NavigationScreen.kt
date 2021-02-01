@@ -38,6 +38,7 @@ import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -85,7 +86,7 @@ fun NavigationButton(text: String, screen: Screen) {
       .fillMaxWidth()
       .padding(start = 16.dp, end = 16.dp, top = 16.dp),
     shape = RoundedCornerShape(4.dp),
-    backgroundColor = colorResource(id = R.color.colorPrimary),
+    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
     onClick = { JetFundamentalsRouter.navigateTo(screen) }
   ) {
     Text(

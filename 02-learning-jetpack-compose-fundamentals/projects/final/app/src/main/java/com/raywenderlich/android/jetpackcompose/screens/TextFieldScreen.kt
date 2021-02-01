@@ -35,11 +35,13 @@
 package com.raywenderlich.android.jetpackcompose.screens
 
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,10 +77,10 @@ fun MyTextField() {
   OutlinedTextField(
     label = { Text(text = stringResource(id = R.string.email)) },
     activeColor = colorResource(id = R.color.colorPrimary),
-    keyboardType = KeyboardType.Email,
+    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
     value = textValue.value,
     onValueChange = {
       textValue.value = it
-    },
+    }
   )
 }

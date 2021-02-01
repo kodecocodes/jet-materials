@@ -34,8 +34,6 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -76,7 +74,7 @@ fun MyTopAppBar(scaffoldState: ScaffoldState) {
   TopAppBar(
     navigationIcon = {
       IconButton(
-        icon = {
+        content = {
           Icon(
             Icons.Default.Menu,
             tint = Color.White
