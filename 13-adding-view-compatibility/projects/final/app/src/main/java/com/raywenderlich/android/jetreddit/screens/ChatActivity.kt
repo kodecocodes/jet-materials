@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonConstants.defaultButtonColors
+import androidx.compose.material.ButtonDefaults.buttonColors
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -52,7 +52,7 @@ class ChatActivity : AppCompatActivity() {
 @ExperimentalMaterialApi
 @Composable
 private fun ComposeButton(onButtonClick: () -> Unit) {
-  val buttonColors = defaultButtonColors(
+  val buttonColors = buttonColors(
     backgroundColor = Color(0xFF006837),
     contentColor = Color.White
   )
