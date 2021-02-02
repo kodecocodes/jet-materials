@@ -38,7 +38,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRowFor
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -109,11 +109,8 @@ fun SubredditsScreen(modifier: Modifier = Modifier) {
         style = MaterialTheme.typography.subtitle1
       )
 
-      LazyRowFor(
-        items = subreddits,
-        modifier = modifier.padding(end = 16.dp)
-      ) {
-        Subreddit(it)
+      LazyRow(modifier = modifier.padding(end = 16.dp)) {
+        items(subreddits) { Subreddit(it) }
       }
 
       mainCommunities.forEach {

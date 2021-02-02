@@ -2,8 +2,7 @@ package com.raywenderlich.android.jetreddit.components
 
 import androidx.compose.animation.ColorPropKey
 import androidx.compose.animation.DpPropKey
-import androidx.compose.animation.core.transitionDefinition
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.animation.transition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -75,7 +74,7 @@ private val transitionDefinition =
 @Composable
 fun JoinButton(onClick: (Boolean) -> Unit = {}) {
   var buttonState: JoinButtonState
-      by remember { mutableStateOf(JoinButtonState.IDLE) }
+    by remember { mutableStateOf(JoinButtonState.IDLE) }
 
   val transitionState = transition(
     definition = transitionDefinition,

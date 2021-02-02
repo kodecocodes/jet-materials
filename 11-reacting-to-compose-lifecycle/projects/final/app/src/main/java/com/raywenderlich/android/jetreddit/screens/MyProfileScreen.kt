@@ -4,7 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -133,11 +133,10 @@ fun MyProfilePosts(modifier: Modifier, viewModel: MainViewModel) {
 
   val posts: List<PostModel> by viewModel.myPosts.observeAsState(listOf())
 
-  LazyColumnFor(
-    items = posts,
+  LazyColumn(
     modifier = modifier.background(color = MaterialTheme.colors.secondary)
   ) {
-    MyProfilePost(modifier, it)
+    items(posts) { MyProfilePost(modifier, it) }
   }
 }
 
@@ -252,8 +251,8 @@ fun MyProfileAbout() {
       R.string.gold_medal,
       R.string.top_comment
     )
-    LazyColumnFor(items = trophies) {
-      Trophy(text = stringResource(it))
+    LazyColumn {
+      items(trophies) { Trophy(text = stringResource(it)) }
     }
   }
 }
