@@ -36,7 +36,7 @@ package com.raywenderlich.android.jetreddit.screens
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -56,7 +56,7 @@ import kotlin.concurrent.schedule
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel>
-      by viewModel.allPosts.observeAsState(listOf())
+    by viewModel.allPosts.observeAsState(listOf())
 
   var isToastVisible by remember { mutableStateOf(false) }
 
@@ -70,17 +70,15 @@ fun HomeScreen(viewModel: MainViewModel) {
   }
 
   Box(modifier = Modifier.fillMaxSize()) {
-    LazyColumnFor(
-      items = posts,
-      modifier = Modifier
-        .background(color = MaterialTheme.colors.secondary)
-    ) {
-      if (it.type == PostType.TEXT) {
-        TextPost(it, onJoinButtonClick = onJoinClickAction)
-      } else {
-        ImagePost(it, onJoinButtonClick = onJoinClickAction)
+    LazyColumn(modifier = Modifier.background(color = MaterialTheme.colors.secondary)) {
+      items(posts) {
+        if (it.type == PostType.TEXT) {
+          TextPost(it, onJoinButtonClick = onJoinClickAction)
+        } else {
+          ImagePost(it, onJoinButtonClick = onJoinClickAction)
+        }
+        Spacer(modifier = Modifier.height(6.dp))
       }
-      Spacer(modifier = Modifier.height(6.dp))
     }
 
     Box(

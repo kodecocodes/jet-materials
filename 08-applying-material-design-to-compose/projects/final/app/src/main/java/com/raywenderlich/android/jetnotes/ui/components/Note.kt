@@ -48,16 +48,25 @@ import com.raywenderlich.android.jetnotes.util.fromHex
 
 @Composable
 fun Note(
+  modifier: Modifier = Modifier,
   note: NoteModel,
   onNoteClick: (NoteModel) -> Unit = {},
-  onNoteCheckedChange: (NoteModel) -> Unit = {}
+  onNoteCheckedChange: (NoteModel) -> Unit = {},
+  isSelected: Boolean = false
 ) {
+
+  val background = if (isSelected)
+    Color.LightGray
+  else
+    MaterialTheme.colors.surface
+
   Card(
     shape = RoundedCornerShape(4.dp),
     modifier = Modifier
       .padding(8.dp)
-      .fillMaxWidth(),
-    backgroundColor = MaterialTheme.colors.surface
+      .fillMaxWidth()
+      .then(modifier),
+    backgroundColor = background
   ) {
     ListItem(
       text = { Text(text = note.title, maxLines = 1) },

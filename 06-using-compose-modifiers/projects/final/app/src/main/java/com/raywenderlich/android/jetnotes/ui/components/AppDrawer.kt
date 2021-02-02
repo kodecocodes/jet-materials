@@ -119,7 +119,7 @@ private fun ScreenNavigationButton(
     colors.onSurface.copy(alpha = 0.6f)
   }
   // Define color for the background for two different states
-// of the button: selected/unselected
+  // of the button: selected/unselected
   val backgroundColor = if (isSelected) {
     colors.primary.copy(alpha = 0.12f)
   } else {

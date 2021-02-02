@@ -68,7 +68,7 @@ fun TextPost(post: PostModel) {
 @Composable
 fun ImagePost(post: PostModel) {
   Post(post) {
-    ImageContent()
+    ImageContent(post.image ?: R.drawable.compose_course)
   }
 }
 
@@ -184,8 +184,8 @@ fun TextContent(text: String) {
 }
 
 @Composable
-fun ImageContent() {
-  val imageAsset = imageResource(id = R.drawable.compose_course)
+fun ImageContent(image: Int) {
+  val imageAsset = imageResource(image)
   Image(
     bitmap = imageAsset,
     modifier = Modifier
@@ -319,6 +319,6 @@ fun TextPostPreview() {
 @Composable
 fun ImagePostPreview() {
   Post(DEFAULT_POST) {
-    ImageContent()
+    ImageContent(DEFAULT_POST.image ?: R.drawable.compose_course)
   }
 }
