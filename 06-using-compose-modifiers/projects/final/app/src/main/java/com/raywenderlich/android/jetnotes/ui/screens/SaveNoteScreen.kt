@@ -54,10 +54,10 @@ fun ColorItem(
       )
   ) {
     NoteColor(
-      Color.fromHex(color.hex),
+      modifier = Modifier.padding(10.dp),
+      color = Color.fromHex(color.hex),
       size = 80.dp,
-      border = 2.dp,
-      modifier = Modifier.padding(10.dp)
+      border = 2.dp
     )
     Text(
       text = color.name,
