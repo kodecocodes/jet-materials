@@ -64,12 +64,12 @@ fun Note() {
       .background(Color.White, backgroundShape)
   ) {
     NoteColor(
-      color = rwGreen,
-      size = 40.dp,
-      border = 1.dp,
       modifier = Modifier
         .align(Alignment.CenterVertically)
-        .padding(start = 16.dp, end = 16.dp) // here
+        .padding(start = 16.dp, end = 16.dp),
+      color = rwGreen,
+      size = 40.dp,
+      border = 1.dp
     )
     Column(
       modifier = Modifier
