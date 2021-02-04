@@ -35,7 +35,6 @@ package com.raywenderlich.android.jetnotes.data.database.dbmapper
 
 import com.raywenderlich.android.jetnotes.data.database.model.ColorDbModel
 import com.raywenderlich.android.jetnotes.data.database.model.NoteDbModel
-import com.raywenderlich.android.jetnotes.data.repository.Repository
 import com.raywenderlich.android.jetnotes.domain.model.ColorModel
 import com.raywenderlich.android.jetnotes.domain.model.NEW_NOTE_ID
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
@@ -75,7 +74,7 @@ class DbMapperImpl : DbMapper {
           canBeCheckedOff = canBeCheckedOff,
           isCheckedOff = isCheckedOff,
           colorId = color.id,
-          isInThrash = false
+          isInTrash = false
         )
       else
         NoteDbModel(id, title, content, canBeCheckedOff, isCheckedOff, color.id, false)
