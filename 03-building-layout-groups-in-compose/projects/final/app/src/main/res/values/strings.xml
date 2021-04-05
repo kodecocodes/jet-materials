@@ -19,4 +19,7 @@
   <string name="box">"Box"</string>
   <string name="surface">"Surface"</string>
   <string name="scaffold">"Scaffold"</string>
+  <string name="favourite">"Favourite"</string>
+  <string name="menu">"Menu"</string>
+
 </resources>
