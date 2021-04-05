@@ -45,7 +45,7 @@ import com.raywenderlich.android.jetpackcompose.screens.*
 @Composable
 fun JetFundamentalsApp() {
   Surface(color = MaterialTheme.colors.background) {
-    Crossfade(current = JetFundamentalsRouter.currentScreen) { screenState ->
+    Crossfade(targetState = JetFundamentalsRouter.currentScreen) { screenState ->
       when (screenState.value) {
         is Screen.Navigation -> NavigationScreen()
         is Screen.Text -> TextScreen()

@@ -14,4 +14,6 @@
   <string name="confirm">"Confirm"</string>
   <string name="alert_dialog_text">"Jetpack Compose Alert Dialog!"</string>
   <string name="alert_dialog_title">"Alert Dialog"</string>
+  <string name="favourite">"Favourite"</string>
+
 </resources>
