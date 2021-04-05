@@ -38,9 +38,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LifecycleOwnerAmbient
+import androidx.compose.ui.platform.LocalLifecycleOwner
 
-private val AmbientBackPressedDispatcher = staticAmbientOf<OnBackPressedDispatcherOwner?> { null }
+private val AmbientBackPressedDispatcher = staticCompositionLocalOf<OnBackPressedDispatcherOwner?> { null }
 
 private class ComposableBackHandler(enabled: Boolean) : OnBackPressedCallback(enabled) {
   lateinit var onBackPressed: () -> Unit
@@ -59,12 +59,14 @@ internal fun handler(
 
   val handler = remember { ComposableBackHandler(enabled) }
 
-  onCommit(dispatcher) {
+  DisposableEffect(dispatcher) {
     dispatcher.addCallback(handler)
+
 
     onDispose { handler.remove() }
   }
-  onCommit(enabled) {
+
+  LaunchedEffect(enabled) {
     handler.isEnabled = enabled
     handler.onBackPressed = onBackPressed
   }
@@ -72,8 +74,8 @@ internal fun handler(
 
 @Composable
 internal fun BackButtonHandler(onBackPressed: () -> Unit) {
-  Providers(
-      AmbientBackPressedDispatcher provides LifecycleOwnerAmbient.current as ComponentActivity
+  CompositionLocalProvider(
+      AmbientBackPressedDispatcher provides LocalLifecycleOwner.current as ComponentActivity
   ) {
     handler {
       onBackPressed()

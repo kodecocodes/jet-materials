@@ -121,7 +121,7 @@ fun MyFloatingActionButton() {
       backgroundColor = colorResource(id = R.color.colorPrimary),
       contentColor = Color.White,
       content = {
-        Icon(Icons.Filled.Favorite)
+        Icon(Icons.Filled.Favorite, stringResource(R.string.favourite))
       }
   )
 }

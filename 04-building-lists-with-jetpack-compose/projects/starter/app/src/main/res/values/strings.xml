@@ -26,4 +26,6 @@
   <string name="kotlin">"Kotlin"</string>
   <string name="swift">"Swift"</string>
   <string name="ios">"iOS"</string>
+  <string name="favourite">"Favourite"</string>
+  <string name="menu">"Menu"</string>
 </resources>

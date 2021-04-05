@@ -34,10 +34,10 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,15 +62,15 @@ fun RowScreen() {
 @Composable
 fun MyRow() {
   Row(
-    verticalAlignment = Alignment.CenterVertically,
-    horizontalArrangement = Arrangement.SpaceEvenly,
-    modifier = Modifier.fillMaxSize()
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.SpaceEvenly,
+      modifier = Modifier.fillMaxSize()
   ) {
 
     THREE_ELEMENT_LIST.forEach { textResId ->
       Text(
-        text = stringResource(id = textResId),
-        fontSize = 18.sp
+          text = stringResource(id = textResId),
+          fontSize = 18.sp
       )
     }
   }
