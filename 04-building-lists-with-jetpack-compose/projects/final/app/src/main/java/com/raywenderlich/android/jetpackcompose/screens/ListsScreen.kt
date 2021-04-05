@@ -39,9 +39,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
@@ -99,12 +101,9 @@ fun ListScreen() {
 @Composable
 fun MyList() {
   LazyColumn {
-    items(
-        items = items,
-        itemContent = {
-          ListItem(it)
-        }
-    )
+    items(items) { items ->
+      ListItem(items)
+    }
   }
 }
 
@@ -122,12 +121,9 @@ fun ListItem(bookCategory: BookCategory, modifier: Modifier = Modifier) {
     Spacer(modifier = modifier.height(8.dp))
 
     LazyRow {
-      items(
-        items = bookCategory.bookImageResources,
-        itemContent = {
-          BookImage(imageResource = it)
-        }
-      )
+      items(bookCategory.bookImageResources) { items ->
+        BookImage(items)
+      }
     }
   }
 }
@@ -136,8 +132,9 @@ fun ListItem(bookCategory: BookCategory, modifier: Modifier = Modifier) {
 fun BookImage(imageResource: Int) {
   Image(
     modifier = Modifier.size(170.dp, 200.dp),
-    bitmap = imageResource(id = imageResource),
-    contentScale = ContentScale.Fit
+    bitmap = ImageBitmap.imageResource(id = imageResource),
+    contentScale = ContentScale.Fit,
+    contentDescription = stringResource(R.string.book_image)
   )
 }
 

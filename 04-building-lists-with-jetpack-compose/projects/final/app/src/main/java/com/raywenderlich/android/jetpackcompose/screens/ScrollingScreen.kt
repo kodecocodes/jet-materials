@@ -35,9 +35,18 @@
 package com.raywenderlich.android.jetpackcompose.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollableRow
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
@@ -46,7 +55,7 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun ScrollingScreen() {
 
-  MyScrollingScreen()
+  MyScrollingScreen(Modifier.fillMaxSize())
 
   BackButtonHandler {
     JetFundamentalsRouter.navigateTo(Screen.Navigation)
@@ -54,10 +63,25 @@ fun ScrollingScreen() {
 }
 
 @Composable
-fun MyScrollingScreen() {
-  ScrollableRow {
-    Image(bitmap = imageResource(R.drawable.advanced_architecture_android))
-    Image(bitmap = imageResource(R.drawable.kotlin_aprentice))
-    Image(bitmap = imageResource(R.drawable.kotlin_coroutines))
+fun MyScrollingScreen(modifier: Modifier) {
+  Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+    Image(
+        bitmap = ImageBitmap.imageResource(R.drawable.advanced_architecture_android),
+        contentDescription = stringResource(R.string.advanced_architecture_android),
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier.size(476.dp, 616.dp)
+    )
+    Image(
+        bitmap = ImageBitmap.imageResource(R.drawable.kotlin_aprentice),
+        contentDescription = stringResource(R.string.kotlin_apprentice),
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier.size(476.dp, 616.dp)
+    )
+    Image(
+        bitmap = ImageBitmap.imageResource(R.drawable.kotlin_coroutines),
+        contentDescription = stringResource(R.string.kotlin_coroutines),
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier.size(476.dp, 616.dp)
+    )
   }
 }
