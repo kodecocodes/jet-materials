@@ -36,7 +36,7 @@ package com.raywenderlich.android.jetnotes
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.platform.setContent
+import androidx.activity.compose.setContent
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModelFactory
 
