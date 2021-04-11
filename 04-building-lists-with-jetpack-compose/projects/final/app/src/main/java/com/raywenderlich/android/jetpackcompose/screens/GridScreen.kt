@@ -34,16 +34,14 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -113,26 +111,23 @@ fun GridView(columnCount: Int) {
 fun RowItem(rowItems: List<IconResource>) {
   Row {
     for (element in rowItems)
-      GridIcon(element)
+      GridIcon(element, modifier = Modifier.weight(1f))
   }
 }
 
 @Composable
-fun GridIcon(iconResource: IconResource) {
+fun GridIcon(iconResource: IconResource,  modifier: Modifier) {
   val color = if (iconResource.isVisible)
     colorResource(R.color.colorPrimary)
   else Color.Transparent
 
-  with(RowScope) {
     Icon(
       imageVector = iconResource.imageVector,
       tint = color,
       contentDescription = stringResource(R.string.grid_icon),
-      modifier = Modifier
+      modifier = modifier
         .size(80.dp, 80.dp)
-        .weight(1f)
     )
-  }
 }
 
 data class IconResource(val imageVector: ImageVector, val isVisible: Boolean)
