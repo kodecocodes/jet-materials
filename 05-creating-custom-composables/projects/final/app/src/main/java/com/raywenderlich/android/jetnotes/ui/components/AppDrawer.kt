@@ -34,25 +34,28 @@
 package com.raywenderlich.android.jetnotes.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.material.Surface
 import androidx.compose.foundation.clickable
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.Switch
 import com.raywenderlich.android.jetnotes.theme.JetNotesThemeSettings
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
+import androidx.compose.material.Divider
 
 @Composable
 fun AppDrawer(
@@ -92,6 +95,7 @@ private fun AppDrawerHeader() {
   Row(modifier = Modifier.fillMaxWidth()) {
     Image(
       imageVector = Icons.Filled.Menu,
+      contentDescription = "Drawer Header Icon",
       colorFilter = ColorFilter
         .tint(MaterialTheme.colors.onSurface),
       modifier = Modifier.padding(16.dp)
@@ -112,6 +116,7 @@ private fun ScreenNavigationButton(
   onClick: () -> Unit
 ) {
   val colors = MaterialTheme.colors
+
   // Define alphas for the image for two different states
   // of the button: selected/unselected
   val imageAlpha = if (isSelected) {
@@ -119,6 +124,7 @@ private fun ScreenNavigationButton(
   } else {
     0.6f
   }
+
   // Define color for the text for two different states
   // of the button: selected/unselected
   val textColor = if (isSelected) {
@@ -126,6 +132,7 @@ private fun ScreenNavigationButton(
   } else {
     colors.onSurface.copy(alpha = 0.6f)
   }
+
   // Define color for the background for two different states
   // of the button: selected/unselected
   val backgroundColor = if (isSelected) {
@@ -145,14 +152,17 @@ private fun ScreenNavigationButton(
       horizontalArrangement = Arrangement.Start,
       verticalAlignment = Alignment.CenterVertically,
       modifier = Modifier
-        .clickable(onClick = onClick).fillMaxWidth().padding(4.dp)
+        .clickable(onClick = onClick)
+        .fillMaxWidth()
+        .padding(4.dp)
     ) {
       Image(
         imageVector = icon,
+        contentDescription = "Screen Navigation Button",
         colorFilter = ColorFilter.tint(textColor),
         alpha = imageAlpha
       )
-      Spacer(Modifier.preferredWidth(16.dp))
+      Spacer(Modifier.width(16.dp))
       Text(
         text = label,
         style = MaterialTheme.typography.body2,
@@ -166,7 +176,8 @@ private fun ScreenNavigationButton(
 @Composable
 private fun LightDarkThemeItem() {
   Row(
-    Modifier.padding(8.dp)
+    Modifier
+      .padding(8.dp)
   ) {
     Text(
       text = "Turn on dark theme",
