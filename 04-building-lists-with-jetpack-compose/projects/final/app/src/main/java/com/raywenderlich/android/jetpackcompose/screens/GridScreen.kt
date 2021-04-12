@@ -111,12 +111,12 @@ fun GridView(columnCount: Int) {
 fun RowItem(rowItems: List<IconResource>) {
   Row {
     for (element in rowItems)
-      GridIcon(element, modifier = Modifier.weight(1f))
+      GridIcon(element)
   }
 }
 
 @Composable
-fun GridIcon(iconResource: IconResource,  modifier: Modifier) {
+fun RowScope.GridIcon(iconResource: IconResource) {
   val color = if (iconResource.isVisible)
     colorResource(R.color.colorPrimary)
   else Color.Transparent
@@ -125,8 +125,9 @@ fun GridIcon(iconResource: IconResource,  modifier: Modifier) {
       imageVector = iconResource.imageVector,
       tint = color,
       contentDescription = stringResource(R.string.grid_icon),
-      modifier = modifier
+      modifier = Modifier
         .size(80.dp, 80.dp)
+        .weight(1f)
     )
 }
 

@@ -34,6 +34,8 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -55,7 +57,7 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun ScrollingScreen() {
 
-  MyScrollingScreen(Modifier.fillMaxSize())
+  MyScrollingScreen()
 
   BackButtonHandler {
     JetFundamentalsRouter.navigateTo(Screen.Navigation)
@@ -63,25 +65,20 @@ fun ScrollingScreen() {
 }
 
 @Composable
-fun MyScrollingScreen(modifier: Modifier) {
+fun MyScrollingScreen(modifier: Modifier = Modifier) {
   Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-    Image(
-        bitmap = ImageBitmap.imageResource(R.drawable.advanced_architecture_android),
-        contentDescription = stringResource(R.string.advanced_architecture_android),
-        contentScale = ContentScale.FillBounds,
-        modifier = Modifier.size(476.dp, 616.dp)
-    )
-    Image(
-        bitmap = ImageBitmap.imageResource(R.drawable.kotlin_aprentice),
-        contentDescription = stringResource(R.string.kotlin_apprentice),
-        contentScale = ContentScale.FillBounds,
-        modifier = Modifier.size(476.dp, 616.dp)
-    )
-    Image(
-        bitmap = ImageBitmap.imageResource(R.drawable.kotlin_coroutines),
-        contentDescription = stringResource(R.string.kotlin_coroutines),
-        contentScale = ContentScale.FillBounds,
-        modifier = Modifier.size(476.dp, 616.dp)
-    )
+    BookImage(R.drawable.advanced_architecture_android, R.string.advanced_architecture_android)
+    BookImage(R.drawable.kotlin_aprentice, R.string.kotlin_apprentice)
+    BookImage(R.drawable.kotlin_coroutines, R.string.kotlin_coroutines)
   }
+}
+
+@Composable
+fun BookImage(@DrawableRes imageResId: Int, @StringRes contentDescriptionResId: Int){
+  Image(
+      bitmap = ImageBitmap.imageResource(imageResId),
+      contentDescription = stringResource(contentDescriptionResId),
+      contentScale = ContentScale.FillBounds,
+      modifier = Modifier.size(476.dp, 616.dp)
+  )
 }
