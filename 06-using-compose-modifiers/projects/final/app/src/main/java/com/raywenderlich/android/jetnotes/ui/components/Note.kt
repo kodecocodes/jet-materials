@@ -54,19 +54,18 @@ import com.raywenderlich.android.jetnotes.theme.rwGreen
 @Composable
 fun Note() {
   val backgroundShape: Shape = RoundedCornerShape(4.dp)
-
   Row(
     modifier = Modifier
       .padding(8.dp)
       .shadow(1.dp, backgroundShape)
       .fillMaxWidth()
-      .preferredHeightIn(min = 64.dp)
+      .heightIn(min = 64.dp)
       .background(Color.White, backgroundShape)
   ) {
     NoteColor(
       modifier = Modifier
         .align(Alignment.CenterVertically)
-        .padding(start = 16.dp, end = 16.dp), // here
+        .padding(start = 16.dp, end = 16.dp),
       color = rwGreen,
       size = 40.dp,
       border = 1.dp
@@ -90,7 +89,7 @@ fun Note() {
         text = "Content",
         color = Color.Black.copy(alpha = 0.75f),
         maxLines = 1,
-        style = TextStyle( // here
+        style = TextStyle(
           fontWeight = FontWeight.Normal,
           fontSize = 14.sp,
           letterSpacing = 0.25.sp
