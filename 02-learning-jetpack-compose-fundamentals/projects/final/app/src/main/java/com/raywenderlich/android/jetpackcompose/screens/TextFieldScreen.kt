@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -77,16 +78,16 @@ fun MyTextField() {
   val primaryColor = colorResource(id = R.color.colorPrimary)
 
   OutlinedTextField(
-      label = { Text(text = stringResource(id = R.string.email)) },
-      colors = TextFieldDefaults.outlinedTextFieldColors(
-          focusedBorderColor = primaryColor,
-          focusedLabelColor = primaryColor,
-          cursorColor = primaryColor
-      ),
-      keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
-      value = textValue.value,
-      onValueChange = {
-        textValue.value = it
-      }
+    label = { Text(text = stringResource(id = R.string.email)) },
+    colors = TextFieldDefaults.outlinedTextFieldColors(
+      focusedBorderColor = primaryColor,
+      focusedLabelColor = primaryColor,
+      cursorColor = primaryColor
+    ),
+    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+    value = textValue.value,
+    onValueChange = {
+      textValue.value = it
+    },
   )
 }

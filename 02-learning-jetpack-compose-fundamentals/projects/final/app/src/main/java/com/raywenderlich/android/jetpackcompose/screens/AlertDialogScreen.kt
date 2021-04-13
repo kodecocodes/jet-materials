@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,17 +62,18 @@ fun AlertDialogScreen() {
 
 @Composable
 fun MyAlertDialog() {
-  val shouldShowDialog = remember { mutableStateOf(true) }
+  val shouldShowDialog = remember { mutableStateOf(true) } // 1
 
-  if (shouldShowDialog.value) {
-    AlertDialog(
-      onDismissRequest = {
+  if (shouldShowDialog.value) { // 2
+    AlertDialog( // 3
+      onDismissRequest = { // 4
         shouldShowDialog.value = false
         JetFundamentalsRouter.navigateTo(Screen.Navigation)
       },
+      // 5
       title = { Text(text = stringResource(id = R.string.alert_dialog_title)) },
       text = { Text(text = stringResource(id = R.string.alert_dialog_text)) },
-      confirmButton = {
+      confirmButton = { // 6
         Button(
           colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
           onClick = {

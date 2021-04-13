@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-
 import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
@@ -71,8 +70,7 @@ fun TextScreen() {
 @Composable
 @Preview
 fun MyText() {
-  Text(
-    text = stringResource(id = R.string.jetpack_compose),
+  Text(text = stringResource(id = R.string.jetpack_compose),
     fontStyle = FontStyle.Italic,
     color = colorResource(id = R.color.colorPrimary),
     fontSize = 30.sp,
