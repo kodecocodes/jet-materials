@@ -33,7 +33,19 @@
  */
 package com.raywenderlich.android.jetreddit.screens
 
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.raywenderlich.android.jetreddit.components.ImagePost
+import com.raywenderlich.android.jetreddit.components.TextPost
+import com.raywenderlich.android.jetreddit.domain.model.PostModel
+import com.raywenderlich.android.jetreddit.domain.model.PostType
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
 
 @Composable

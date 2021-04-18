@@ -9,18 +9,41 @@ class DbMapperImpl : DbMapper {
 
   override fun mapPost(dbPostDbModel: PostDbModel): PostModel {
     with(dbPostDbModel) {
-      return PostModel(username, subreddit, title, text, likes.toString(), comments.toString(), PostType.fromType(type), getPostedDate(datePosted))
+      return PostModel(
+        username,
+        subreddit,
+        title,
+        text,
+        likes.toString(),
+        comments.toString(),
+        PostType.fromType(type),
+        getPostedDate(datePosted),
+        image
+      )
     }
   }
 
   override fun mapDbPost(postModel: PostModel): PostDbModel {
     with(postModel) {
-      return PostDbModel(null, "raywenderlich", subreddit, title, text, 0, 0, type.type, System.currentTimeMillis(), false)
+      return PostDbModel(
+        null,
+        "raywenderlich",
+        subreddit,
+        title,
+        text,
+        0,
+        0,
+        type.type,
+        System.currentTimeMillis(),
+        false,
+        image
+      )
     }
   }
 
   private fun getPostedDate(date: Long): String {
-    val hoursPassed = TimeUnit.HOURS.convert(System.currentTimeMillis() - date, TimeUnit.MILLISECONDS)
+    val hoursPassed =
+      TimeUnit.HOURS.convert(System.currentTimeMillis() - date, TimeUnit.MILLISECONDS)
     if (hoursPassed > 24) {
       val daysPassed = TimeUnit.DAYS.convert(hoursPassed, TimeUnit.HOURS)
 

@@ -34,58 +34,69 @@
 package com.raywenderlich.android.jetreddit.screens
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.Text
+import androidx.compose.foundation.ScrollableColumn
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRowFor
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.ui.tooling.preview.Preview
+import androidx.compose.ui.zIndex
 import com.raywenderlich.android.jetreddit.R
 import com.raywenderlich.android.jetreddit.components.BackgroundText
 import com.raywenderlich.android.jetreddit.models.SubredditModel
 
 val subreddits = listOf(
-    SubredditModel(
-        R.string.raywenderlich,
-        R.string.members_120k,
-        R.string.welcome_to_raywenderlich
-    ),
-    SubredditModel(
-        R.string.programming,
-        R.string.members_600k,
-        R.string.hello_programmers
-    ),
-    SubredditModel(
-        R.string.android,
-        R.string.members_400k,
-        R.string.welcome_to_android
-    ),
-    SubredditModel(
-        R.string.androiddev,
-        R.string.members_500k,
-        R.string.hello_android_devs
-    )
+  SubredditModel(
+    R.string.raywenderlich,
+    R.string.members_120k,
+    R.string.welcome_to_raywenderlich
+  ),
+  SubredditModel(
+    R.string.programming,
+    R.string.members_600k,
+    R.string.hello_programmers
+  ),
+  SubredditModel(
+    R.string.android,
+    R.string.members_400k,
+    R.string.welcome_to_android
+  ),
+  SubredditModel(
+    R.string.androiddev,
+    R.string.members_500k,
+    R.string.hello_android_devs
+  )
 )
 
 val mainCommunities = listOf(R.string.all, R.string.public_network)
 
 val communities = listOf(
-    R.string.digitalnomad,
-    R.string.covid19,
-    R.string.memes,
-    R.string.humor,
-    R.string.worldnews,
-    R.string.dogs,
-    R.string.cats
+  R.string.digitalnomad,
+  R.string.covid19,
+  R.string.memes,
+  R.string.humor,
+  R.string.worldnews,
+  R.string.dogs,
+  R.string.cats
 )
 
 @Composable
@@ -106,50 +117,51 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
 @Composable
 fun SubredditImage(modifier: Modifier) {
   Image(
-      painter = ColorPainter(Color.Blue),
-      modifier = modifier
-          .fillMaxWidth()
-          .height(30.dp)
+    painter = ColorPainter(Color.Blue),
+    modifier = modifier
+      .fillMaxWidth()
+      .height(30.dp)
   )
 }
 
 @Composable
 fun SubredditIcon(modifier: Modifier) {
   Icon(
-      modifier = modifier,
-      tint = Color.LightGray,
-      asset = vectorResource(id = R.drawable.ic_planet)
+    modifier = modifier,
+    tint = Color.LightGray,
+    imageVector = vectorResource(id = R.drawable.ic_planet)
   )
 }
 
 @Composable
 fun SubredditName(modifier: Modifier, @StringRes nameStringRes: Int) {
   Text(
-      fontWeight = FontWeight.Bold,
-      fontSize = 10.sp,
-      text = stringResource(nameStringRes),
-      color = MaterialTheme.colors.primaryVariant,
-      modifier = modifier.padding(4.dp)
+    fontWeight = FontWeight.Bold,
+    fontSize = 10.sp,
+    text = stringResource(nameStringRes),
+    color = MaterialTheme.colors.primaryVariant,
+    modifier = modifier.padding(4.dp)
   )
 }
 
 @Composable
 fun SubredditMembers(modifier: Modifier, @StringRes membersStringRes: Int) {
   Text(
-      fontSize = 8.sp,
-      text = stringResource(membersStringRes),
-      color = Color.Gray,
-      modifier = modifier
+    fontSize = 8.sp,
+    text = stringResource(membersStringRes),
+    color = Color.Gray,
+    modifier = modifier
   )
 }
 
 @Composable
 fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: Int) {
   Text(
-      fontSize = 8.sp,
-      text = stringResource(descriptionStringRes),
-      color = MaterialTheme.colors.primaryVariant,
-      modifier = modifier.padding(4.dp)
+    fontSize = 8.sp,
+    text = stringResource(descriptionStringRes),
+    color = MaterialTheme.colors.primaryVariant,
+    modifier = modifier.padding(4.dp),
+    textAlign = TextAlign.Center
   )
 }
 
@@ -178,7 +190,7 @@ fun SubredditPreview() {
 @Preview
 @Composable
 fun CommunityPreview() {
-  Community("r/raywenderlich")
+  Community("r/raywenderlich.com")
 }
 
 @Preview
