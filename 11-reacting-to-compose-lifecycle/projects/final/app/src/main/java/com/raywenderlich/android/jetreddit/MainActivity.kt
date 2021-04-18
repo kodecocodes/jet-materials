@@ -34,11 +34,11 @@
 package com.raywenderlich.android.jetreddit
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.platform.setContent
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModelFactory
-import androidx.activity.viewModels
 
 class MainActivity : AppCompatActivity() {
 

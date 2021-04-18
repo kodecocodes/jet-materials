@@ -3,8 +3,8 @@ package com.raywenderlich.android.jetreddit.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -31,38 +31,41 @@ private val defaultCommunities = listOf("raywenderlich", "androiddev", "puppies"
 
 @Composable
 fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
-
   val scope = rememberCoroutineScope()
-  var currentJob by remember { mutableStateOf<Job?>(null) }
-
   val communities: List<String> by viewModel.subreddits.observeAsState(emptyList())
-
   var searchedText by remember { mutableStateOf("") }
+  var currentJob by remember { mutableStateOf<Job?>(null) }
+  val activeColor = MaterialTheme.colors.onSurface
 
-  onActive {
+  LaunchedEffect(Unit) {
     viewModel.searchCommunities(searchedText)
   }
 
   Column {
     ChooseCommunityTopBar()
-
     TextField(
-        value = searchedText,
-        onValueChange = {
-          searchedText = it
-          currentJob?.cancel()
-          currentJob = scope.async {
-            delay(SEARCH_DELAY_MILLIS)
-            viewModel.searchCommunities(searchedText)
-          }
-        },
-        leadingIcon = { Icon(Icons.Default.Search) },
-        label = { Text(stringResource(R.string.search)) },
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
-        backgroundColor = MaterialTheme.colors.surface,
-        activeColor = MaterialTheme.colors.onSurface
+      value = searchedText,
+      onValueChange = {
+        searchedText = it
+        currentJob?.cancel()
+        currentJob = scope.async {
+          delay(SEARCH_DELAY_MILLIS)
+          viewModel.searchCommunities(searchedText)
+        }
+      },
+      leadingIcon = {
+        Icon(Icons.Default.Search, contentDescription = stringResource(id = R.string.search))
+      },
+      label = { Text(stringResource(R.string.search)) },
+      modifier = modifier
+        .fillMaxWidth()
+        .padding(horizontal = 8.dp),
+      colors = TextFieldDefaults.outlinedTextFieldColors(
+        focusedBorderColor = activeColor,
+        focusedLabelColor = activeColor,
+        cursorColor = activeColor,
+        backgroundColor = MaterialTheme.colors.surface
+      )
     )
     SearchedCommunities(communities, viewModel, modifier)
   }
@@ -73,15 +76,19 @@ fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifie
 }
 
 @Composable
-fun SearchedCommunities(communities: List<String>, viewModel: MainViewModel?, modifier: Modifier = Modifier) {
+fun SearchedCommunities(
+  communities: List<String>,
+  viewModel: MainViewModel?,
+  modifier: Modifier = Modifier
+) {
   communities.forEach {
     Community(
-        text = it,
-        modifier = modifier,
-        onCommunityClicked = {
-          viewModel?.selectedCommunity?.postValue(it)
-          JetRedditRouter.goBack()
-        }
+      text = it,
+      modifier = modifier,
+      onCommunityClicked = {
+        viewModel?.selectedCommunity?.postValue(it)
+        JetRedditRouter.goBack()
+      }
     )
   }
 }
@@ -92,28 +99,29 @@ fun ChooseCommunityTopBar(modifier: Modifier = Modifier) {
   val colors = MaterialTheme.colors
 
   TopAppBar(
-      title = {
-        Text(
-            fontSize = 16.sp,
-            text = stringResource(R.string.choose_community),
-            color = colors.primaryVariant
+    title = {
+      Text(
+        fontSize = 16.sp,
+        text = stringResource(R.string.choose_community),
+        color = colors.primaryVariant
+      )
+    },
+    navigationIcon = {
+      IconButton(
+        onClick = { JetRedditRouter.goBack() }
+      ) {
+        Icon(
+          imageVector = Icons.Default.Close,
+          tint = colors.primaryVariant,
+          contentDescription = stringResource(id = R.string.close)
         )
-      },
-      navigationIcon = {
-        IconButton(
-            onClick = { JetRedditRouter.goBack() }
-        ) {
-          Icon(
-              imageVector = Icons.Default.Close,
-              tint = colors.primaryVariant
-          )
-        }
-      },
-      backgroundColor = colors.primary,
-      elevation = 0.dp,
-      modifier = modifier
-          .preferredHeight(48.dp)
-          .background(Color.Blue)
+      }
+    },
+    backgroundColor = colors.primary,
+    elevation = 0.dp,
+    modifier = modifier
+      .height(48.dp)
+      .background(Color.Blue)
   )
 }
 
