@@ -1,10 +1,7 @@
 package com.raywenderlich.android.jetreddit.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -61,14 +58,15 @@ fun ChooseCommunityTopBar(modifier: Modifier = Modifier) {
       ) {
         Icon(
           imageVector = Icons.Default.Close,
-          tint = colors.primaryVariant
+          tint = colors.primaryVariant,
+          contentDescription = stringResource(id = R.string.close)
         )
       }
     },
     backgroundColor = colors.primary,
     elevation = 0.dp,
     modifier = modifier
-      .preferredHeight(48.dp)
+      .height(48.dp)
       .background(Color.Blue)
   )
 }
