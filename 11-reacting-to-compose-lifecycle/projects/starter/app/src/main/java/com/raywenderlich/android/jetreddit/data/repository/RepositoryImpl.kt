@@ -48,16 +48,18 @@ class RepositoryImpl(private val postDao: PostDao, private val mapper: DbMapper)
   override fun getAllSubreddits(searchedText: String): List<String> {
     this.searchedText = searchedText
 
-    if (searchedText.isNotEmpty()){
+    if (searchedText.isNotEmpty()) {
       return postDao.getAllSubreddits().filter { it.contains(searchedText) }
     }
 
     return postDao.getAllSubreddits()
   }
 
-  private fun getAllPostsFromDatabase(): List<PostModel> = postDao.getAllPosts().map(mapper::mapPost)
+  private fun getAllPostsFromDatabase(): List<PostModel> =
+    postDao.getAllPosts().map(mapper::mapPost)
 
-  private fun getAllOwnedPostsFromDatabase(): List<PostModel> = postDao.getAllOwnedPosts("raywenderlich").map(mapper::mapPost)
+  private fun getAllOwnedPostsFromDatabase(): List<PostModel> =
+    postDao.getAllOwnedPosts("raywenderlich").map(mapper::mapPost)
 
   override fun insert(post: PostModel) {
     postDao.insert(mapper.mapDbPost(post))

@@ -4,7 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -41,47 +41,47 @@ fun MyProfileScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
     val colors = MaterialTheme.colors
 
     TopAppBar(
-        title = {
-          Text(
-              fontSize = 12.sp,
-              text = stringResource(R.string.default_username),
-              color = colors.primaryVariant
+      title = {
+        Text(
+          fontSize = 12.sp,
+          text = stringResource(R.string.default_username),
+          color = colors.primaryVariant
+        )
+      },
+      navigationIcon = {
+        IconButton(
+          onClick = { JetRedditRouter.goBack() }
+        ) {
+          Icon(
+            imageVector = Icons.Default.ArrowBack,
+            tint = colors.primaryVariant
           )
-        },
-        navigationIcon = {
-          IconButton(
-              onClick = { JetRedditRouter.goBack() }
-          ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                tint = colors.primaryVariant
-            )
-          }
-        },
-        backgroundColor = colors.primary,
-        elevation = 0.dp,
-        modifier = modifier.constrainAs(topAppBar) {
-          top.linkTo(parent.top)
-          start.linkTo(parent.start)
-          end.linkTo(parent.end)
-        }.preferredHeight(48.dp)
-            .background(Color.Blue)
+        }
+      },
+      backgroundColor = colors.primary,
+      elevation = 0.dp,
+      modifier = modifier.constrainAs(topAppBar) {
+        top.linkTo(parent.top)
+        start.linkTo(parent.start)
+        end.linkTo(parent.end)
+      }.preferredHeight(48.dp)
+        .background(Color.Blue)
     )
 
     MyProfileTabs(
-        modifier = modifier.constrainAs(tabs) {
-          top.linkTo(topAppBar.bottom)
-          start.linkTo(parent.start)
-          end.linkTo(parent.end)
-        }
+      modifier = modifier.constrainAs(tabs) {
+        top.linkTo(topAppBar.bottom)
+        start.linkTo(parent.start)
+        end.linkTo(parent.end)
+      }
     )
 
     Surface(
-        modifier = modifier.constrainAs(bodyContent) {
-          top.linkTo(tabs.bottom)
-          start.linkTo(parent.start)
-          end.linkTo(parent.end)
-        }.padding(bottom = 68.dp)
+      modifier = modifier.constrainAs(bodyContent) {
+        top.linkTo(tabs.bottom)
+        start.linkTo(parent.start)
+        end.linkTo(parent.end)
+      }.padding(bottom = 68.dp)
     ) {
 
       Crossfade(current = MyProfileRouter.currentScreen) { screen ->
@@ -98,23 +98,23 @@ fun MyProfileScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
 fun MyProfileTabs(modifier: Modifier = Modifier) {
   var selectedIndex by remember { mutableStateOf(0) }
   TabRow(
-      selectedTabIndex = selectedIndex,
-      backgroundColor = MaterialTheme.colors.primary,
-      modifier = modifier
+    selectedTabIndex = selectedIndex,
+    backgroundColor = MaterialTheme.colors.primary,
+    modifier = modifier
   ) {
     tabNames.forEachIndexed { index, nameResource ->
       Tab(
-          selected = index == selectedIndex,
-          onClick = {
-            selectedIndex = index
-            changeScreen(index)
-          }
+        selected = index == selectedIndex,
+        onClick = {
+          selectedIndex = index
+          changeScreen(index)
+        }
       ) {
         Text(
-            color = MaterialTheme.colors.primaryVariant,
-            fontSize = 12.sp,
-            text = stringResource(nameResource),
-            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
+          color = MaterialTheme.colors.primaryVariant,
+          fontSize = 12.sp,
+          text = stringResource(nameResource),
+          modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
         )
       }
     }
@@ -133,11 +133,12 @@ fun MyProfilePosts(modifier: Modifier, viewModel: MainViewModel) {
 
   val posts: List<PostModel> by viewModel.myPosts.observeAsState(listOf())
 
-  LazyColumnFor(
-      items = posts,
-      modifier = modifier.background(color = MaterialTheme.colors.secondary)
+  LazyColumn(
+    modifier = modifier.background(color = MaterialTheme.colors.secondary)
   ) {
-    MyProfilePost(modifier, it)
+    items(posts) {
+      MyProfilePost(modifier, it)
+    }
   }
 }
 
@@ -146,7 +147,7 @@ fun MyProfilePost(modifier: Modifier, post: PostModel) {
   Card(shape = MaterialTheme.shapes.large) {
 
     ConstraintLayout(
-        modifier = modifier.fillMaxSize()
+      modifier = modifier.fillMaxSize()
     ) {
 
       val (redditIcon, subredditName, actionsBar, title, description, settingIcon) = createRefs()
@@ -154,82 +155,82 @@ fun MyProfilePost(modifier: Modifier, post: PostModel) {
       val colors = MaterialTheme.colors
 
       Image(
-          imageVector = Icons.Default.Star,
-          modifier = postModifier.size(20.dp)
-              .constrainAs(redditIcon) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-              }.padding(start = 8.dp, top = 8.dp)
+        imageVector = Icons.Default.Star,
+        modifier = postModifier.size(20.dp)
+          .constrainAs(redditIcon) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+          }.padding(start = 8.dp, top = 8.dp)
       )
 
       Image(
-          imageVector = vectorResource(id = R.drawable.ic_baseline_more_vert_24),
-          modifier = postModifier.size(20.dp)
-              .constrainAs(settingIcon) {
-                top.linkTo(parent.top)
-                end.linkTo(parent.end)
-              }.padding(end = 8.dp, top = 8.dp)
+        imageVector = vectorResource(id = R.drawable.ic_baseline_more_vert_24),
+        modifier = postModifier.size(20.dp)
+          .constrainAs(settingIcon) {
+            top.linkTo(parent.top)
+            end.linkTo(parent.end)
+          }.padding(end = 8.dp, top = 8.dp)
       )
 
       Text(
-          text = "${post.username} • ${post.postedTime}",
-          fontSize = 8.sp,
-          modifier = postModifier.constrainAs(subredditName) {
-            top.linkTo(redditIcon.top)
-            bottom.linkTo(redditIcon.bottom)
-            start.linkTo(redditIcon.end)
-          }.padding(start = 2.dp, top = 8.dp)
+        text = "${post.username} • ${post.postedTime}",
+        fontSize = 8.sp,
+        modifier = postModifier.constrainAs(subredditName) {
+          top.linkTo(redditIcon.top)
+          bottom.linkTo(redditIcon.bottom)
+          start.linkTo(redditIcon.end)
+        }.padding(start = 2.dp, top = 8.dp)
       )
 
       Text(
-          text = post.title,
-          color = colors.primaryVariant,
-          fontSize = 12.sp,
-          modifier = postModifier.constrainAs(title) {
-            top.linkTo(redditIcon.bottom)
-            start.linkTo(redditIcon.start)
-          }.padding(start = 8.dp, top = 8.dp)
+        text = post.title,
+        color = colors.primaryVariant,
+        fontSize = 12.sp,
+        modifier = postModifier.constrainAs(title) {
+          top.linkTo(redditIcon.bottom)
+          start.linkTo(redditIcon.start)
+        }.padding(start = 8.dp, top = 8.dp)
       )
 
       Text(
-          text = post.text,
-          color = Color.DarkGray,
-          fontSize = 10.sp,
-          modifier = postModifier.constrainAs(description) {
-            top.linkTo(title.bottom)
-            start.linkTo(redditIcon.start)
-          }.padding(start = 8.dp, top = 8.dp)
+        text = post.text,
+        color = Color.DarkGray,
+        fontSize = 10.sp,
+        modifier = postModifier.constrainAs(description) {
+          top.linkTo(title.bottom)
+          start.linkTo(redditIcon.start)
+        }.padding(start = 8.dp, top = 8.dp)
       )
 
       Row(
-          modifier = postModifier.fillMaxWidth()
-              .constrainAs(actionsBar) {
-                top.linkTo(description.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-              }.padding(
-                  top = 8.dp,
-                  bottom = 8.dp,
-                  end = 16.dp,
-                  start = 16.dp
-              ),
-          horizontalArrangement = Arrangement.SpaceBetween,
-          verticalAlignment = Alignment.CenterVertically
+        modifier = postModifier.fillMaxWidth()
+          .constrainAs(actionsBar) {
+            top.linkTo(description.bottom)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+          }.padding(
+            top = 8.dp,
+            bottom = 8.dp,
+            end = 16.dp,
+            start = 16.dp
+          ),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
       ) {
         PostAction(
-            vectorResourceId = R.drawable.ic_baseline_arrow_upward_24,
-            text = post.likes,
-            onClickAction = {}
+          vectorResourceId = R.drawable.ic_baseline_arrow_upward_24,
+          text = post.likes,
+          onClickAction = {}
         )
         PostAction(
-            vectorResourceId = R.drawable.ic_baseline_comment_24,
-            text = post.comments,
-            onClickAction = {}
+          vectorResourceId = R.drawable.ic_baseline_comment_24,
+          text = post.comments,
+          onClickAction = {}
         )
         PostAction(
-            vectorResourceId = R.drawable.ic_baseline_share_24,
-            text = stringResource(R.string.share),
-            onClickAction = {}
+          vectorResourceId = R.drawable.ic_baseline_share_24,
+          text = stringResource(R.string.share),
+          onClickAction = {}
         )
       }
     }
@@ -248,12 +249,12 @@ fun MyProfileAbout() {
     BackgroundText(stringResource(R.string.trophies))
 
     val trophies = listOf(
-        R.string.verified_email,
-        R.string.gold_medal,
-        R.string.top_comment
+      R.string.verified_email,
+      R.string.gold_medal,
+      R.string.top_comment
     )
-    LazyColumnFor(items = trophies) {
-      Trophy(text = stringResource(it))
+    LazyColumn {
+      items(trophies) { Trophy(text = stringResource(it)) }
     }
   }
 }
@@ -261,17 +262,17 @@ fun MyProfileAbout() {
 @Composable
 fun BackgroundText(text: String) {
   Text(
-      fontWeight = FontWeight.Medium,
-      text = text,
-      fontSize = 10.sp,
-      color = Color.DarkGray,
-      modifier = with(ColumnScope) {
-        Modifier
-            .background(color = MaterialTheme.colors.secondary)
-            .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
-            .fillMaxWidth()
-            .align(Alignment.Start)
-      }
+    fontWeight = FontWeight.Medium,
+    text = text,
+    fontSize = 10.sp,
+    color = Color.DarkGray,
+    modifier = with(ColumnScope) {
+      Modifier
+        .background(color = MaterialTheme.colors.secondary)
+        .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
+        .fillMaxWidth()
+        .align(Alignment.Start)
+    }
   )
 }
 
@@ -281,16 +282,16 @@ fun Trophy(text: String, modifier: Modifier = Modifier) {
   Row(verticalAlignment = Alignment.CenterVertically) {
     Spacer(modifier = modifier.width(16.dp))
     Image(
-        bitmap = imageResource(id = R.drawable.trophy),
-        contentScale = ContentScale.Crop,
-        modifier = modifier.size(24.dp)
+      bitmap = imageResource(id = R.drawable.trophy),
+      contentScale = ContentScale.Crop,
+      modifier = modifier.size(24.dp)
     )
     Spacer(modifier = modifier.width(16.dp))
     Text(
-        text = text, fontSize = 12.sp,
-        color = MaterialTheme.colors.primaryVariant,
-        textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Medium
+      text = text, fontSize = 12.sp,
+      color = MaterialTheme.colors.primaryVariant,
+      textAlign = TextAlign.Center,
+      fontWeight = FontWeight.Medium
     )
   }
 }

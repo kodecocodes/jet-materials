@@ -15,13 +15,13 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun BackgroundText(text: String) {
   Text(
-      fontWeight = FontWeight.Medium,
-      text = text,
-      fontSize = 10.sp,
-      color = Color.DarkGray,
-      modifier = Modifier
-          .background(color = MaterialTheme.colors.secondary)
-          .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
-          .fillMaxWidth()
+    fontWeight = FontWeight.Medium,
+    text = text,
+    fontSize = 10.sp,
+    color = Color.DarkGray,
+    modifier = Modifier
+      .background(color = MaterialTheme.colors.secondary)
+      .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
+      .fillMaxWidth()
   )
 }

@@ -34,7 +34,11 @@ fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifie
 }
 
 @Composable
-fun SearchedCommunities(communities: List<String>, viewModel: MainViewModel?, modifier: Modifier = Modifier) {
+fun SearchedCommunities(
+  communities: List<String>,
+  viewModel: MainViewModel?,
+  modifier: Modifier = Modifier
+) {
   //TODO Add your code here
 }
 
@@ -44,27 +48,27 @@ fun ChooseCommunityTopBar(modifier: Modifier = Modifier) {
   val colors = MaterialTheme.colors
 
   TopAppBar(
-      title = {
-        Text(
-            fontSize = 16.sp,
-            text = stringResource(R.string.choose_community),
-            color = colors.primaryVariant
+    title = {
+      Text(
+        fontSize = 16.sp,
+        text = stringResource(R.string.choose_community),
+        color = colors.primaryVariant
+      )
+    },
+    navigationIcon = {
+      IconButton(
+        onClick = { JetRedditRouter.goBack() }
+      ) {
+        Icon(
+          imageVector = Icons.Default.Close,
+          tint = colors.primaryVariant
         )
-      },
-      navigationIcon = {
-        IconButton(
-            onClick = { JetRedditRouter.goBack() }
-        ) {
-          Icon(
-              imageVector = Icons.Default.Close,
-              tint = colors.primaryVariant
-          )
-        }
-      },
-      backgroundColor = colors.primary,
-      elevation = 0.dp,
-      modifier = modifier
-          .preferredHeight(48.dp)
-          .background(Color.Blue)
+      }
+    },
+    backgroundColor = colors.primary,
+    elevation = 0.dp,
+    modifier = modifier
+      .preferredHeight(48.dp)
+      .background(Color.Blue)
   )
 }

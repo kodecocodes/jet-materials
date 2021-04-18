@@ -36,7 +36,7 @@ package com.raywenderlich.android.jetreddit.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -53,15 +53,16 @@ import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
 fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel> by viewModel.allPosts.observeAsState(listOf())
 
-  LazyColumnFor(
-      items = posts,
-      modifier = Modifier.background(color = MaterialTheme.colors.secondary)
+  LazyColumn(
+    modifier = Modifier.background(color = MaterialTheme.colors.secondary)
   ) {
-    if (it.type == PostType.TEXT) {
-      TextPost(it)
-    } else {
-      ImagePost(it)
+    items(posts) {
+      if (it.type == PostType.TEXT) {
+        TextPost(it)
+      } else {
+        ImagePost(it)
+      }
+      Spacer(modifier = Modifier.height(6.dp))
     }
-    Spacer(modifier = Modifier.height(6.dp))
   }
 }
