@@ -140,9 +140,10 @@ private fun ScreenNavigationButton(
       ) {
         Image(
           imageVector = icon,
-          colorFilter = ColorFilter.tint(Color.Gray)
+          colorFilter = ColorFilter.tint(Color.Gray),
+          contentDescription = label
         )
-        Spacer(Modifier.preferredWidth(16.dp))
+        Spacer(Modifier.width(16.dp))
         Text(
           fontSize = 10.sp,
           text = label,
