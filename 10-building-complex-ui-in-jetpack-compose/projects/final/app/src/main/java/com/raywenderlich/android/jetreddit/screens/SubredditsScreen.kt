@@ -34,12 +34,10 @@
 package com.raywenderlich.android.jetreddit.screens
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.LazyRowFor
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -51,16 +49,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.raywenderlich.android.jetreddit.R
 import com.raywenderlich.android.jetreddit.components.BackgroundText
 import com.raywenderlich.android.jetreddit.models.SubredditModel
@@ -102,22 +102,20 @@ val communities = listOf(
 
 @Composable
 fun SubredditsScreen(modifier: Modifier = Modifier) {
-  ScrollableColumn {
-    Column {
-      Text(
-        modifier = modifier.padding(16.dp),
-        text = stringResource(R.string.recently_visited_subreddits),
-        fontSize = 12.sp,
-        style = MaterialTheme.typography.subtitle1
-      )
+  Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+    Text(
+      modifier = modifier.padding(16.dp),
+      text = stringResource(R.string.recently_visited_subreddits),
+      fontSize = 12.sp,
+      style = MaterialTheme.typography.subtitle1
+    )
 
-      LazyRow(
-        modifier = modifier.padding(end = 16.dp)
-      ) {
-        items(subreddits) { Subreddit(it) }
-      }
-      Communities(modifier)
+    LazyRow(
+      modifier = modifier.padding(end = 16.dp)
+    ) {
+      items(subreddits) { Subreddit(it) }
     }
+    Communities(modifier)
   }
 }
 
@@ -142,26 +140,30 @@ fun Subreddit(subredditModel: SubredditModel, modifier: Modifier = Modifier) {
 @Composable
 fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier) {
   ConstraintLayout(
-    modifier = modifier.fillMaxSize().background(color = MaterialTheme.colors.surface)
+    modifier = modifier
+      .fillMaxSize()
+      .background(color = MaterialTheme.colors.surface)
   ) {
-    val (backgroundImage, icon, name, members, description) = createRefs() // 1
+    val (backgroundImage, icon, name, members, description) = createRefs()
 
-    SubredditImage( // 2
+    SubredditImage(
       modifier = modifier.constrainAs(backgroundImage) {
         centerHorizontallyTo(parent)
         top.linkTo(parent.top)
       }
     )
 
-    SubredditIcon( // 3
-      modifier = modifier.constrainAs(icon) {
-        top.linkTo(backgroundImage.bottom)
-        bottom.linkTo(backgroundImage.bottom)
-        centerHorizontallyTo(parent)
-      }.zIndex(1f)
+    SubredditIcon(
+      modifier = modifier
+        .constrainAs(icon) {
+          top.linkTo(backgroundImage.bottom)
+          bottom.linkTo(backgroundImage.bottom)
+          centerHorizontallyTo(parent)
+        }
+        .zIndex(1f)
     )
 
-    SubredditName( // 4
+    SubredditName(
       nameStringRes = subredditModel.nameStringRes,
       modifier = modifier.constrainAs(name) {
         top.linkTo(icon.bottom)
@@ -169,7 +171,7 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
       }
     )
 
-    SubredditMembers( // 5
+    SubredditMembers(
       membersStringRes = subredditModel.membersStringRes,
       modifier = modifier.constrainAs(members) {
         top.linkTo(name.bottom)
@@ -177,7 +179,7 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
       }
     )
 
-    SubredditDescription( // 6
+    SubredditDescription(
       descriptionStringRes = subredditModel.descriptionStringRes,
       modifier = modifier.constrainAs(description) {
         top.linkTo(members.bottom)
@@ -191,6 +193,7 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
 fun SubredditImage(modifier: Modifier) {
   Image(
     painter = ColorPainter(Color.Blue),
+    contentDescription = stringResource(id = R.string.subreddit_image),
     modifier = modifier
       .fillMaxWidth()
       .height(30.dp)
@@ -202,7 +205,8 @@ fun SubredditIcon(modifier: Modifier) {
   Icon(
     modifier = modifier,
     tint = Color.LightGray,
-    imageVector = vectorResource(id = R.drawable.ic_planet)
+    imageVector = ImageVector.vectorResource(id = R.drawable.ic_planet),
+    contentDescription = stringResource(id = R.string.subreddit_icon),
   )
 }
 
@@ -233,17 +237,21 @@ fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: In
     fontSize = 8.sp,
     text = stringResource(descriptionStringRes),
     color = MaterialTheme.colors.primaryVariant,
-    modifier = modifier.padding(4.dp),
-    textAlign = TextAlign.Center
+    modifier = modifier.padding(4.dp)
   )
 }
 
 @Composable
-fun Community(text: String, modifier: Modifier = Modifier) {
-  Row(modifier = modifier.padding(start = 16.dp, top = 16.dp)) {
+fun Community(text: String, modifier: Modifier = Modifier, onCommunityClicked: () -> Unit = {}) {
+  Row(modifier = modifier
+    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+    .fillMaxWidth()
+    .clickable { onCommunityClicked.invoke() }
+  ) {
     Image(
-      imageResource(id = R.drawable.subreddit_placeholder),
-      modifier
+      bitmap = ImageBitmap.imageResource(id = R.drawable.subreddit_placeholder),
+      contentDescription = stringResource(id = R.string.community_icon),
+      modifier = modifier
         .size(24.dp)
         .clip(CircleShape)
     )
@@ -289,7 +297,7 @@ fun SubredditPreview() {
 @Preview
 @Composable
 fun CommunityPreview() {
-  Community("r/raywenderlich.com")
+  Community(stringResource(id = R.string.raywenderlich_com))
 }
 
 @Preview

@@ -51,7 +51,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.raywenderlich.android.jetreddit.R
+import com.raywenderlich.android.jetreddit.routing.JetRedditRouter
+import com.raywenderlich.android.jetreddit.routing.Screen
 import com.raywenderlich.android.jetreddit.theme.JetRedditThemeSettings
 
 /**
@@ -88,7 +92,8 @@ private fun AppDrawerHeader() {
         .padding(16.dp)
         .size(50.dp),
       contentScale = ContentScale.Fit,
-      alignment = Alignment.Center
+      alignment = Alignment.Center,
+      contentDescription = stringResource(id = R.string.account)
     )
 
     Text(
@@ -170,13 +175,15 @@ private fun ProfileInfoItem(
     val itemModifier = Modifier
 
     Icon(
+      contentDescription = stringResource(id = textResourceId),
       imageVector = iconAsset,
       tint = Color.Blue,
       modifier = itemModifier
         .constrainAs(iconRef) {
           centerVerticallyTo(parent)
           start.linkTo(parent.start)
-        }.padding(start = 16.dp)
+        }
+        .padding(start = 16.dp)
     )
 
     Text(
@@ -219,6 +226,7 @@ private fun AppDrawerBody(closeDrawerAction: () -> Unit) {
       icon = Icons.Filled.AccountBox,
       label = stringResource(R.string.my_profile),
       onClickAction = {
+        JetRedditRouter.navigateTo(Screen.MyProfile)
         closeDrawerAction()
       }
     )
@@ -227,6 +235,7 @@ private fun AppDrawerBody(closeDrawerAction: () -> Unit) {
       icon = Icons.Filled.Home,
       label = stringResource(R.string.saved),
       onClickAction = {
+        JetRedditRouter.navigateTo(Screen.Subscriptions)
         closeDrawerAction()
       }
     )
@@ -265,9 +274,10 @@ private fun ScreenNavigationButton(
       ) {
         Image(
           imageVector = icon,
-          colorFilter = ColorFilter.tint(Color.Gray)
+          colorFilter = ColorFilter.tint(Color.Gray),
+          contentDescription = label
         )
-        Spacer(Modifier.preferredWidth(16.dp))
+        Spacer(Modifier.width(16.dp))
         Text(
           fontSize = 10.sp,
           text = label,
@@ -303,6 +313,7 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
         bottom.linkTo(parent.bottom)
       },
       imageVector = Icons.Default.Settings,
+      contentDescription = stringResource(id = R.string.settings),
       colorFilter = ColorFilter.tint(colors.primaryVariant)
     )
 
@@ -320,7 +331,8 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
     )
 
     Image(
-      imageVector = vectorResource(id = R.drawable.ic_moon),
+      imageVector = ImageVector.vectorResource(id = R.drawable.ic_moon),
+      contentDescription = stringResource(id = R.string.change_theme),
       modifier = modifier
         .clickable(onClick = { changeTheme() })
         .constrainAs(darkModeButton) {
