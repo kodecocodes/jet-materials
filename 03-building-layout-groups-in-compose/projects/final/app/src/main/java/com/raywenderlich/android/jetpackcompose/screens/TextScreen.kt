@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,9 +56,9 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun TextScreen() {
   Column(
-      modifier = Modifier.fillMaxSize(),
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center
+    modifier = Modifier.fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center
   ) {
     MyText()
   }
@@ -72,10 +72,10 @@ fun TextScreen() {
 @Preview
 fun MyText() {
   Text(
-      text = stringResource(id = R.string.jetpack_compose),
-      fontStyle = FontStyle.Italic,
-      color = colorResource(id = R.color.colorPrimary),
-      fontSize = 30.sp,
-      fontWeight = FontWeight.Bold
+    text = stringResource(id = R.string.jetpack_compose),
+    fontStyle = FontStyle.Italic,
+    color = colorResource(id = R.color.colorPrimary),
+    fontSize = 30.sp,
+    fontWeight = FontWeight.Bold
   )
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,12 +54,12 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun NavigationScreen() {
   Surface(
-      color = Color.White,
-      modifier = Modifier.fillMaxSize()
+    color = Color.White,
+    modifier = Modifier.fillMaxSize()
   ) {
     Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
       NavigationButton(stringResource(id = R.string.text), Screen.Text)
@@ -79,16 +79,16 @@ fun NavigationScreen() {
 @Composable
 fun NavigationButton(text: String, screen: Screen) {
   Button(
-      modifier = Modifier
-          .fillMaxWidth()
-          .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-      shape = RoundedCornerShape(4.dp),
-      colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
-      onClick = { JetFundamentalsRouter.navigateTo(screen) }
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+    shape = RoundedCornerShape(4.dp),
+    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
+    onClick = { JetFundamentalsRouter.navigateTo(screen) }
   ) {
     Text(
-        text = text,
-        color = Color.White
+      text = text,
+      color = Color.White
     )
   }
 }
