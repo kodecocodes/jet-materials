@@ -297,7 +297,7 @@ fun SubredditPreview() {
 @Preview
 @Composable
 fun CommunityPreview() {
-  Community(stringResource(id = R.string.raywenderlich))
+  Community(stringResource(id = R.string.raywenderlich_com))
 }
 
 @Preview
