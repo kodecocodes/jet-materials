@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,10 +43,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -101,9 +100,7 @@ fun ListScreen() {
 @Composable
 fun MyList() {
   LazyColumn {
-    items(items) { item ->
-      ListItem(item)
-    }
+    items(items) { item -> ListItem(item) }
   }
 }
 
@@ -114,10 +111,8 @@ fun ListItem(bookCategory: BookCategory, modifier: Modifier = Modifier) {
       text = stringResource(bookCategory.categoryResourceId),
       fontSize = 22.sp,
       fontWeight = FontWeight.Bold,
-      color = colorResource(id = R.color.colorPrimary),
-      modifier = Modifier.padding(start = 8.dp)
+      color = colorResource(id = R.color.colorPrimary)
     )
-
     Spacer(modifier = modifier.height(8.dp))
 
     LazyRow {
@@ -132,7 +127,7 @@ fun ListItem(bookCategory: BookCategory, modifier: Modifier = Modifier) {
 fun BookImage(imageResource: Int) {
   Image(
     modifier = Modifier.size(170.dp, 200.dp),
-    bitmap = ImageBitmap.imageResource(id = imageResource),
+    painter = painterResource(id = imageResource),
     contentScale = ContentScale.Fit,
     contentDescription = stringResource(R.string.book_image)
   )

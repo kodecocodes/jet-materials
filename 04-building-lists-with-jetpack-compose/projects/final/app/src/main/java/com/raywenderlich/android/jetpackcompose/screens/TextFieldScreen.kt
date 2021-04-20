@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,9 +58,9 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 @Composable
 fun TextFieldScreen() {
   Column(
-      modifier = Modifier.fillMaxSize(),
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center
+    modifier = Modifier.fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center
   ) {
     MyTextField()
   }
@@ -77,16 +77,16 @@ fun MyTextField() {
   val primaryColor = colorResource(id = R.color.colorPrimary)
 
   OutlinedTextField(
-      label = { Text(text = stringResource(id = R.string.email)) },
-      colors = TextFieldDefaults.outlinedTextFieldColors(
-          focusedBorderColor = primaryColor,
-          focusedLabelColor = primaryColor,
-          cursorColor = primaryColor
-      ),
-      keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
-      value = textValue.value,
-      onValueChange = {
-        textValue.value = it
-      }
+    label = { Text(text = stringResource(id = R.string.email)) },
+    colors = TextFieldDefaults.outlinedTextFieldColors(
+      focusedBorderColor = primaryColor,
+      focusedLabelColor = primaryColor,
+      cursorColor = primaryColor
+    ),
+    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+    value = textValue.value,
+    onValueChange = {
+      textValue.value = it
+    }
   )
 }

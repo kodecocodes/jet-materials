@@ -49,7 +49,6 @@ import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
 import com.raywenderlich.android.jetpackcompose.router.Screen
 
-
 @Composable
 fun AlertDialogScreen() {
 
@@ -66,26 +65,25 @@ fun MyAlertDialog() {
 
   if (shouldShowDialog.value) {
     AlertDialog(
-        onDismissRequest = {
-          shouldShowDialog.value = false
-          JetFundamentalsRouter.navigateTo(Screen.Navigation)
-        },
-        title = { Text(text = stringResource(id = R.string.alert_dialog_title)) },
-        text = { Text(text = stringResource(id = R.string.alert_dialog_text)) },
-        confirmButton = {
-          Button(
-              colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
-              onClick = {
-                shouldShowDialog.value = false
-                JetFundamentalsRouter.navigateTo(Screen.Navigation)
-              }
-          ) {
-            Text(
-                text = stringResource(id = R.string.confirm),
-                color = Color.White
-            )
-          }
+      onDismissRequest = {
+        shouldShowDialog.value = false
+        JetFundamentalsRouter.navigateTo(Screen.Navigation)
+      },
+      title = { Text(text = stringResource(id = R.string.alert_dialog_title)) },
+      text = { Text(text = stringResource(id = R.string.alert_dialog_text)) },
+      confirmButton = {
+        Button(
+          colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
+          onClick = {
+            shouldShowDialog.value = false
+            JetFundamentalsRouter.navigateTo(Screen.Navigation)
+          }) {
+          Text(
+            text = stringResource(id = R.string.confirm),
+            color = Color.White
+          )
         }
+      }
     )
   }
 }

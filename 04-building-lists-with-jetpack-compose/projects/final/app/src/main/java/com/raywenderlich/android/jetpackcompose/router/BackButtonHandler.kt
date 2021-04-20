@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalLifecycleOwner
 
-private val AmbientBackPressedDispatcher = staticCompositionLocalOf<OnBackPressedDispatcherOwner?> { null }
+private val LocalBackPressedDispatcher = staticCompositionLocalOf<OnBackPressedDispatcherOwner?> { null }
 
 private class ComposableBackHandler(enabled: Boolean) : OnBackPressedCallback(enabled) {
   lateinit var onBackPressed: () -> Unit
@@ -51,11 +51,11 @@ private class ComposableBackHandler(enabled: Boolean) : OnBackPressedCallback(en
 }
 
 @Composable
-internal fun handler(
-    enabled: Boolean = true,
-    onBackPressed: () -> Unit
+internal fun Handler(
+  enabled: Boolean = true,
+  onBackPressed: () -> Unit
 ) {
-  val dispatcher = (AmbientBackPressedDispatcher.current ?: return).onBackPressedDispatcher
+  val dispatcher = (LocalBackPressedDispatcher.current ?: return).onBackPressedDispatcher
 
   val handler = remember { ComposableBackHandler(enabled) }
 
@@ -75,9 +75,9 @@ internal fun handler(
 @Composable
 internal fun BackButtonHandler(onBackPressed: () -> Unit) {
   CompositionLocalProvider(
-      AmbientBackPressedDispatcher provides LocalLifecycleOwner.current as ComponentActivity
+    LocalBackPressedDispatcher provides LocalLifecycleOwner.current as ComponentActivity
   ) {
-    handler {
+    Handler {
       onBackPressed()
     }
   }

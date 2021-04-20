@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -89,16 +89,11 @@ fun MyTopAppBar(scaffoldState: ScaffoldState, scope: CoroutineScope) {
           )
         },
         onClick = {
-          scope.launch { if( drawerState.isClosed)  drawerState.open() else  drawerState.close() }
+          scope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
         }
       )
     },
-    title = {
-      Text(
-        text = stringResource(id = R.string.app_name),
-        color = Color.White
-      )
-    },
+    title = { Text(text = stringResource(id = R.string.app_name), color = Color.White) },
     backgroundColor = colorResource(id = R.color.colorPrimary)
   )
 }

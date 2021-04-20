@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -64,12 +64,12 @@ fun MyScaffold() {
   val scope: CoroutineScope = rememberCoroutineScope()
 
   Scaffold(
-      scaffoldState = scaffoldState,
-      contentColor = colorResource(id = R.color.colorPrimary),
-      content = { MyRow() },
-      topBar = { MyTopAppBar(scaffoldState = scaffoldState, scope = scope) },
-      bottomBar = { MyBottomAppBar() },
-      drawerContent = { MyColumn() }
+    scaffoldState = scaffoldState,
+    contentColor = colorResource(id = R.color.colorPrimary),
+    content = { MyRow() },
+    topBar = { MyTopAppBar(scaffoldState = scaffoldState, scope = scope) },
+    bottomBar = { MyBottomAppBar() },
+    drawerContent = { MyColumn() }
   )
 }
 
@@ -79,34 +79,29 @@ fun MyTopAppBar(scaffoldState: ScaffoldState, scope: CoroutineScope) {
   val drawerState = scaffoldState.drawerState
 
   TopAppBar(
-      navigationIcon = {
-        IconButton(
-            content = {
-              Icon(
-                  Icons.Default.Menu,
-                  tint = Color.White,
-                  contentDescription = stringResource(R.string.menu)
-              )
-            },
-            onClick = {
-              scope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
-            }
-        )
-      },
-      title = {
-        Text(
-            text = stringResource(id = R.string.app_name),
-            color = Color.White
-        )
-      },
-      backgroundColor = colorResource(id = R.color.colorPrimary)
+    navigationIcon = {
+      IconButton(
+        content = {
+          Icon(
+            Icons.Default.Menu,
+            tint = Color.White,
+            contentDescription = stringResource(R.string.menu)
+          )
+        },
+        onClick = {
+          scope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
+        }
+      )
+    },
+    title = { Text(text = stringResource(id = R.string.app_name), color = Color.White) },
+    backgroundColor = colorResource(id = R.color.colorPrimary)
   )
 }
 
 @Composable
 fun MyBottomAppBar() {
   BottomAppBar(
-      content = {},
-      backgroundColor = colorResource(id = R.color.colorPrimary)
+    content = {},
+    backgroundColor = colorResource(id = R.color.colorPrimary)
   )
 }
