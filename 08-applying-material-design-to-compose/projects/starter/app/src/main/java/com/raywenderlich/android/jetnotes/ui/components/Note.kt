@@ -74,17 +74,17 @@ fun Note(
       .padding(8.dp)
       .shadow(1.dp, backgroundShape)
       .fillMaxWidth()
-      .preferredHeightIn(min = 64.dp)
+      .heightIn(min = 64.dp)
       .background(background, backgroundShape)
       .clickable(onClick = { onNoteClick(note) })
   ) {
     NoteColor(
-      color = Color.fromHex(note.color.hex),
-      size = 40.dp,
-      border = 1.dp,
       modifier = Modifier
         .align(Alignment.CenterVertically)
-        .padding(start = 16.dp, end = 16.dp)
+        .padding(start = 16.dp, end = 16.dp),
+      color = Color.fromHex(note.color.hex),
+      size = 40.dp,
+      border = 1.dp
     )
     Column(
       modifier = Modifier
