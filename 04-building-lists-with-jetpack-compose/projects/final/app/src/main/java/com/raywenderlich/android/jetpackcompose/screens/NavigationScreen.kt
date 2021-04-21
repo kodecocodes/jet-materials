@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,12 +34,14 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,7 +61,8 @@ fun NavigationScreen() {
   ) {
     Column(
       verticalArrangement = Arrangement.Center,
-      horizontalAlignment = Alignment.CenterHorizontally
+      horizontalAlignment = Alignment.CenterHorizontally,
+      modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
 
       NavigationButton(stringResource(id = R.string.text), Screen.Text)

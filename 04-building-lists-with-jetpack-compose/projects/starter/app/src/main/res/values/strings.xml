@@ -26,4 +26,11 @@
   <string name="kotlin">"Kotlin"</string>
   <string name="swift">"Swift"</string>
   <string name="ios">"iOS"</string>
+  <string name="favourite">"Favourite"</string>
+  <string name="advanced_architecture_android">"Advanced Architecture Android"</string>
+  <string name="kotlin_apprentice">"Kotlin Apprentice"</string>
+  <string name="kotlin_coroutines">"Kotlin Coroutines"</string>
+  <string name="menu">"Menu"</string>
+  <string name="book_image">"Book image"</string>
+  <string name="grid_icon">"Grid icon"</string>
 </resources>

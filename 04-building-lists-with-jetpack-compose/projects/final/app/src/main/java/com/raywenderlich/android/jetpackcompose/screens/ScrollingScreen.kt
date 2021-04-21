@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,10 +34,22 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollableRow
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
@@ -45,7 +57,6 @@ import com.raywenderlich.android.jetpackcompose.router.Screen
 
 @Composable
 fun ScrollingScreen() {
-
   MyScrollingScreen()
 
   BackButtonHandler {
@@ -54,10 +65,20 @@ fun ScrollingScreen() {
 }
 
 @Composable
-fun MyScrollingScreen() {
-  ScrollableRow {
-    Image(bitmap = imageResource(R.drawable.advanced_architecture_android))
-    Image(bitmap = imageResource(R.drawable.kotlin_aprentice))
-    Image(bitmap = imageResource(R.drawable.kotlin_coroutines))
+fun MyScrollingScreen(modifier: Modifier = Modifier) {
+  Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
+    BookImage(R.drawable.advanced_architecture_android, R.string.advanced_architecture_android)
+    BookImage(R.drawable.kotlin_aprentice, R.string.kotlin_apprentice)
+    BookImage(R.drawable.kotlin_coroutines, R.string.kotlin_coroutines)
   }
+}
+
+@Composable
+fun BookImage(@DrawableRes imageResId: Int, @StringRes contentDescriptionResId: Int) {
+  Image(
+    bitmap = ImageBitmap.imageResource(imageResId),
+    contentDescription = stringResource(contentDescriptionResId),
+    contentScale = ContentScale.FillBounds,
+    modifier = Modifier.size(476.dp, 616.dp)
+  )
 }

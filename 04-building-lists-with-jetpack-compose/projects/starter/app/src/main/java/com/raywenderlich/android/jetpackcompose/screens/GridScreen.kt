@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
@@ -75,7 +76,7 @@ fun RowItem(rowItems: List<IconResource>) {
 }
 
 @Composable
-fun GridIcon(iconResource: IconResource) {
+fun RowScope.GridIcon(iconResource: IconResource) {
   //TODO add your code here
 }
 

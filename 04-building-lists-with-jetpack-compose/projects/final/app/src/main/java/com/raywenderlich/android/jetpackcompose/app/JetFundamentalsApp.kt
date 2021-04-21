@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ import com.raywenderlich.android.jetpackcompose.screens.*
 @Composable
 fun JetFundamentalsApp() {
   Surface(color = MaterialTheme.colors.background) {
-    Crossfade(current = JetFundamentalsRouter.currentScreen) { screenState ->
+    Crossfade(targetState = JetFundamentalsRouter.currentScreen) { screenState ->
       when (screenState.value) {
         is Screen.Navigation -> NavigationScreen()
         is Screen.Text -> TextScreen()

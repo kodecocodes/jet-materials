@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,25 +58,26 @@ fun BoxScreen() {
 
 @Composable
 fun MyBox(
-    modifier: Modifier = Modifier,
-    contentModifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  contentModifier: Modifier = Modifier
 ) {
   Box(modifier = modifier.fillMaxSize()) {
     Text(
-        text = stringResource(id = R.string.first),
-        fontSize = 22.sp,
-        modifier = contentModifier.align(Alignment.TopStart)
+      text = stringResource(id = R.string.first),
+      fontSize = 22.sp,
+      modifier = contentModifier.align(Alignment.TopStart)
     )
 
     Text(
-        text = stringResource(id = R.string.second),
-        fontSize = 22.sp,
-        modifier = contentModifier.align(Alignment.Center)
+      text = stringResource(id = R.string.second),
+      fontSize = 22.sp,
+      modifier = contentModifier.align(Alignment.Center)
     )
+
     Text(
-        text = stringResource(id = R.string.third),
-        fontSize = 22.sp,
-        modifier = contentModifier.align(Alignment.BottomEnd)
+      text = stringResource(id = R.string.third),
+      fontSize = 22.sp,
+      modifier = contentModifier.align(Alignment.BottomEnd)
     )
   }
 }

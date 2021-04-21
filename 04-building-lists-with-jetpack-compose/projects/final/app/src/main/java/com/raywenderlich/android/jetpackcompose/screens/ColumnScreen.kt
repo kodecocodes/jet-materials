@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,15 +59,15 @@ fun ColumnScreen() {
 @Composable
 fun MyColumn() {
   Column(
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.SpaceEvenly,
-      modifier = Modifier.fillMaxSize()
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.SpaceEvenly,
+    modifier = Modifier.fillMaxSize()
   ) {
 
     THREE_ELEMENT_LIST.forEach { textResId ->
       Text(
-          text = stringResource(id = textResId),
-          fontSize = 22.sp
+        text = stringResource(id = textResId),
+        fontSize = 22.sp
       )
     }
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,12 +34,15 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -48,6 +51,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
@@ -68,9 +72,20 @@ private val items = listOf(
   Icons.Filled.ThumbUp,
 )
 
+data class IconResource(val imageVector: ImageVector, val isVisible: Boolean)
+
+@ExperimentalFoundationApi
 @Composable
 fun GridScreen() {
-  GridView(columnCount = 3)
+  LazyVerticalGrid(
+    modifier = Modifier.fillMaxSize(),
+    cells = GridCells.Fixed(3),
+    content = {
+      items(items) { item ->
+        GridIcon(IconResource(item, true))
+      }
+    }
+  )
 
   BackButtonHandler {
     JetFundamentalsRouter.navigateTo(Screen.Navigation)
@@ -91,7 +106,7 @@ fun GridView(columnCount: Int) {
         rowItem.add(IconResource(items[position++], true))
       }
     }
-
+    // here
     val itemsToFill = columnCount - rowItem.size
 
     for (j in 0 until itemsToFill) {
@@ -99,14 +114,11 @@ fun GridView(columnCount: Int) {
     }
     gridItems.add(rowItem)
   }
-
+  // here
   LazyColumn(modifier = Modifier.fillMaxSize()) {
-    items(
-        items = gridItems,
-        itemContent = {
-          RowItem(it)
-        }
-    )
+    items(gridItems) { items ->
+      RowItem(items)
+    }
   }
 }
 
@@ -119,20 +131,32 @@ fun RowItem(rowItems: List<IconResource>) {
 }
 
 @Composable
+fun RowScope.GridIcon(iconResource: IconResource) {
+  val color = if (iconResource.isVisible)
+    colorResource(R.color.colorPrimary)
+  else Color.Transparent
+
+  Icon(
+    imageVector = iconResource.imageVector,
+    tint = color,
+    contentDescription = stringResource(R.string.grid_icon),
+    modifier = Modifier
+      .size(80.dp, 80.dp)
+      .weight(1f)
+  )
+}
+
+@Composable
 fun GridIcon(iconResource: IconResource) {
   val color = if (iconResource.isVisible)
     colorResource(R.color.colorPrimary)
   else Color.Transparent
 
-  with(RowScope) {
-    Icon(
-      imageVector = iconResource.imageVector,
-      tint = color,
-      modifier = Modifier
-        .size(80.dp, 80.dp)
-        .weight(1f)
-    )
-  }
+  Icon(
+    imageVector = iconResource.imageVector,
+    tint = color,
+    contentDescription = stringResource(R.string.grid_icon),
+    modifier = Modifier
+      .size(80.dp, 80.dp)
+  )
 }
-
-data class IconResource(val imageVector: ImageVector, val isVisible: Boolean)
