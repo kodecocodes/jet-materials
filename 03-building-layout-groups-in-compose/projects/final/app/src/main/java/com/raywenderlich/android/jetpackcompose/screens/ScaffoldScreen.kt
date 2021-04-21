@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -45,6 +46,8 @@ import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
 import com.raywenderlich.android.jetpackcompose.router.Screen
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ScaffoldScreen() {
@@ -58,37 +61,38 @@ fun ScaffoldScreen() {
 @Composable
 fun MyScaffold() {
   val scaffoldState: ScaffoldState = rememberScaffoldState()
+  val scope: CoroutineScope = rememberCoroutineScope()
 
   Scaffold(
     scaffoldState = scaffoldState,
     contentColor = colorResource(id = R.color.colorPrimary),
-    bodyContent = { MyRow() },
-    topBar = { MyTopAppBar(scaffoldState = scaffoldState) },
+    content = { MyRow() },
+    topBar = { MyTopAppBar(scaffoldState = scaffoldState, scope = scope) },
     bottomBar = { MyBottomAppBar() },
     drawerContent = { MyColumn() }
   )
 }
 
 @Composable
-fun MyTopAppBar(scaffoldState: ScaffoldState) {
+fun MyTopAppBar(scaffoldState: ScaffoldState, scope: CoroutineScope) {
+  val drawerState = scaffoldState.drawerState
+
   TopAppBar(
     navigationIcon = {
       IconButton(
         content = {
           Icon(
             Icons.Default.Menu,
-            tint = Color.White
+            tint = Color.White,
+            contentDescription = stringResource(R.string.menu)
           )
         },
-        onClick = { scaffoldState.drawerState.open() }
+        onClick = {
+          scope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
+        }
       )
     },
-    title = {
-      Text(
-        text = stringResource(id = R.string.app_name),
-        color = Color.White
-      )
-    },
+    title = { Text(text = stringResource(id = R.string.app_name), color = Color.White) },
     backgroundColor = colorResource(id = R.color.colorPrimary)
   )
 }
@@ -97,6 +101,6 @@ fun MyTopAppBar(scaffoldState: ScaffoldState) {
 fun MyBottomAppBar() {
   BottomAppBar(
     content = {},
-    backgroundColor = colorResource(id = R.color.colorPrimary)
-  )
+    backgroundColor = colorResource(id = R.color.colorPrimary))
 }
+

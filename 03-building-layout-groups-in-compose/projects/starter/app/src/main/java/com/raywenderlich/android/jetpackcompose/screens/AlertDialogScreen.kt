@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -66,26 +66,25 @@ fun MyAlertDialog() {
 
   if (shouldShowDialog.value) {
     AlertDialog(
-        onDismissRequest = {
-          shouldShowDialog.value = false
-          JetFundamentalsRouter.navigateTo(Screen.Navigation)
-        },
-        title = { Text(text = stringResource(id = R.string.alert_dialog_title)) },
-        text = { Text(text = stringResource(id = R.string.alert_dialog_text)) },
-        confirmButton = {
-          Button(
-              colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
-              onClick = {
-                shouldShowDialog.value = false
-                JetFundamentalsRouter.navigateTo(Screen.Navigation)
-              }
-          ) {
-            Text(
-                text = stringResource(id = R.string.confirm),
-                color = Color.White
-            )
-          }
+      onDismissRequest = {
+        shouldShowDialog.value = false
+        JetFundamentalsRouter.navigateTo(Screen.Navigation)
+      },
+      title = { Text(text = stringResource(id = R.string.alert_dialog_title)) },
+      text = { Text(text = stringResource(id = R.string.alert_dialog_text)) },
+      confirmButton = {
+        Button(
+          colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
+          onClick = {
+            shouldShowDialog.value = false
+            JetFundamentalsRouter.navigateTo(Screen.Navigation)
+          }) {
+          Text(
+            text = stringResource(id = R.string.confirm),
+            color = Color.White
+          )
         }
+      }
     )
   }
 }
