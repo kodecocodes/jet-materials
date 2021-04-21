@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +46,8 @@ import androidx.compose.ui.unit.dp
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
 import com.raywenderlich.android.jetnotes.util.fromHex
 
+
+@ExperimentalMaterialApi
 @Composable
 fun Note(
   modifier: Modifier = Modifier,
@@ -54,7 +56,6 @@ fun Note(
   onNoteCheckedChange: (NoteModel) -> Unit = {},
   isSelected: Boolean = false
 ) {
-
   val background = if (isSelected)
     Color.LightGray
   else
@@ -96,6 +97,7 @@ fun Note(
 
 @Preview
 @Composable
+@ExperimentalMaterialApi
 private fun NotePreview() {
   Note(note = NoteModel(1, "Note 1", "Content 1", null))
 }
