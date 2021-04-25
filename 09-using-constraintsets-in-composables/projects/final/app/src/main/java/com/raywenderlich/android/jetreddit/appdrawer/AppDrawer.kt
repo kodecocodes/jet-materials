@@ -303,14 +303,14 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
     val colors = MaterialTheme.colors
     val (settingsImage, settingsText, darkModeButton) = createRefs()
 
-    Image(
+    Icon(
       modifier = modifier.constrainAs(settingsImage) {
         start.linkTo(parent.start)
         bottom.linkTo(parent.bottom)
       },
       imageVector = Icons.Default.Settings,
       contentDescription = stringResource(id = R.string.settings),
-      colorFilter = ColorFilter.tint(colors.primaryVariant)
+      tint = colors.primaryVariant
     )
 
     Text(
@@ -326,7 +326,7 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
         }
     )
 
-    Image(
+    Icon(
       imageVector = ImageVector.vectorResource(id = R.drawable.ic_moon),
       contentDescription = stringResource(id = R.string.change_theme),
       modifier = modifier
@@ -335,7 +335,7 @@ private fun AppDrawerFooter(modifier: Modifier = Modifier) {
           end.linkTo(parent.end)
           bottom.linkTo(settingsImage.bottom)
         },
-      colorFilter = ColorFilter.tint(colors.primaryVariant)
+      tint = colors.primaryVariant
     )
   }
 }
