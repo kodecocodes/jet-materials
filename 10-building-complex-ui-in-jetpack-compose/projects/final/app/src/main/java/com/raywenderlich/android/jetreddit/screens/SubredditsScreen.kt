@@ -144,18 +144,17 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
       .fillMaxSize()
       .background(color = MaterialTheme.colors.surface)
   ) {
-    val (backgroundImage, icon, name, members, description) = createRefs()
+    val (backgroundImage, icon, name, members, description) = createRefs() // 1
 
-    SubredditImage(
+    SubredditImage( // 2
       modifier = modifier.constrainAs(backgroundImage) {
         centerHorizontallyTo(parent)
         top.linkTo(parent.top)
       }
     )
 
-    SubredditIcon(
-      modifier = modifier
-        .constrainAs(icon) {
+    SubredditIcon( // 3
+      modifier = modifier.constrainAs(icon) {
           top.linkTo(backgroundImage.bottom)
           bottom.linkTo(backgroundImage.bottom)
           centerHorizontallyTo(parent)
@@ -163,7 +162,7 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
         .zIndex(1f)
     )
 
-    SubredditName(
+    SubredditName( // 4
       nameStringRes = subredditModel.nameStringRes,
       modifier = modifier.constrainAs(name) {
         top.linkTo(icon.bottom)
@@ -171,7 +170,7 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
       }
     )
 
-    SubredditMembers(
+    SubredditMembers( // 5
       membersStringRes = subredditModel.membersStringRes,
       modifier = modifier.constrainAs(members) {
         top.linkTo(name.bottom)
@@ -179,7 +178,7 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
       }
     )
 
-    SubredditDescription(
+    SubredditDescription( // 6
       descriptionStringRes = subredditModel.descriptionStringRes,
       modifier = modifier.constrainAs(description) {
         top.linkTo(members.bottom)
