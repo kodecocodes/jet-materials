@@ -64,7 +64,7 @@ fun TrashScreen(viewModel: MainViewModel) {
   val selectedNotes: List<NoteModel> by viewModel.selectedNotes
     .observeAsState(listOf())
 
-  var dialogState: MutableState<Int> = rememberSaveable { mutableStateOf(NO_DIALOG) }
+  val dialogState: MutableState<Int> = rememberSaveable { mutableStateOf(NO_DIALOG) }
 
   val scaffoldState: ScaffoldState = rememberScaffoldState()
 

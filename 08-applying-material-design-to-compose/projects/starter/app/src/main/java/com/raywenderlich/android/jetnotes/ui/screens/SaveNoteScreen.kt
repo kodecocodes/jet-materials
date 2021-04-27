@@ -86,7 +86,7 @@ fun ColorItem(
       .fillMaxWidth()
       .clickable(
         onClick = {
-          onColorSelect.invoke(color)
+          onColorSelect(color)
         }
       )
   ) {
@@ -108,6 +108,12 @@ fun ColorItem(
 
 @Preview
 @Composable
+fun ColorItemPreview() {
+  ColorItem(ColorModel.DEFAULT) {}
+}
+
+@Preview
+@Composable
 fun ColorPickerPreview() {
   ColorPicker(
     colors = listOf(
@@ -116,10 +122,4 @@ fun ColorPickerPreview() {
       ColorModel.DEFAULT
     )
   ) { }
-}
-
-@Preview
-@Composable
-fun ColorItemPreview() {
-  ColorItem(ColorModel.DEFAULT) {}
 }

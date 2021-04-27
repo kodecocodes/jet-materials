@@ -64,8 +64,8 @@ import com.raywenderlich.android.jetnotes.util.fromHex
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
-@Composable
 @ExperimentalMaterialApi
+@Composable
 fun SaveNoteScreen(viewModel: MainViewModel) {
 
   val noteEntry: NoteModel by viewModel.noteEntry
@@ -184,18 +184,18 @@ private fun SaveNoteTopAppBar(
     navigationIcon = {
       IconButton(onClick = onBackClick) {
         Icon(
-          imageVector = Icons.Filled.ArrowBack,
-          contentDescription = "Back Button"
+          imageVector = Icons.Default.ArrowBack,
+          contentDescription = "Save Note Button",
+          tint = MaterialTheme.colors.onPrimary
         )
       }
     },
     actions = {
-      // Save note action icon
       IconButton(onClick = onSaveNoteClick) {
         Icon(
           imageVector = Icons.Default.Check,
-          contentDescription = "Save Note Button",
-          tint = MaterialTheme.colors.onPrimary
+          tint = MaterialTheme.colors.onPrimary,
+          contentDescription = "Save Note"
         )
       }
 
@@ -210,7 +210,6 @@ private fun SaveNoteTopAppBar(
         )
       }
 
-      // Delete action icon (show only in editing mode)
       if (isEditingMode) {
         IconButton(onClick = onDeleteNoteClick) {
           Icon(
@@ -220,8 +219,7 @@ private fun SaveNoteTopAppBar(
           )
         }
       }
-    }
-  )
+    })
 }
 
 @Composable
@@ -263,7 +261,6 @@ private fun SaveNoteContent(
     PickedColor(color = note.color)
   }
 }
-
 
 @Composable
 private fun ContentTextField(
@@ -363,7 +360,7 @@ fun ColorItem(
       .fillMaxWidth()
       .clickable(
         onClick = {
-          onColorSelect.invoke(color)
+          onColorSelect(color)
         }
       )
   ) {
@@ -385,6 +382,30 @@ fun ColorItem(
 
 @Preview
 @Composable
+fun ColorItemPreview() {
+  ColorItem(ColorModel.DEFAULT) {}
+}
+
+@Preview
+@Composable
+fun ColorPickerPreview() {
+  ColorPicker(
+    colors = listOf(
+      ColorModel.DEFAULT,
+      ColorModel.DEFAULT,
+      ColorModel.DEFAULT
+    )
+  ) { }
+}
+
+@Preview
+@Composable
+fun PickedColorPreview() {
+  PickedColor(ColorModel.DEFAULT)
+}
+
+@Preview
+@Composable
 fun SaveNoteTopAppBarPreview() {
   SaveNoteTopAppBar(
     isEditingMode = true,
@@ -397,14 +418,8 @@ fun SaveNoteTopAppBarPreview() {
 
 @Preview
 @Composable
-fun SaveNoteContentPreview() {
-  SaveNoteContent(
-    note = com.raywenderlich.android.jetnotes.domain.model.NoteModel(
-      title = "Title",
-      content = "content"
-    ),
-    onNoteChange = {}
-  )
+fun NoteCheckOptionPreview() {
+  NoteCheckOption(false) {}
 }
 
 @Preview
@@ -419,30 +434,9 @@ fun ContentTextFieldPreview() {
 
 @Preview
 @Composable
-fun NoteCheckOptionPreview() {
-  NoteCheckOption(false) {}
-}
-
-@Preview
-@Composable
-fun PickedColorPreview() {
-  PickedColor(ColorModel.DEFAULT)
-}
-
-@Preview
-@Composable
-fun ColorPickerPreview() {
-  ColorPicker(
-    colors = kotlin.collections.listOf(
-      ColorModel.DEFAULT,
-      ColorModel.DEFAULT,
-      ColorModel.DEFAULT
-    )
-  ) { }
-}
-
-@Preview
-@Composable
-fun ColorItemPreview() {
-  ColorItem(ColorModel.DEFAULT) {}
+fun SaveNoteContentPreview() {
+  SaveNoteContent(
+    note = NoteModel(title = "Title", content = "content"),
+    onNoteChange = {}
+  )
 }

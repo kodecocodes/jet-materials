@@ -49,7 +49,6 @@ import com.raywenderlich.android.jetnotes.ui.screens.TrashScreen
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModelFactory
 
-
 /**
  * Main activity for the app.
  */
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     setContent {
       JetNotesTheme {
-        MainActivityScreen(viewModel = viewModel)
+        MainActivityScreen(viewModel = viewModel) // here
       }
     }
   }
