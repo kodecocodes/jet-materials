@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,9 @@
 package com.raywenderlich.android.jetnotes
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.platform.setContent
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
 import com.raywenderlich.android.jetnotes.ui.screens.NotesScreen
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel

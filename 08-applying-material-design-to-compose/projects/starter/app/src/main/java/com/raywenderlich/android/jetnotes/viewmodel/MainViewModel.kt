@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -72,7 +72,6 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
       repository.insertNote(note)
     }
   }
-
 
   fun onNoteSelected(note: NoteModel) {
     _selectedNotes.value = _selectedNotes.value!!.toMutableList().apply {

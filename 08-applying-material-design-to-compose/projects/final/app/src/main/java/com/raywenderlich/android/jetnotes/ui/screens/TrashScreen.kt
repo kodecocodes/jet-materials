@@ -1,3 +1,36 @@
+/*
+ * Copyright (c) 2021 Razeware LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries and
+ * frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package com.raywenderlich.android.jetnotes.ui.screens
 
 import androidx.compose.foundation.layout.Column
@@ -7,20 +40,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.savedinstancestate.savedInstanceState
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.res.painterResource
 import com.raywenderlich.android.jetnotes.R
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
 import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.ui.components.AppDrawer
 import com.raywenderlich.android.jetnotes.ui.components.Note
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
 private const val NO_DIALOG = 1
 private const val RESTORE_NOTES_DIALOG = 2
 private const val PERMANENTLY_DELETE_DIALOG = 3
 
 @Composable
+@ExperimentalMaterialApi
 fun TrashScreen(viewModel: MainViewModel) {
 
   val notesInThrash: List<NoteModel> by viewModel.notesInTrash
@@ -29,17 +64,21 @@ fun TrashScreen(viewModel: MainViewModel) {
   val selectedNotes: List<NoteModel> by viewModel.selectedNotes
     .observeAsState(listOf())
 
-  var dialog: Int by savedInstanceState { NO_DIALOG }
+  val dialogState: MutableState<Int> = rememberSaveable { mutableStateOf(NO_DIALOG) }
 
   val scaffoldState: ScaffoldState = rememberScaffoldState()
+
+  val coroutineScope = rememberCoroutineScope()
 
   Scaffold(
     topBar = {
       val areActionsVisible = selectedNotes.isNotEmpty()
       TrashTopAppBar(
-        onNavigationIconClick = { scaffoldState.drawerState.open() },
-        onRestoreNotesClick = { dialog = RESTORE_NOTES_DIALOG },
-        onDeleteNotesClick = { dialog = PERMANENTLY_DELETE_DIALOG },
+        onNavigationIconClick = {
+          coroutineScope.launch { scaffoldState.drawerState.open() }
+        },
+        onRestoreNotesClick = { dialogState.value = RESTORE_NOTES_DIALOG },
+        onDeleteNotesClick = { dialogState.value = PERMANENTLY_DELETE_DIALOG },
         areActionsVisible = areActionsVisible
       )
     },
@@ -47,41 +86,42 @@ fun TrashScreen(viewModel: MainViewModel) {
     drawerContent = {
       AppDrawer(
         currentScreen = Screen.Trash,
-        closeDrawerAction = { scaffoldState.drawerState.close() }
+        closeDrawerAction = {
+          coroutineScope.launch { scaffoldState.drawerState.close() }
+        }
       )
     },
-    bodyContent = {
+    content = {
       Content(
         notes = notesInThrash,
         onNoteClick = { viewModel.onNoteSelected(it) },
         selectedNotes = selectedNotes
       )
 
+      val dialog = dialogState.value
       if (dialog != NO_DIALOG) {
         val confirmAction: () -> Unit = when (dialog) {
           RESTORE_NOTES_DIALOG -> {
             {
               viewModel.restoreNotes(selectedNotes)
-              dialog = NO_DIALOG
+              dialogState.value = NO_DIALOG
             }
           }
           PERMANENTLY_DELETE_DIALOG -> {
             {
               viewModel.permanentlyDeleteNotes(selectedNotes)
-              dialog = NO_DIALOG
+              dialogState.value = NO_DIALOG
             }
           }
           else -> {
             {
-              dialog = NO_DIALOG
+              dialogState.value = NO_DIALOG
             }
           }
         }
 
         AlertDialog(
-          onDismissRequest = {
-            dialog = NO_DIALOG
-          },
+          onDismissRequest = { dialogState.value = NO_DIALOG },
           title = { Text(mapDialogTitle(dialog)) },
           text = { Text(mapDialogText(dialog)) },
           confirmButton = {
@@ -90,7 +130,7 @@ fun TrashScreen(viewModel: MainViewModel) {
             }
           },
           dismissButton = {
-            TextButton(onClick = { dialog = NO_DIALOG }) {
+            TextButton(onClick = { dialogState.value = NO_DIALOG }) {
               Text("Dismiss")
             }
           }
@@ -111,20 +151,25 @@ private fun TrashTopAppBar(
     title = { Text(text = "Trash", color = MaterialTheme.colors.onPrimary) },
     navigationIcon = {
       IconButton(onClick = onNavigationIconClick) {
-        Icon(Icons.Filled.List)
+        Icon(
+          imageVector = Icons.Filled.List,
+          contentDescription = "Drawer Button"
+        )
       }
     },
     actions = {
       if (areActionsVisible) {
         IconButton(onClick = onRestoreNotesClick) {
           Icon(
-            imageVector = vectorResource(id = R.drawable.ic_baseline_restore_from_trash_24),
+            painter = painterResource(id = R.drawable.ic_baseline_restore_from_trash_24),
+            contentDescription = "Restore Notes Button",
             tint = MaterialTheme.colors.onPrimary
           )
         }
         IconButton(onClick = onDeleteNotesClick) {
           Icon(
-            imageVector = vectorResource(id = R.drawable.ic_baseline_delete_forever_24),
+            painter = painterResource(id = R.drawable.ic_baseline_delete_forever_24),
+            contentDescription = "Delete Notes Button",
             tint = MaterialTheme.colors.onPrimary
           )
         }
@@ -134,6 +179,7 @@ private fun TrashTopAppBar(
 }
 
 @Composable
+@ExperimentalMaterialApi
 private fun Content(
   notes: List<NoteModel>,
   onNoteClick: (NoteModel) -> Unit,
@@ -166,17 +212,15 @@ private fun Content(
     }
 
     LazyColumn {
-      items(
-        items = filteredNotes,
-        itemContent = { note ->
-          val isNoteSelected = selectedNotes.contains(note)
-          Note(
-            note = note,
-            onNoteClick = onNoteClick,
-            isSelected = isNoteSelected
-          )
-        }
-      )
+      items(count = filteredNotes.size) { noteIndex ->
+        val note = filteredNotes[noteIndex]
+        val isNoteSelected = selectedNotes.contains(note)
+        Note(
+          note = note,
+          onNoteClick = onNoteClick,
+          isSelected = isNoteSelected
+        )
+      }
     }
   }
 }
