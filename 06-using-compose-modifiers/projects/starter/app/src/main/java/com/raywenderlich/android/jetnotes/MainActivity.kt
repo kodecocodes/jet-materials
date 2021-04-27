@@ -37,8 +37,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
-import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
-import com.raywenderlich.android.jetnotes.viewmodel.MainViewModelFactory
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
@@ -47,6 +45,8 @@ import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
 import com.raywenderlich.android.jetnotes.ui.components.AppDrawer
 import com.raywenderlich.android.jetnotes.ui.components.Note
+import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
+import com.raywenderlich.android.jetnotes.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.launch
 
 /**
@@ -66,8 +66,9 @@ class MainActivity : AppCompatActivity() {
 
     setContent {
       JetNotesTheme {
-        val scaffoldState: ScaffoldState = rememberScaffoldState()
         val coroutineScope = rememberCoroutineScope()
+        val scaffoldState: ScaffoldState = rememberScaffoldState()
+
         Scaffold(
           scaffoldState = scaffoldState,
           drawerContent = {
