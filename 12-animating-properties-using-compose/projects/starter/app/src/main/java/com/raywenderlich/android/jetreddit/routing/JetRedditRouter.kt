@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,6 +49,7 @@ sealed class Screen(val titleResId: Int) {
   object Subscriptions : Screen(R.string.subreddits)
   object NewPost : Screen(R.string.new_post)
   object MyProfile : Screen(R.string.my_profile)
+  object ChooseCommunity : Screen(R.string.choose_community)
 }
 
 object JetRedditRouter {
