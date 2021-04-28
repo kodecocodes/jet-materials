@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,11 +34,11 @@
 package com.raywenderlich.android.jetreddit
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.platform.setContent
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModelFactory
-import androidx.activity.viewModels
 
 class MainActivity : AppCompatActivity() {
 
