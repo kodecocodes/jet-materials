@@ -1,16 +1,16 @@
 /*
  * Copyright (c) 2021 Razeware LLC
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
  * distribute, sublicense, create a derivative work, and/or sell copies of the
  * Software in any work that is designed, intended, or marketed for pedagogical or
@@ -18,11 +18,11 @@
  * or information technology.  Permission for such use, copying, modification,
  * merger, publication, distribution, sublicensing, creation of derivative works,
  * or sale is expressly withheld.
- * 
+ *
  * This project and source code may use libraries or frameworks that are
  * released under various Open-Source licenses. Use of those libraries and
  * frameworks are governed by their own individual licenses.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,35 +31,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.raywenderlich.android.jetreddit.viewmodel
+package com.raywenderlich.android.jetreddit.routing
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.raywenderlich.android.jetreddit.data.repository.Repository
-import com.raywenderlich.android.jetreddit.domain.model.PostModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalLifecycleOwner
 
-class MainViewModel(private val repository: Repository) : ViewModel() {
+private val localBackPressedDispatcher = staticCompositionLocalOf<OnBackPressedDispatcher?> { null }
 
-  val allPosts by lazy { repository.getAllPosts() }
-
-  val myPosts by lazy { repository.getAllOwnedPosts() }
-
-  val subreddits by lazy { MutableLiveData<List<String>>() }
-
-  val selectedCommunity: MutableLiveData<String> by lazy { MutableLiveData<String>() }
-
-  fun searchCommunities(searchedText: String) {
-    viewModelScope.launch(Dispatchers.Default) {
-      subreddits.postValue(repository.getAllSubreddits(searchedText))
+@Composable
+fun BackButtonHandler(
+  enabled: Boolean = true,
+  onBackPressed: () -> Unit
+) {
+  val dispatcher = localBackPressedDispatcher.current ?: return
+  val backCallback = remember {
+    object : OnBackPressedCallback(enabled) {
+      override fun handleOnBackPressed() {
+        onBackPressed.invoke()
+      }
     }
   }
+  DisposableEffect(dispatcher) {
+    dispatcher.addCallback(backCallback)
+    onDispose {
+      backCallback.remove()
+    }
+  }
+}
 
-  fun savePost(post: PostModel) {
-    viewModelScope.launch(Dispatchers.Default) {
-      repository.insert(post.copy(subreddit = selectedCommunity.value ?: ""))
+@Composable
+fun BackButtonAction(onBackPressed: () -> Unit) {
+  CompositionLocalProvider(
+    localBackPressedDispatcher provides (
+        LocalLifecycleOwner.current as ComponentActivity
+        ).onBackPressedDispatcher
+  ) {
+    BackButtonHandler {
+      onBackPressed.invoke()
     }
   }
 }
