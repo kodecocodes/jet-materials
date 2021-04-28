@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,15 +42,15 @@ import com.raywenderlich.android.jetreddit.data.repository.Repository
 
 @Suppress("UNCHECKED_CAST")
 class MainViewModelFactory(
-    owner: SavedStateRegistryOwner,
-    private val repository: Repository,
-    private val defaultArgs: Bundle? = null
+  owner: SavedStateRegistryOwner,
+  private val repository: Repository,
+  private val defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
   override fun <T : ViewModel?> create(
-      key: String,
-      modelClass: Class<T>,
-      handle: SavedStateHandle
+    key: String,
+    modelClass: Class<T>,
+    handle: SavedStateHandle
   ): T {
     return MainViewModel(repository) as T
   }
