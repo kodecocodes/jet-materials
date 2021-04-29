@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -140,9 +140,10 @@ private fun ScreenNavigationButton(
       ) {
         Image(
           imageVector = icon,
-          colorFilter = ColorFilter.tint(Color.Gray)
+          colorFilter = ColorFilter.tint(Color.Gray),
+          contentDescription = label
         )
-        Spacer(Modifier.preferredWidth(16.dp))
+        Spacer(Modifier.width(16.dp))
         Text(
           fontSize = 10.sp,
           text = label,
