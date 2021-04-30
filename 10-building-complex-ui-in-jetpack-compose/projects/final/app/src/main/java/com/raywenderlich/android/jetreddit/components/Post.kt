@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +46,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
@@ -68,12 +70,12 @@ fun TextPost(post: PostModel) {
 @Composable
 fun ImagePost(post: PostModel) {
   Post(post) {
-    ImageContent(post.image)
+    ImageContent(post.image ?: R.drawable.compose_course)
   }
 }
 
 @Composable
-fun Post(post: PostModel, content: @Composable () -> Unit = emptyContent()) {
+fun Post(post: PostModel, content: @Composable () -> Unit = {}) {
   Card(shape = MaterialTheme.shapes.large) {
     Column(
       modifier = Modifier.padding(
@@ -94,8 +96,10 @@ fun Post(post: PostModel, content: @Composable () -> Unit = emptyContent()) {
 fun Header(post: PostModel) {
   Row(modifier = Modifier.padding(start = 16.dp)) {
     Image(
-      imageResource(id = R.drawable.subreddit_placeholder),
-      Modifier.size(40.dp)
+      ImageBitmap.imageResource(id = R.drawable.subreddit_placeholder),
+      contentDescription = stringResource(id = R.string.subreddits),
+      Modifier
+        .size(40.dp)
         .clip(CircleShape)
     )
     Spacer(modifier = Modifier.width(8.dp))
@@ -119,25 +123,25 @@ fun Header(post: PostModel) {
 @Composable
 fun MoreActionsMenu() {
   var expanded by remember { mutableStateOf(false) }
+  Box(modifier = Modifier.wrapContentSize(Alignment.TopStart)) {
 
-  val iconButton = @Composable {
     IconButton(onClick = { expanded = true }) {
       Icon(
         imageVector = Icons.Default.MoreVert,
-        tint = Color.DarkGray
+        tint = Color.DarkGray,
+        contentDescription = stringResource(id = R.string.more_actions)
       )
     }
-  }
 
-  DropdownMenu(
-    expanded = expanded,
-    onDismissRequest = { expanded = false },
-    toggle = iconButton
-  ) {
-    CustomDropdownMenuItem(
-      vectorResourceId = R.drawable.ic_baseline_bookmark_24,
-      text = "Save"
-    )
+    DropdownMenu(
+      expanded = expanded,
+      onDismissRequest = { expanded = false }
+    ) {
+      CustomDropdownMenuItem(
+        vectorResourceId = R.drawable.ic_baseline_bookmark_24,
+        text = stringResource(id = R.string.save)
+      )
+    }
   }
 }
 
@@ -150,7 +154,11 @@ fun CustomDropdownMenuItem(
 ) {
   DropdownMenuItem(onClick = onClickAction) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-      Icon(vectorResource(id = vectorResourceId), tint = color)
+      Icon(
+        imageVector = ImageVector.vectorResource(id = vectorResourceId),
+        tint = color,
+        contentDescription = stringResource(id = R.string.save)
+      )
       Spacer(modifier = Modifier.width(8.dp))
       Text(text = text, fontWeight = FontWeight.Medium, color = color)
     }
@@ -184,10 +192,11 @@ fun TextContent(text: String) {
 }
 
 @Composable
-fun ImageContent(image: Int?) {
-  val imageAsset = imageResource(id = image ?: R.drawable.subreddit_placeholder)
+fun ImageContent(image: Int) {
+  val imageAsset = ImageBitmap.imageResource(id = image)
   Image(
     bitmap = imageAsset,
+    contentDescription = stringResource(id = R.string.post_header_description),
     modifier = Modifier
       .fillMaxWidth()
       .aspectRatio(imageAsset.width.toFloat() / imageAsset.height),
@@ -245,7 +254,8 @@ fun VotingAction(
 fun ArrowButton(onClickAction: () -> Unit, arrowResourceId: Int) {
   IconButton(onClick = onClickAction, modifier = Modifier.size(30.dp)) {
     Icon(
-      vectorResource(arrowResourceId),
+      imageVector = ImageVector.vectorResource(arrowResourceId),
+      contentDescription = stringResource(id = R.string.upvote),
       modifier = Modifier.size(20.dp),
       tint = Color.Gray
     )
@@ -261,7 +271,8 @@ fun PostAction(
   Box(modifier = Modifier.clickable(onClick = onClickAction)) {
     Row(verticalAlignment = Alignment.CenterVertically) {
       Icon(
-        vectorResource(id = vectorResourceId),
+        ImageVector.vectorResource(id = vectorResourceId),
+        contentDescription = stringResource(id = R.string.post_action),
         tint = Color.Gray,
         modifier = Modifier.size(20.dp)
       )
@@ -269,26 +280,6 @@ fun PostAction(
       Text(text = text, fontWeight = FontWeight.Medium, color = Color.Gray, fontSize = 12.sp)
     }
   }
-}
-
-@Preview
-@Composable
-fun PostPreview() {
-  Post(DEFAULT_POST)
-}
-
-@Preview
-@Composable
-fun ImagePostPreview() {
-  Post(DEFAULT_POST) {
-    ImageContent(DEFAULT_POST.image)
-  }
-}
-
-@Preview
-@Composable
-fun ArrowButtonPreview() {
-  ArrowButton({}, R.drawable.ic_baseline_arrow_upward_24)
 }
 
 @Preview
@@ -303,6 +294,12 @@ fun PostActionPreview() {
 
 @Preview
 @Composable
+fun ArrowButtonPreview() {
+  ArrowButton({}, R.drawable.ic_baseline_arrow_upward_24)
+}
+
+@Preview
+@Composable
 fun HeaderPreview() {
   Column {
     Header(DEFAULT_POST)
@@ -313,4 +310,26 @@ fun HeaderPreview() {
 @Composable
 fun VotingActionPreview() {
   VotingAction("555", {}, {})
+}
+
+@Preview
+@Composable
+fun PostPreview() {
+  Post(DEFAULT_POST)
+}
+
+@Preview
+@Composable
+fun TextPostPreview() {
+  Post(DEFAULT_POST) {
+    TextContent(DEFAULT_POST.text)
+  }
+}
+
+@Preview
+@Composable
+fun ImagePostPreview() {
+  Post(DEFAULT_POST) {
+    ImageContent(DEFAULT_POST.image ?: R.drawable.compose_course)
+  }
 }

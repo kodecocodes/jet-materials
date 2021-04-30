@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,11 +34,10 @@
 package com.raywenderlich.android.jetreddit.screens
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRowFor
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -50,16 +49,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.raywenderlich.android.jetreddit.R
 import com.raywenderlich.android.jetreddit.components.BackgroundText
 import com.raywenderlich.android.jetreddit.models.SubredditModel
@@ -118,6 +119,7 @@ fun SubredditBody(subredditModel: SubredditModel, modifier: Modifier = Modifier)
 fun SubredditImage(modifier: Modifier) {
   Image(
     painter = ColorPainter(Color.Blue),
+    contentDescription = stringResource(id = R.string.subreddit_image),
     modifier = modifier
       .fillMaxWidth()
       .height(30.dp)
@@ -129,7 +131,8 @@ fun SubredditIcon(modifier: Modifier) {
   Icon(
     modifier = modifier,
     tint = Color.LightGray,
-    imageVector = vectorResource(id = R.drawable.ic_planet)
+    imageVector = ImageVector.vectorResource(id = R.drawable.ic_planet),
+    contentDescription = stringResource(id = R.string.subreddit_icon),
   )
 }
 
@@ -160,8 +163,7 @@ fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: In
     fontSize = 8.sp,
     text = stringResource(descriptionStringRes),
     color = MaterialTheme.colors.primaryVariant,
-    modifier = modifier.padding(4.dp),
-    textAlign = TextAlign.Center
+    modifier = modifier.padding(4.dp)
   )
 }
 
@@ -190,7 +192,7 @@ fun SubredditPreview() {
 @Preview
 @Composable
 fun CommunityPreview() {
-  Community("r/raywenderlich.com")
+  Community(stringResource(id = R.string.raywenderlich_com))
 }
 
 @Preview

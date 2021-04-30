@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -54,6 +55,8 @@ import com.raywenderlich.android.jetreddit.screens.MyProfileScreen
 import com.raywenderlich.android.jetreddit.screens.SubredditsScreen
 import com.raywenderlich.android.jetreddit.theme.JetRedditTheme
 import com.raywenderlich.android.jetreddit.viewmodel.MainViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun JetRedditApp(viewModel: MainViewModel) {
@@ -65,20 +68,22 @@ fun JetRedditApp(viewModel: MainViewModel) {
 @Composable
 private fun AppContent(viewModel: MainViewModel) {
   val scaffoldState: ScaffoldState = rememberScaffoldState()
-  Crossfade(current = JetRedditRouter.currentScreen) { screenState: MutableState<Screen> ->
+  val coroutineScope: CoroutineScope = rememberCoroutineScope()
+
+  Crossfade(targetState = JetRedditRouter.currentScreen) { screenState: MutableState<Screen> ->
 
     Scaffold(
-      topBar = getTopBar(screenState.value, scaffoldState),
+      topBar = getTopBar(screenState.value, scaffoldState, coroutineScope),
       drawerContent = {
         AppDrawer(
-          closeDrawerAction = { scaffoldState.drawerState.close() }
+          closeDrawerAction = { coroutineScope.launch { scaffoldState.drawerState.close() } }
         )
       },
       scaffoldState = scaffoldState,
       bottomBar = {
         BottomNavigationComponent(screenState = screenState)
       },
-      bodyContent = {
+      content = {
         MainScreenContainer(
           modifier = Modifier.padding(bottom = 56.dp),
           screenState = screenState,
@@ -89,11 +94,15 @@ private fun AppContent(viewModel: MainViewModel) {
   }
 }
 
-fun getTopBar(screenState: Screen, scaffoldState: ScaffoldState): @Composable (() -> Unit) {
+fun getTopBar(
+  screenState: Screen,
+  scaffoldState: ScaffoldState,
+  coroutineScope: CoroutineScope
+): @Composable (() -> Unit) {
   if (screenState == Screen.MyProfile) {
     return {}
   } else {
-    return { TopAppBar(scaffoldState = scaffoldState) }
+    return { TopAppBar(scaffoldState = scaffoldState, coroutineScope = coroutineScope) }
   }
 }
 
@@ -101,7 +110,7 @@ fun getTopBar(screenState: Screen, scaffoldState: ScaffoldState): @Composable ((
  * Represents top app bar on the screen
  */
 @Composable
-fun TopAppBar(scaffoldState: ScaffoldState) {
+fun TopAppBar(scaffoldState: ScaffoldState, coroutineScope: CoroutineScope) {
 
   val colors = MaterialTheme.colors
 
@@ -115,11 +124,12 @@ fun TopAppBar(scaffoldState: ScaffoldState) {
     backgroundColor = colors.surface,
     navigationIcon = {
       IconButton(onClick = {
-        scaffoldState.drawerState.open()
+        coroutineScope.launch { scaffoldState.drawerState.open() }
       }) {
         Icon(
           Icons.Filled.AccountCircle,
-          tint = Color.LightGray
+          tint = Color.LightGray,
+          contentDescription = stringResource(id = R.string.account)
         )
       }
     }
@@ -153,14 +163,24 @@ private fun BottomNavigationComponent(
   var selectedItem by remember { mutableStateOf(0) }
 
   val items = listOf(
-    NavigationItem(0, R.drawable.ic_baseline_home_24, Screen.Home),
-    NavigationItem(1, R.drawable.ic_baseline_format_list_bulleted_24, Screen.Subscriptions),
-    NavigationItem(2, R.drawable.ic_baseline_add_24, Screen.NewPost),
+    NavigationItem(0, R.drawable.ic_baseline_home_24, R.string.home_icon, Screen.Home),
+    NavigationItem(
+      1,
+      R.drawable.ic_baseline_format_list_bulleted_24,
+      R.string.subscriptions_icon,
+      Screen.Subscriptions
+    ),
+    NavigationItem(2, R.drawable.ic_baseline_add_24, R.string.post_icon, Screen.NewPost),
   )
   BottomNavigation(modifier = modifier) {
     items.forEach {
       BottomNavigationItem(
-        icon = { Icon(vectorResource(id = it.vectorResourceId)) },
+        icon = {
+          Icon(
+            imageVector = ImageVector.vectorResource(id = it.vectorResourceId),
+            contentDescription = stringResource(id = it.contentDescriptionResourceId)
+          )
+        },
         selected = selectedItem == it.index,
         onClick = {
           selectedItem = it.index
@@ -171,4 +191,9 @@ private fun BottomNavigationComponent(
   }
 }
 
-private data class NavigationItem(val index: Int, val vectorResourceId: Int, val screen: Screen)
+private data class NavigationItem(
+  val index: Int,
+  val vectorResourceId: Int,
+  val contentDescriptionResourceId: Int,
+  val screen: Screen
+)
