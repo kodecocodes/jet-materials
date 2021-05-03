@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -50,7 +52,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -99,17 +100,18 @@ fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel>
     by viewModel.allPosts.observeAsState(listOf())
 
-  var joinedToastVisible by remember { mutableStateOf(false) }
+  var isToastVisible by remember { mutableStateOf(false) }
 
   val onJoinClickAction: (Boolean) -> Unit = { joined ->
-    joinedToastVisible = joined
-    if (joinedToastVisible) {
+    isToastVisible = joined
+    if (isToastVisible) {
       Timer().schedule(3000) {
-        joinedToastVisible = false
+        isToastVisible = false
       }
     }
   }
 
+  // Add this line
   val homeScreenItems = mapHomeScreenItems(posts)
 
   Box(modifier = Modifier.fillMaxSize()) {
@@ -152,7 +154,7 @@ fun HomeScreen(viewModel: MainViewModel) {
         .align(Alignment.BottomCenter)
         .padding(bottom = 16.dp)
     ) {
-      JoinedToast(visible = joinedToastVisible)
+      JoinedToast(visible = isToastVisible)
     }
   }
 }
@@ -195,7 +197,8 @@ private fun TrendingTopics(
         Icon(
           modifier = Modifier.size(18.dp),
           imageVector = Icons.Filled.Star,
-          tint = Color.Blue
+          tint = Color.Blue,
+          contentDescription = "Star Icon"
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
@@ -207,7 +210,6 @@ private fun TrendingTopics(
 
       Spacer(modifier = Modifier.height(8.dp))
 
-      // Horizontally scrollable Trending items
       LazyRow(
         contentPadding = PaddingValues(
           start = 16.dp,
@@ -230,23 +232,20 @@ private fun TrendingTopics(
   }
 }
 
-@Composable
-private fun TrendingTopic(trendingTopic: TrendingTopicModel) {
-  val context = AmbientContext.current
-  val trendingView = remember(trendingTopic) {
-    TrendingTopicView(context)
-  }
-
-  AndroidView(viewBlock = { trendingView }) {
-    it.text = trendingTopic.text
-    it.image = trendingTopic.imageRes
-  }
-}
-
 @Preview
 @Composable
-private fun TrendingItemsPreview() {
+private fun TrendingTopicsPreview() {
   TrendingTopics(trendingTopics = trendingItems)
+}
+
+@Composable
+private fun TrendingTopic(trendingTopic: TrendingTopicModel) {
+  AndroidView({ context ->
+    TrendingTopicView(context).apply {
+      text = trendingTopic.text
+      image = trendingTopic.imageRes
+    }
+  })
 }
 
 @Preview
