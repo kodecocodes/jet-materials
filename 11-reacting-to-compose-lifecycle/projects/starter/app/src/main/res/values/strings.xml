@@ -49,4 +49,20 @@
   <string name="gold_medal">Gold Medal</string>
   <string name="top_comment">Top Comment</string>
   <string name="share">Share</string>
+  <string name="account">Account</string>
+  <string name="home_icon">Home icon</string>
+  <string name="subscriptions_icon">Subscriptions icon</string>
+  <string name="post_icon">Post icon</string>
+  <string name="change_theme">Change theme</string>
+  <string name="more_actions">More actions</string>
+  <string name="save">Saved</string>
+  <string name="post_header_description">Post Header</string>
+  <string name="upvote">Upvote</string>
+  <string name="post_action">Post action</string>
+  <string name="close">Close</string>
+  <string name="back">Back</string>
+  <string name="subreddit_image">Subreddit Image</string>
+  <string name="subreddit_icon">Subreddit Icon</string>
+  <string name="community_icon">Community Icon</string>
+  <string name="raywenderlich_com">r/raywenderlich.com</string>
 </resources>
