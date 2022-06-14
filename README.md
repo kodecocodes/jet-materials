@@ -10,3 +10,4 @@ Each edition has its own branch, named `editions/[EDITION]`. The default branch 
 | ---------------------------------------------------------------------------------|:-------:|:------------:|
 | [editions/1.0](https://github.com/raywenderlich/jet-materials/tree/editions/1.0) | 1.0     | 2021-02-13   |
 | [editions/1.1](https://github.com/raywenderlich/jet-materials/tree/editions/1.1) | 1.1     | 2021-05-07   |
+| [editions/2.0](https://github.com/raywenderlich/jet-materials/tree/editions/2.0) | 2.0     | YYYY-MM-DD   |
