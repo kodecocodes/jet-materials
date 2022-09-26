@@ -33,6 +33,7 @@
  */
 package com.raywenderlich.android.jetnotes
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     )
   })
 
+  @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
