@@ -1,16 +1,16 @@
 /*
  * Copyright (c) 2021 Razeware LLC
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
  * distribute, sublicense, create a derivative work, and/or sell copies of the
  * Software in any work that is designed, intended, or marketed for pedagogical or
@@ -18,11 +18,11 @@
  * or information technology.  Permission for such use, copying, modification,
  * merger, publication, distribution, sublicensing, creation of derivative works,
  * or sale is expressly withheld.
- * 
+ *
  * This project and source code may use libraries or frameworks that are
  * released under various Open-Source licenses. Use of those libraries and
  * frameworks are governed by their own individual licenses.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -43,8 +43,7 @@ import com.raywenderlich.android.jetnotes.data.database.model.ColorDbModel
 import com.raywenderlich.android.jetnotes.data.database.model.NoteDbModel
 import com.raywenderlich.android.jetnotes.domain.model.ColorModel
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /**
  * {@inheritDoc}
@@ -71,18 +70,18 @@ class RepositoryImpl(
    * Populates database with colors if it is empty.
    */
   private fun initDatabase(postInitAction: () -> Unit) {
-    GlobalScope.launch {
+    GlobalScope.launch(context = Dispatchers.IO) {
       // Prepopulate colors
       val colors = ColorDbModel.DEFAULT_COLORS.toTypedArray()
       val dbColors = colorDao.getAllSync()
-      if (dbColors.isNullOrEmpty()) {
+      if (dbColors.isEmpty()) {
         colorDao.insertAll(*colors)
       }
 
       // Prepopulate notes
       val notes = NoteDbModel.DEFAULT_NOTES.toTypedArray()
       val dbNotes = noteDao.getAllSync()
-      if (dbNotes.isNullOrEmpty()) {
+      if (dbNotes.isEmpty()) {
         noteDao.insertAll(*notes)
       }
 
