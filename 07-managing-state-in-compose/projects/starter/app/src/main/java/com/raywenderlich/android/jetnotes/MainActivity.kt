@@ -33,10 +33,11 @@
  */
 package com.raywenderlich.android.jetnotes
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
     )
   })
 
+  @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
@@ -74,7 +76,8 @@ class MainActivity : AppCompatActivity() {
           drawerContent = {
             AppDrawer(
               currentScreen = Screen.Notes,
-              closeDrawerAction = {
+              onScreenSelected = { screen ->
+                /* TODO */
                 coroutineScope.launch {
                   scaffoldState.drawerState.close()
                 }

@@ -35,6 +35,7 @@ package com.raywenderlich.android.jetnotes.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.raywenderlich.android.jetnotes.data.repository.Repository
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
@@ -49,7 +50,7 @@ import kotlinx.coroutines.launch
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
   val notesNotInTrash: LiveData<List<NoteModel>> by lazy {
-    repository.getAllNotesNotInTrash()
+    repository.getAllNotesNotInTrash().asLiveData()
   }
 
   fun onCreateNewNoteClick() {
