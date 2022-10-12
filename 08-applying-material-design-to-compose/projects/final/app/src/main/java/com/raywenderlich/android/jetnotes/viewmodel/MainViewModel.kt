@@ -33,10 +33,8 @@
  */
 package com.raywenderlich.android.jetnotes.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.provider.ContactsContract.CommonDataKinds.Note
+import androidx.lifecycle.*
 import com.raywenderlich.android.jetnotes.data.repository.Repository
 import com.raywenderlich.android.jetnotes.domain.model.ColorModel
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
@@ -54,17 +52,19 @@ import kotlinx.coroutines.withContext
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
   val notesNotInTrash: LiveData<List<NoteModel>> by lazy {
-    repository.getAllNotesNotInTrash()
+    repository.getAllNotesNotInTrash().asLiveData()
   }
 
   private var _noteEntry = MutableLiveData(NoteModel())
   val noteEntry: LiveData<NoteModel> = _noteEntry
 
   val colors: LiveData<List<ColorModel>> by lazy {
-    repository.getAllColors()
+    repository.getAllColors().asLiveData()
   }
 
-  val notesInTrash by lazy { repository.getAllNotesInTrash() }
+  val notesInTrash: LiveData<List<NoteModel>> by lazy {
+    repository.getAllNotesInTrash().asLiveData()
+  }
 
   private var _selectedNotes = MutableLiveData<List<NoteModel>>(listOf())
   val selectedNotes: LiveData<List<NoteModel>> = _selectedNotes
@@ -96,7 +96,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   }
 
   fun restoreNotes(notes: List<NoteModel>) {
-    viewModelScope.launch(Dispatchers.Default) {
+    viewModelScope.launch(Dispatchers.IO) {
       repository.restoreNotesFromTrash(notes.map { it.id })
       withContext(Dispatchers.Main) {
         _selectedNotes.value = listOf()
@@ -105,7 +105,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   }
 
   fun permanentlyDeleteNotes(notes: List<NoteModel>) {
-    viewModelScope.launch(Dispatchers.Default) {
+    viewModelScope.launch(Dispatchers.IO) {
       repository.deleteNotes(notes.map { it.id })
       withContext(Dispatchers.Main) {
         _selectedNotes.value = listOf()
@@ -118,7 +118,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   }
 
   fun saveNote(note: NoteModel) {
-    viewModelScope.launch(Dispatchers.Default) {
+    viewModelScope.launch(Dispatchers.IO) {
       repository.insertNote(note)
 
       withContext(Dispatchers.Main) {
@@ -130,7 +130,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   }
 
   fun moveNoteToTrash(note: NoteModel) {
-    viewModelScope.launch(Dispatchers.Default) {
+    viewModelScope.launch(Dispatchers.IO) {
       repository.moveNoteToTrash(note.id)
 
       withContext(Dispatchers.Main) {

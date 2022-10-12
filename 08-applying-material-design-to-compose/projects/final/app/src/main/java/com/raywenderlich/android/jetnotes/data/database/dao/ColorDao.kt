@@ -33,11 +33,11 @@
  */
 package com.raywenderlich.android.jetnotes.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.raywenderlich.android.jetnotes.data.database.model.ColorDbModel
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Dao for managing Color table in the database.
@@ -46,18 +46,17 @@ import com.raywenderlich.android.jetnotes.data.database.model.ColorDbModel
 interface ColorDao {
 
   @Query("SELECT * FROM ColorDbModel")
-  fun getAll(): LiveData<List<ColorDbModel>>
+  fun getAll(): Flow<List<ColorDbModel>>
 
   @Query("SELECT * FROM ColorDbModel")
-  fun getAllSync(): List<ColorDbModel>
-
-
-  @Query("SELECT * FROM ColorDbModel WHERE id LIKE :id")
-  fun findById(id: Long): LiveData<ColorDbModel>
+  suspend fun getAllSync(): List<ColorDbModel>
 
   @Query("SELECT * FROM ColorDbModel WHERE id LIKE :id")
-  fun findByIdSync(id: Long): ColorDbModel
+  fun findById(id: Long): Flow<ColorDbModel>
+
+  @Query("SELECT * FROM ColorDbModel WHERE id LIKE :id")
+  suspend fun findByIdSync(id: Long): ColorDbModel
 
   @Insert
-  fun insertAll(vararg colorDbModels: ColorDbModel)
+  suspend fun insertAll(vararg colorDbModels: ColorDbModel)
 }

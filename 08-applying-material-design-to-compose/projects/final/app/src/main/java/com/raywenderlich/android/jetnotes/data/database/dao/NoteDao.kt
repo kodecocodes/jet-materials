@@ -33,12 +33,12 @@
  */
 package com.raywenderlich.android.jetnotes.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.raywenderlich.android.jetnotes.data.database.model.NoteDbModel
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Dao for managing Note table in the database.
@@ -47,26 +47,26 @@ import com.raywenderlich.android.jetnotes.data.database.model.NoteDbModel
 interface NoteDao {
 
   @Query("SELECT * FROM NoteDbModel")
-  fun getAllSync(): List<NoteDbModel>
+  suspend fun getAllSync(): List<NoteDbModel>
 
   @Query("SELECT * FROM NoteDbModel WHERE id IN (:noteIds)")
-  fun getNotesByIdsSync(noteIds: List<Long>): List<NoteDbModel>
+  suspend fun getNotesByIdsSync(noteIds: List<Long>): List<NoteDbModel>
 
   @Query("SELECT * FROM NoteDbModel WHERE id LIKE :id")
-  fun findById(id: Long): LiveData<NoteDbModel>
+  fun findById(id: Long): Flow<NoteDbModel>
 
   @Query("SELECT * FROM NoteDbModel WHERE id LIKE :id")
-  fun findByIdSync(id: Long): NoteDbModel
+  suspend fun findByIdSync(id: Long): NoteDbModel
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun insert(noteDbModel: NoteDbModel)
+  suspend fun insert(noteDbModel: NoteDbModel)
 
   @Insert
-  fun insertAll(vararg noteDbModel: NoteDbModel)
+  suspend fun insertAll(vararg noteDbModel: NoteDbModel)
 
   @Query("DELETE FROM NoteDbModel WHERE id LIKE :id")
-  fun delete(id: Long)
+  suspend fun delete(id: Long)
 
   @Query("DELETE FROM NoteDbModel WHERE id IN (:noteIds)")
-  fun delete(noteIds: List<Long>)
+  suspend fun delete(noteIds: List<Long>)
 }

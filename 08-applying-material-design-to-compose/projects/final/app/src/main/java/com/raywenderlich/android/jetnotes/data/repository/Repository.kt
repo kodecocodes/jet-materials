@@ -36,6 +36,7 @@ package com.raywenderlich.android.jetnotes.data.repository
 import androidx.lifecycle.LiveData
 import com.raywenderlich.android.jetnotes.domain.model.ColorModel
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Allows communication with the app's database.
@@ -44,29 +45,29 @@ interface Repository {
 
   // notes
 
-  fun getAllNotesNotInTrash(): LiveData<List<NoteModel>>
+  fun getAllNotesNotInTrash(): Flow<List<NoteModel>>
 
-  fun getAllNotesInTrash(): LiveData<List<NoteModel>>
+  fun getAllNotesInTrash(): Flow<List<NoteModel>>
 
-  fun getNote(id: Long): LiveData<NoteModel>
+  fun getNote(id: Long): Flow<NoteModel>
 
-  fun insertNote(note: NoteModel)
+  suspend fun insertNote(note: NoteModel)
 
-  fun deleteNote(id: Long)
+  suspend fun deleteNote(id: Long)
 
-  fun deleteNotes(noteIds: List<Long>)
+  suspend fun deleteNotes(noteIds: List<Long>)
 
-  fun moveNoteToTrash(noteId: Long)
+  suspend fun moveNoteToTrash(noteId: Long)
 
-  fun restoreNotesFromTrash(noteIds: List<Long>)
+  suspend fun restoreNotesFromTrash(noteIds: List<Long>)
 
   // colors
 
-  fun getAllColors(): LiveData<List<ColorModel>>
+  fun getAllColors(): Flow<List<ColorModel>>
 
-  fun getAllColorsSync(): List<ColorModel>
+  suspend fun getAllColorsSync(): List<ColorModel>
 
-  fun getColor(id: Long): LiveData<ColorModel>
+  fun getColor(id: Long): Flow<ColorModel>
 
-  fun getColorSync(id: Long): ColorModel
+  suspend fun getColorSync(id: Long): ColorModel
 }
