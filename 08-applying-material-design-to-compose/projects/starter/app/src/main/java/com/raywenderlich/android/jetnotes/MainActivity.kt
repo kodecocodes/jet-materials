@@ -33,14 +33,25 @@
  */
 package com.raywenderlich.android.jetnotes
 
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.rememberCoroutineScope
+import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
+import com.raywenderlich.android.jetnotes.ui.components.AppDrawer
 import com.raywenderlich.android.jetnotes.ui.screens.NotesScreen
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModelFactory
+import kotlinx.coroutines.launch
 
 /**
  * Main activity for the app.
@@ -54,12 +65,37 @@ class MainActivity : AppCompatActivity() {
     )
   })
 
+  @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     setContent {
       JetNotesTheme {
-        NotesScreen(viewModel = viewModel)
+        val coroutineScope = rememberCoroutineScope()
+        val scaffoldState: ScaffoldState = rememberScaffoldState()
+        val navController = rememberNavController()
+
+        Scaffold(
+          scaffoldState = scaffoldState,
+          drawerContent = {
+            AppDrawer(
+              currentScreen = Screen.Notes,
+              onScreenSelected = { screen ->
+                coroutineScope.launch {
+                  scaffoldState.drawerState.close()
+                }
+              }
+            )
+          },
+          content = {
+            NavHost(
+              navController = navController,
+              startDestination = Screen.Notes.route
+            ) {
+              composable(Screen.Notes.route) { NotesScreen(viewModel) }
+            }
+          }
+        )
       }
     }
   }

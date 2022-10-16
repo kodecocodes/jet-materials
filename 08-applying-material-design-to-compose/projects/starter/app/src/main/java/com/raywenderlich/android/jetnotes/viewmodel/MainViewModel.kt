@@ -34,12 +34,13 @@
 package com.raywenderlich.android.jetnotes.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.raywenderlich.android.jetnotes.data.repository.Repository
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -51,13 +52,15 @@ import kotlinx.coroutines.withContext
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
   val notesNotInTrash: LiveData<List<NoteModel>> by lazy {
-    repository.getAllNotesNotInTrash()
+    repository.getAllNotesNotInTrash().asLiveData()
   }
 
-  val notesInTrash by lazy { repository.getAllNotesInTrash() }
+  val notesInTrash: LiveData<List<NoteModel>> by lazy {
+    repository.getAllNotesInTrash().asLiveData()
+  }
 
-  private var _selectedNotes = MutableLiveData<List<NoteModel>>(listOf())
-  val selectedNotes: LiveData<List<NoteModel>> = _selectedNotes
+  private var _selectedNotes = MutableStateFlow<List<NoteModel>>(listOf())
+  val selectedNotes: LiveData<List<NoteModel>> = _selectedNotes.asLiveData()
 
   fun onCreateNewNoteClick() {
     // TODO - Open SaveNoteScreen

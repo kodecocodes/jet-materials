@@ -56,7 +56,10 @@ private const val PERMANENTLY_DELETE_DIALOG = 3
 
 @Composable
 @ExperimentalMaterialApi
-fun TrashScreen(viewModel: MainViewModel) {
+fun TrashScreen(
+  viewModel: MainViewModel,
+  onTopBarNavigationIconClicked: () -> Unit
+) {
 
   val notesInThrash: List<NoteModel> by viewModel.notesInTrash
     .observeAsState(listOf())
@@ -66,78 +69,59 @@ fun TrashScreen(viewModel: MainViewModel) {
 
   val dialogState: MutableState<Int> = rememberSaveable { mutableStateOf(NO_DIALOG) }
 
-  val scaffoldState: ScaffoldState = rememberScaffoldState()
+  Column {
+    val areActionsVisible = selectedNotes.isNotEmpty()
+    TrashTopAppBar(
+      onNavigationIconClick = onTopBarNavigationIconClicked,
+      onRestoreNotesClick = { dialogState.value = RESTORE_NOTES_DIALOG },
+      onDeleteNotesClick = { dialogState.value = PERMANENTLY_DELETE_DIALOG },
+      areActionsVisible = areActionsVisible
+    )
+    Content(
+      notes = notesInThrash,
+      onNoteClick = { viewModel.onNoteSelected(it) },
+      selectedNotes = selectedNotes
+    )
 
-  val coroutineScope = rememberCoroutineScope()
-
-  Scaffold(
-    topBar = {
-      val areActionsVisible = selectedNotes.isNotEmpty()
-      TrashTopAppBar(
-        onNavigationIconClick = {
-          coroutineScope.launch { scaffoldState.drawerState.open() }
-        },
-        onRestoreNotesClick = { dialogState.value = RESTORE_NOTES_DIALOG },
-        onDeleteNotesClick = { dialogState.value = PERMANENTLY_DELETE_DIALOG },
-        areActionsVisible = areActionsVisible
-      )
-    },
-    scaffoldState = scaffoldState,
-    drawerContent = {
-      AppDrawer(
-        currentScreen = Screen.Trash,
-        closeDrawerAction = {
-          coroutineScope.launch { scaffoldState.drawerState.close() }
-        }
-      )
-    },
-    content = {
-      Content(
-        notes = notesInThrash,
-        onNoteClick = { viewModel.onNoteSelected(it) },
-        selectedNotes = selectedNotes
-      )
-
-      val dialog = dialogState.value
-      if (dialog != NO_DIALOG) {
-        val confirmAction: () -> Unit = when (dialog) {
-          RESTORE_NOTES_DIALOG -> {
-            {
-              viewModel.restoreNotes(selectedNotes)
-              dialogState.value = NO_DIALOG
-            }
-          }
-          PERMANENTLY_DELETE_DIALOG -> {
-            {
-              viewModel.permanentlyDeleteNotes(selectedNotes)
-              dialogState.value = NO_DIALOG
-            }
-          }
-          else -> {
-            {
-              dialogState.value = NO_DIALOG
-            }
+    val dialog = dialogState.value
+    if (dialog != NO_DIALOG) {
+      val confirmAction: () -> Unit = when (dialog) {
+        RESTORE_NOTES_DIALOG -> {
+          {
+            viewModel.restoreNotes(selectedNotes)
+            dialogState.value = NO_DIALOG
           }
         }
-
-        AlertDialog(
-          onDismissRequest = { dialogState.value = NO_DIALOG },
-          title = { Text(mapDialogTitle(dialog)) },
-          text = { Text(mapDialogText(dialog)) },
-          confirmButton = {
-            TextButton(onClick = confirmAction) {
-              Text("Confirm")
-            }
-          },
-          dismissButton = {
-            TextButton(onClick = { dialogState.value = NO_DIALOG }) {
-              Text("Dismiss")
-            }
+        PERMANENTLY_DELETE_DIALOG -> {
+          {
+            viewModel.permanentlyDeleteNotes(selectedNotes)
+            dialogState.value = NO_DIALOG
           }
-        )
+        }
+        else -> {
+          {
+            dialogState.value = NO_DIALOG
+          }
+        }
       }
+
+      AlertDialog(
+        onDismissRequest = { dialogState.value = NO_DIALOG },
+        title = { Text(mapDialogTitle(dialog)) },
+        text = { Text(mapDialogText(dialog)) },
+        confirmButton = {
+          TextButton(onClick = confirmAction) {
+            Text("Confirm")
+          }
+        },
+        dismissButton = {
+          TextButton(onClick = { dialogState.value = NO_DIALOG }) {
+            Text("Dismiss")
+          }
+        }
+      )
     }
-  )
+  }
 }
 
 @Composable

@@ -48,7 +48,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
 import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
 import com.raywenderlich.android.jetnotes.theme.JetNotesThemeSettings
@@ -193,7 +192,7 @@ fun LightDarkThemeItemPreview() {
 @Composable
 fun AppDrawer(
   currentScreen: Screen,
-  closeDrawerAction: () -> Unit
+  onScreenSelected: (Screen) -> Unit
 ) {
   Column(modifier = Modifier.fillMaxSize()) {
     AppDrawerHeader()
@@ -205,8 +204,7 @@ fun AppDrawer(
       label = "Notes",
       isSelected = currentScreen == Screen.Notes,
       onClick = {
-        JetNotesRouter.navigateTo(Screen.Notes)
-        closeDrawerAction()
+        onScreenSelected.invoke(Screen.Notes)
       }
     )
     ScreenNavigationButton(
@@ -214,8 +212,7 @@ fun AppDrawer(
       label = "Trash",
       isSelected = currentScreen == Screen.Trash,
       onClick = {
-        JetNotesRouter.navigateTo(Screen.Trash)
-        closeDrawerAction()
+        onScreenSelected.invoke(Screen.Trash)
       }
     )
     LightDarkThemeItem()

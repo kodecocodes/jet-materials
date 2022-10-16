@@ -48,11 +48,9 @@ import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 
 @Composable
 fun NotesScreen(viewModel: MainViewModel) {
-
   val notes: List<NoteModel> by viewModel
     .notesNotInTrash
     .observeAsState(listOf())
-
   Column {
     TopAppBar(
       title = "JetNotes",
