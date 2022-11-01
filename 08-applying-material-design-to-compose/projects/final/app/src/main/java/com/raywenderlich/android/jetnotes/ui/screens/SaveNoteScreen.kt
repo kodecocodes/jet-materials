@@ -33,7 +33,7 @@
  */
 package com.raywenderlich.android.jetnotes.ui.screens
 
-import androidx.activity.compose.BackHandler
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -57,17 +57,18 @@ import com.raywenderlich.android.jetnotes.R
 import com.raywenderlich.android.jetnotes.domain.model.ColorModel
 import com.raywenderlich.android.jetnotes.domain.model.NEW_NOTE_ID
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
-import com.raywenderlich.android.jetnotes.routing.JetNotesRouter
-import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.ui.components.NoteColor
 import com.raywenderlich.android.jetnotes.util.fromHex
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalMaterialApi
 @Composable
-fun SaveNoteScreen(viewModel: MainViewModel) {
-
+fun SaveNoteScreen(
+  viewModel: MainViewModel,
+  onNavigateBack: () -> Unit = {}
+) {
   val noteEntry: NoteModel by viewModel.noteEntry
     .observeAsState(NoteModel())
 
@@ -83,33 +84,27 @@ fun SaveNoteScreen(viewModel: MainViewModel) {
     mutableStateOf(false)
   }
 
-  BackHandler(onBack = {
-    if (bottomDrawerState.isOpen) {
-      coroutineScope.launch { bottomDrawerState.close() }
-    } else {
-      JetNotesRouter.navigateTo(Screen.Notes)
-    }
-  })
-
   Scaffold(
     topBar = {
       val isEditingMode: Boolean = noteEntry.id != NEW_NOTE_ID
       SaveNoteTopAppBar(
         isEditingMode = isEditingMode,
         onBackClick = {
-          JetNotesRouter.navigateTo(Screen.Notes)
+          onNavigateBack.invoke()
         },
         onSaveNoteClick = {
           viewModel.saveNote(noteEntry)
+          onNavigateBack.invoke()
         },
         onOpenColorPickerClick = {
-          coroutineScope.launch { bottomDrawerState.open() }
+          coroutineScope.launch {
+            bottomDrawerState.open()
+          }
         },
         onDeleteNoteClick = {
           moveNoteToTrashDialogShownState.value = true
         }
-      )
-    },
+      ) },
     content = {
       BottomDrawer(
         drawerState = bottomDrawerState,
@@ -143,12 +138,13 @@ fun SaveNoteScreen(viewModel: MainViewModel) {
           text = {
             Text(
               "Are you sure you want to " +
-                "move this note to the trash?"
+                  "move this note to the trash?"
             )
           },
           confirmButton = {
             TextButton(onClick = {
               viewModel.moveNoteToTrash(noteEntry)
+              onNavigateBack.invoke()
             }) {
               Text("Confirm")
             }
@@ -191,6 +187,7 @@ private fun SaveNoteTopAppBar(
       }
     },
     actions = {
+      // Save note action icon
       IconButton(onClick = onSaveNoteClick) {
         Icon(
           imageVector = Icons.Default.Check,
@@ -210,6 +207,7 @@ private fun SaveNoteTopAppBar(
         )
       }
 
+      // Delete action icon (show only in editing mode)
       if (isEditingMode) {
         IconButton(onClick = onDeleteNoteClick) {
           Icon(
@@ -219,7 +217,8 @@ private fun SaveNoteTopAppBar(
           )
         }
       }
-    })
+    }
+  )
 }
 
 @Composable
@@ -294,7 +293,9 @@ private fun NoteCheckOption(
   ) {
     Text(
       text = "Can note be checked off?",
-      modifier = Modifier.weight(1f)
+      modifier = Modifier
+        .weight(1f)
+        .align(Alignment.CenterVertically)
     )
     Switch(
       checked = isChecked,
@@ -382,30 +383,6 @@ fun ColorItem(
 
 @Preview
 @Composable
-fun ColorItemPreview() {
-  ColorItem(ColorModel.DEFAULT) {}
-}
-
-@Preview
-@Composable
-fun ColorPickerPreview() {
-  ColorPicker(
-    colors = listOf(
-      ColorModel.DEFAULT,
-      ColorModel.DEFAULT,
-      ColorModel.DEFAULT
-    )
-  ) { }
-}
-
-@Preview
-@Composable
-fun PickedColorPreview() {
-  PickedColor(ColorModel.DEFAULT)
-}
-
-@Preview
-@Composable
 fun SaveNoteTopAppBarPreview() {
   SaveNoteTopAppBar(
     isEditingMode = true,
@@ -418,8 +395,11 @@ fun SaveNoteTopAppBarPreview() {
 
 @Preview
 @Composable
-fun NoteCheckOptionPreview() {
-  NoteCheckOption(false) {}
+fun SaveNoteContentPreview() {
+  SaveNoteContent(
+    note = NoteModel(title = "Title", content = "content"),
+    onNoteChange = {}
+  )
 }
 
 @Preview
@@ -434,9 +414,30 @@ fun ContentTextFieldPreview() {
 
 @Preview
 @Composable
-fun SaveNoteContentPreview() {
-  SaveNoteContent(
-    note = NoteModel(title = "Title", content = "content"),
-    onNoteChange = {}
-  )
+fun NoteCheckOptionPreview() {
+  NoteCheckOption(false) {}
+}
+
+@Preview
+@Composable
+fun PickedColorPreview() {
+  PickedColor(ColorModel.DEFAULT)
+}
+
+@Preview
+@Composable
+fun ColorItemPreview() {
+  ColorItem(ColorModel.DEFAULT) {}
+}
+
+@Preview
+@Composable
+fun ColorPickerPreview() {
+  ColorPicker(
+    colors = listOf(
+      ColorModel.DEFAULT,
+      ColorModel.DEFAULT,
+      ColorModel.DEFAULT
+    )
+  ) { }
 }

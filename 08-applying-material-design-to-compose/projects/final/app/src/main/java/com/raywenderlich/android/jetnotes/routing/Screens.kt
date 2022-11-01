@@ -33,28 +33,23 @@
  */
 package com.raywenderlich.android.jetnotes.routing
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-
 /**
  * Class defining all possible screens in the app.
  */
-sealed class Screen {
-  object Notes : Screen()
-  object SaveNote : Screen()
-  object Trash : Screen()
-}
+sealed class Screen(val route: String) {
 
-/**
- * Allows you to change the screen in the [MainActivity]
- *
- * Also keeps track of the current screen.
- */
-object JetNotesRouter {
-  var currentScreen: Screen by mutableStateOf(Screen.Notes)
-
-  fun navigateTo(destination: Screen) {
-    currentScreen = destination
+  companion object {
+    fun fromRoute(route: String?): Screen {
+      return when(route) {
+        Notes.route -> Notes
+        SaveNote.route -> SaveNote
+        Trash.route -> Trash
+        else -> Notes
+      }
+    }
   }
+
+  object Notes : Screen("Notes")
+  object SaveNote : Screen("SaveNote")
+  object Trash : Screen("Trash")
 }

@@ -33,6 +33,7 @@
  */
 package com.raywenderlich.android.jetnotes.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -41,27 +42,26 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import com.raywenderlich.android.jetnotes.domain.model.NoteModel
-import com.raywenderlich.android.jetnotes.routing.Screen
-import com.raywenderlich.android.jetnotes.ui.components.AppDrawer
 import com.raywenderlich.android.jetnotes.ui.components.Note
 import com.raywenderlich.android.jetnotes.viewmodel.MainViewModel
-import kotlinx.coroutines.launch
 
-@ExperimentalMaterialApi
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun NotesScreen(viewModel: MainViewModel) {
-
+fun NotesScreen(
+  viewModel: MainViewModel,
+  onOpenNavigationDrawer: () -> Unit = {},
+  onNavigateToSaveNote: () -> Unit = {}
+) {
   val notes: List<NoteModel> by viewModel
     .notesNotInTrash
     .observeAsState(listOf())
 
   val scaffoldState: ScaffoldState = rememberScaffoldState()
-  val coroutineScope = rememberCoroutineScope()
 
   Scaffold(
+    scaffoldState = scaffoldState,
     topBar = {
       TopAppBar(
         title = {
@@ -72,7 +72,7 @@ fun NotesScreen(viewModel: MainViewModel) {
         },
         navigationIcon = {
           IconButton(onClick = {
-            coroutineScope.launch { scaffoldState.drawerState.open() }
+            onOpenNavigationDrawer.invoke()
           }) {
             Icon(
               imageVector = Icons.Filled.List,
@@ -82,21 +82,13 @@ fun NotesScreen(viewModel: MainViewModel) {
         }
       )
     },
-    scaffoldState = scaffoldState,
-    drawerContent = {
-      AppDrawer(
-        currentScreen = Screen.Notes,
-        closeDrawerAction = {
-          coroutineScope.launch {
-            scaffoldState.drawerState.close()
-          }
-        }
-      )
-    },
     floatingActionButtonPosition = FabPosition.End,
     floatingActionButton = {
       FloatingActionButton(
-        onClick = { viewModel.onCreateNewNoteClick() },
+        onClick = {
+          viewModel.onCreateNewNoteClick()
+          onNavigateToSaveNote.invoke()
+        },
         contentColor = MaterialTheme.colors.background,
         content = {
           Icon(
@@ -113,14 +105,17 @@ fun NotesScreen(viewModel: MainViewModel) {
           onNoteCheckedChange = {
             viewModel.onNoteCheckedChange(it)
           },
-          onNoteClick = { viewModel.onNoteClick(it) }
+          onNoteClick = {
+            viewModel.onNoteClick(it)
+            onNavigateToSaveNote.invoke()
+          }
         )
       }
     }
   )
 }
 
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun NotesList(
   notes: List<NoteModel>,
@@ -140,7 +135,6 @@ private fun NotesList(
   }
 }
 
-@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun NotesListPreview() {

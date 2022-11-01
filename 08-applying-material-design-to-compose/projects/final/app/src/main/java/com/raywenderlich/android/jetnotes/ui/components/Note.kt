@@ -98,7 +98,7 @@ fun Note(
   }
 }
 
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 private fun NotePreview() {
