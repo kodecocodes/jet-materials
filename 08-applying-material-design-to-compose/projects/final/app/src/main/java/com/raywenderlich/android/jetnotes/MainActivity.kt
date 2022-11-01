@@ -43,10 +43,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.raywenderlich.android.jetnotes.routing.Screen
 import com.raywenderlich.android.jetnotes.theme.JetNotesTheme
@@ -79,13 +82,24 @@ class MainActivity : AppCompatActivity() {
         val coroutineScope = rememberCoroutineScope()
         val scaffoldState: ScaffoldState = rememberScaffoldState()
         val navController = rememberNavController()
+        val navBackStackEntry
+            by navController.currentBackStackEntryAsState()
 
         Scaffold(
           scaffoldState = scaffoldState,
           drawerContent = {
             AppDrawer(
-              currentScreen = Screen.Notes,
+              currentScreen = Screen.fromRoute(
+                navBackStackEntry?.destination?.route
+              ),
               onScreenSelected = { screen ->
+                navController.navigate(screen.route) {
+                  popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                  }
+                  launchSingleTop = true
+                  restoreState = true
+                }
                 coroutineScope.launch {
                   scaffoldState.drawerState.close()
                 }
