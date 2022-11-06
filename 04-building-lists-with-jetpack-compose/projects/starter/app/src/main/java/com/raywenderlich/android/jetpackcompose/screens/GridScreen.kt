@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Razeware LLC
+ * Copyright (c) 2022 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,13 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
@@ -58,26 +62,14 @@ private val items = listOf(
 
 @Composable
 fun GridScreen() {
-  GridView(columnCount = 3)
+    //TODO add your code here
 
-  BackButtonHandler {
-    JetFundamentalsRouter.navigateTo(Screen.Navigation)
-  }
+    BackButtonHandler {
+        JetFundamentalsRouter.navigateTo(Screen.Navigation)
+    }
 }
 
 @Composable
-fun GridView(columnCount: Int) {
-  //TODO add your code here
+fun GridIcon(iconResource: ImageVector) {
+    //TODO add your code here
 }
-
-@Composable
-fun RowItem(rowItems: List<IconResource>) {
-  //TODO add your code here
-}
-
-@Composable
-fun RowScope.GridIcon(iconResource: IconResource) {
-  //TODO add your code here
-}
-
-data class IconResource(val imageVector: ImageVector, val isVisible: Boolean)
