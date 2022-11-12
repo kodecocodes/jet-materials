@@ -9,7 +9,7 @@ android {
   buildToolsVersion "30.0.3"
 
   defaultConfig {
-    applicationId "com.raywenderlich.android.jetnotes"
+    applicationId "com.yourcompany.android.jetnotes"
 
     minSdkVersion 21
     targetSdkVersion 33
@@ -92,4 +92,14 @@ dependencies {
 
   // Flow x LiveData
   implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+
+  // Unit Tests
+  testImplementation "junit:junit:4.13.2"
+
+  // Instrumented Tests
+  androidTestImplementation "androidx.test:runner:1.5.1"
+  androidTestImplementation "androidx.test.ext:junit:1.1.4"
+
+  // SplashScreen compat library
+  implementation 'androidx.core:core-splashscreen:1.0.0'
 }
