@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Razeware LLC
+ * Copyright (c) 2022 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ import com.raywenderlich.android.jetreddit.data.database.model.PostDbModel
  *
  * It contains a table for posts
  */
-@Database(entities = [PostDbModel::class], version = 1)
+@Database(entities = [PostDbModel::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
   companion object {
