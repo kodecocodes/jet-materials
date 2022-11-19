@@ -1,5 +1,3 @@
-
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -15,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 include ':app'
-rootProject.name = "JetpackReddit"
+rootProject.name = "JetReddit"
