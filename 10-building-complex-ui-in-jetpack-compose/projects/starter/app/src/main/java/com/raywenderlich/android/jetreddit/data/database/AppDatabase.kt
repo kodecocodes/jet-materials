@@ -43,7 +43,7 @@ import com.raywenderlich.android.jetreddit.data.database.model.PostDbModel
  *
  * It contains a table for posts
  */
-@Database(entities = [PostDbModel::class], version = 1)
+@Database(entities = [PostDbModel::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
   companion object {
