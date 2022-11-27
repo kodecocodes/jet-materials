@@ -37,7 +37,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.ExperimentalAnimationApi
 import com.yourcompany.android.jetreddit.viewmodel.MainViewModel
 import com.yourcompany.android.jetreddit.viewmodel.MainViewModelFactory
 
@@ -50,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     )
   })
 
-  @ExperimentalAnimationApi
   override fun onCreate(savedInstanceState: Bundle?) {
     // Switch to AppTheme for displaying the activity
     setTheme(R.style.Theme_JetReddit)

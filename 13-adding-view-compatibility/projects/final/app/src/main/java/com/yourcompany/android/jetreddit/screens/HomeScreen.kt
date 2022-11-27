@@ -34,7 +34,6 @@
 package com.yourcompany.android.jetreddit.screens
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -94,7 +93,6 @@ private val trendingItems = listOf(
   )
 )
 
-@ExperimentalAnimationApi
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel>

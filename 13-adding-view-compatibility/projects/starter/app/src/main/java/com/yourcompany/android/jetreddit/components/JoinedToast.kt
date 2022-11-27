@@ -50,7 +50,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yourcompany.android.jetreddit.R
 
-@ExperimentalAnimationApi
 @Composable
 fun JoinedToast(visible: Boolean) {
   AnimatedVisibility(
@@ -88,7 +87,6 @@ private fun ToastContent() {
   }
 }
 
-@ExperimentalAnimationApi
 @Preview
 @Composable
 fun JoinedToastPreview() {

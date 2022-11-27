@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults.buttonColors
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +26,6 @@ class ChatActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityChatBinding
 
-  @ExperimentalMaterialApi
   override fun onCreate(savedInstanceState: Bundle?) {
     // Switch to AppTheme for displaying the activity
     setTheme(R.style.Theme_JetReddit)
@@ -53,7 +51,6 @@ class ChatActivity : AppCompatActivity() {
   }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun ComposeButton(onButtonClick: () -> Unit) {
   val buttonColors = buttonColors(
@@ -80,7 +77,6 @@ private fun ComposeButton(onButtonClick: () -> Unit) {
   }
 }
 
-@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun ComposeButtonPreview() {
