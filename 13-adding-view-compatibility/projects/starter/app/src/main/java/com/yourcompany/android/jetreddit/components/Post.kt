@@ -50,6 +50,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -218,13 +219,13 @@ fun TextContent(text: String) {
 
 @Composable
 fun ImageContent(image: Int) {
-  val imageAsset = ImageBitmap.imageResource(id = image)
+  val painter = painterResource(id = image)
   Image(
-    bitmap = imageAsset,
+    painter = painterResource(image),
     contentDescription = stringResource(id = R.string.post_header_description),
     modifier = Modifier
       .fillMaxWidth()
-      .aspectRatio(imageAsset.width.toFloat() / imageAsset.height),
+      .aspectRatio(painter.intrinsicSize.width / painter.intrinsicSize.height),
     contentScale = ContentScale.Crop
   )
 }

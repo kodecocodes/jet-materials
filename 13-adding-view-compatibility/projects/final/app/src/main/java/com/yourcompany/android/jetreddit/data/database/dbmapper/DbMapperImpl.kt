@@ -33,7 +33,9 @@
  */
 package com.yourcompany.android.jetreddit.data.database.dbmapper
 
+import com.yourcompany.android.jetreddit.R
 import com.yourcompany.android.jetreddit.data.database.model.PostDbModel
+import com.yourcompany.android.jetreddit.data.database.model.PostDbModel.Companion.DEFAULT_POSTS
 import com.yourcompany.android.jetreddit.domain.model.PostModel
 import com.yourcompany.android.jetreddit.domain.model.PostType
 import java.util.concurrent.TimeUnit
@@ -51,10 +53,18 @@ class DbMapperImpl : DbMapper {
         comments.toString(),
         PostType.fromType(type),
         getPostedDate(datePosted),
-        image
+        mapImage(dbPostDbModel.id!!)
       )
     }
   }
+
+  private fun mapImage(id: Long): Int? =
+    if (id == DEFAULT_POSTS[1].id) {
+      R.drawable.thailand
+    } else {
+      null
+    }
+
 
   override fun mapDbPost(postModel: PostModel): PostDbModel {
     with(postModel) {
@@ -68,8 +78,7 @@ class DbMapperImpl : DbMapper {
         0,
         type.type,
         System.currentTimeMillis(),
-        false,
-        image
+        false
       )
     }
   }
