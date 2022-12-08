@@ -8,7 +8,7 @@ android {
   buildToolsVersion "30.0.3"
 
   defaultConfig {
-    applicationId "com.raywenderlich.android.jetpackcompose"
+    applicationId "com.yourcompany.android.jetpackcompose"
 
     minSdkVersion 21
     targetSdkVersion 33
@@ -69,5 +69,8 @@ dependencies {
   implementation "androidx.compose.material:material-icons-extended:$compose_version"
   implementation "androidx.compose.ui:ui-tooling:$compose_version"
   implementation "androidx.compose.compiler:compiler:$compose_compiler_version"
+
+  // SplashScreen compat library
+  implementation 'androidx.core:core-splashscreen:1.0.0'
 
 }
