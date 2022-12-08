@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.jetpackcompose.screens
+package com.yourcompany.android.jetpackcompose.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -50,10 +50,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.raywenderlich.android.jetpackcompose.R
-import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
-import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
-import com.raywenderlich.android.jetpackcompose.router.Screen
+import com.yourcompany.android.jetpackcompose.R
+import com.yourcompany.android.jetpackcompose.router.BackButtonHandler
+import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
+import com.yourcompany.android.jetpackcompose.router.Screen
 
 @Composable
 fun ExploreButtonsScreen() {

@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2022 Razeware LLC
- *
+ * Copyright (c) 2022 Kodeco Inc
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
  * distribute, sublicense, create a derivative work, and/or sell copies of the
  * Software in any work that is designed, intended, or marketed for pedagogical or
@@ -18,11 +18,11 @@
  * or information technology.  Permission for such use, copying, modification,
  * merger, publication, distribution, sublicensing, creation of derivative works,
  * or sale is expressly withheld.
- *
+ * 
  * This project and source code may use libraries or frameworks that are
  * released under various Open-Source licenses. Use of those libraries and
  * frameworks are governed by their own individual licenses.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,28 +32,20 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.jetpackcompose.app
+package com.yourcompany.android.jetpackcompose
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
-import com.raywenderlich.android.jetpackcompose.router.Screen
-import com.raywenderlich.android.jetpackcompose.screens.*
+import org.junit.Test
 
-@Composable
-fun JetFundamentalsApp() {
-  Surface(color = MaterialTheme.colors.background) {
-    Crossfade(targetState = JetFundamentalsRouter.currentScreen) { screenState ->
-      when (screenState.value) {
-        is Screen.Navigation -> NavigationScreen()
-        is Screen.Text -> TextScreen()
-        is Screen.TextField -> TextFieldScreen()
-        is Screen.Buttons -> ExploreButtonsScreen()
-        is Screen.ProgressIndicator -> ProgressIndicatorScreen()
-        is Screen.AlertDialog -> AlertDialogScreen()
-      }
-    }
+import org.junit.Assert.*
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+  @Test
+  fun addition_isCorrect() {
+    assertEquals(4, 2 + 2)
   }
 }

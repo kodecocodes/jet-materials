@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,58 +32,61 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.jetpackcompose.screens
+package com.yourcompany.android.jetpackcompose.screens
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Surface
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import com.raywenderlich.android.jetpackcompose.R
-import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
-import com.raywenderlich.android.jetpackcompose.router.Screen
+import androidx.compose.ui.text.input.KeyboardType
+import com.yourcompany.android.jetpackcompose.R
+import com.yourcompany.android.jetpackcompose.router.BackButtonHandler
+import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
+import com.yourcompany.android.jetpackcompose.router.Screen
 
 @Composable
-fun NavigationScreen() {
-  Surface(
-      color = Color.White,
-      modifier = Modifier.fillMaxSize()
+fun TextFieldScreen() {
+  Column(
+      modifier = Modifier.fillMaxSize(),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Center
   ) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    MyTextField()
+  }
 
-      NavigationButton(stringResource(id = R.string.text), Screen.Text)
-      NavigationButton(stringResource(id = R.string.text_field), Screen.TextField)
-      NavigationButton(stringResource(id = R.string.buttons), Screen.Buttons)
-      NavigationButton(stringResource(id = R.string.progress_indicators), Screen.ProgressIndicator)
-      NavigationButton(stringResource(id = R.string.alert_dialog), Screen.AlertDialog)
-    }
+  BackButtonHandler {
+    JetFundamentalsRouter.navigateTo(Screen.Navigation)
   }
 }
 
 @Composable
-fun NavigationButton(text: String, screen: Screen) {
-  Button(
-      modifier = Modifier
-          .fillMaxWidth()
-          .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-      shape = RoundedCornerShape(4.dp),
-      colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
-      onClick = { JetFundamentalsRouter.navigateTo(screen) }
-  ) {
-    Text(
-        text = text,
-        color = Color.White
-    )
-  }
+fun MyTextField() {
+  val textValue = remember { mutableStateOf("") }
+
+  val primaryColor = colorResource(id = R.color.colorPrimary)
+
+  OutlinedTextField(
+    label = { Text(text = stringResource(id = R.string.email)) },
+    colors = TextFieldDefaults.outlinedTextFieldColors(
+      focusedBorderColor = primaryColor,
+      focusedLabelColor = primaryColor,
+      cursorColor = primaryColor
+    ),
+    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+    value = textValue.value,
+    onValueChange = {
+      textValue.value = it
+    },
+  )
 }

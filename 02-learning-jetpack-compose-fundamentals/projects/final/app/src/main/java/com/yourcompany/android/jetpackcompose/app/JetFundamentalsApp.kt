@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,61 +32,28 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.jetpackcompose.screens
+package com.yourcompany.android.jetpackcompose.app
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.animation.Crossfade
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
-import com.raywenderlich.android.jetpackcompose.R
-import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
-import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
-import com.raywenderlich.android.jetpackcompose.router.Screen
-
+import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
+import com.yourcompany.android.jetpackcompose.router.Screen
+import com.yourcompany.android.jetpackcompose.screens.*
 
 @Composable
-fun AlertDialogScreen() {
-
-  MyAlertDialog()
-
-  BackButtonHandler {
-    JetFundamentalsRouter.navigateTo(Screen.Navigation)
-  }
-}
-
-@Composable
-fun MyAlertDialog() {
-  val shouldShowDialog = remember { mutableStateOf(true) } // 1
-
-  if (shouldShowDialog.value) { // 2
-    AlertDialog( // 3
-      onDismissRequest = { // 4
-        shouldShowDialog.value = false
-        JetFundamentalsRouter.navigateTo(Screen.Navigation)
-      },
-      // 5
-      title = { Text(text = stringResource(id = R.string.alert_dialog_title)) },
-      text = { Text(text = stringResource(id = R.string.alert_dialog_text)) },
-      confirmButton = { // 6
-        Button(
-          colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
-          onClick = {
-            shouldShowDialog.value = false
-            JetFundamentalsRouter.navigateTo(Screen.Navigation)
-          }
-        ) {
-          Text(
-            text = stringResource(id = R.string.confirm),
-            color = Color.White
-          )
-        }
+fun JetFundamentalsApp() {
+  Surface(color = MaterialTheme.colors.background) {
+    Crossfade(targetState = JetFundamentalsRouter.currentScreen) { screenState ->
+      when (screenState.value) {
+        is Screen.Navigation -> NavigationScreen()
+        is Screen.Text -> TextScreen()
+        is Screen.TextField -> TextFieldScreen()
+        is Screen.Buttons -> ExploreButtonsScreen()
+        is Screen.ProgressIndicator -> ProgressIndicatorScreen()
+        is Screen.AlertDialog -> AlertDialogScreen()
       }
-    )
+    }
   }
 }
