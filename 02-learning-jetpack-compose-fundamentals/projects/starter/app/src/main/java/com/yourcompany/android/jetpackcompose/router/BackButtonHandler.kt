@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,29 +31,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.raywenderlich.android.jetpackcompose.router
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+package com.yourcompany.android.jetpackcompose.router
 
-/**
- * Class defining the screens we have in the app.
- *
- * These objects should match files we have in the screens package
- */
-sealed class Screen {
-  object Navigation : Screen()
-  object Text : Screen()
-  object TextField : Screen()
-  object Buttons : Screen()
-  object ProgressIndicator : Screen()
-  object AlertDialog : Screen()
+import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcherOwner
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalLifecycleOwner
+
+private val LocalBackPressedDispatcher = staticCompositionLocalOf<OnBackPressedDispatcherOwner?> { null }
+
+private class ComposableBackHandler(enabled: Boolean) : OnBackPressedCallback(enabled) {
+  lateinit var onBackPressed: () -> Unit
+
+  override fun handleOnBackPressed() {
+    onBackPressed()
+  }
 }
 
-object JetFundamentalsRouter {
-  var currentScreen: MutableState<Screen> = mutableStateOf(Screen.Navigation)
+@Composable
+internal fun Handler(
+    enabled: Boolean = true,
+    onBackPressed: () -> Unit
+) {
+  val dispatcher = (LocalBackPressedDispatcher.current ?: return).onBackPressedDispatcher
 
-  fun navigateTo(destination: Screen) {
-    currentScreen.value = destination
+  val handler = remember { ComposableBackHandler(enabled) }
+
+  DisposableEffect(dispatcher) {
+    dispatcher.addCallback(handler)
+
+
+    onDispose { handler.remove() }
+  }
+
+  LaunchedEffect(enabled) {
+    handler.isEnabled = enabled
+    handler.onBackPressed = onBackPressed
+  }
+}
+
+@Composable
+internal fun BackButtonHandler(onBackPressed: () -> Unit) {
+  CompositionLocalProvider(
+      LocalBackPressedDispatcher provides LocalLifecycleOwner.current as ComponentActivity
+  ) {
+    Handler {
+      onBackPressed()
+    }
   }
 }

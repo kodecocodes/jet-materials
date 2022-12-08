@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,45 +32,25 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.jetpackcompose.screens
+package com.yourcompany.android.jetpackcompose.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
-import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
-import com.raywenderlich.android.jetpackcompose.router.Screen
+import com.yourcompany.android.jetpackcompose.router.BackButtonHandler
+import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
+import com.yourcompany.android.jetpackcompose.router.Screen
+
 
 @Composable
-fun ExploreButtonsScreen() {
-  Column(modifier = Modifier.fillMaxSize(),
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center) {
+fun AlertDialogScreen() {
 
-    MyButton()
-    MyRadioGroup()
-    MyFloatingActionButton()
+  MyAlertDialog()
 
-    BackButtonHandler {
-      JetFundamentalsRouter.navigateTo(Screen.Navigation)
-    }
+  BackButtonHandler {
+    JetFundamentalsRouter.navigateTo(Screen.Navigation)
   }
 }
 
 @Composable
-fun MyButton() {
-  //TODO add your code here
-}
-
-@Composable
-fun MyRadioGroup() {
-  //TODO add your code here
-}
-
-@Composable
-fun MyFloatingActionButton() {
+fun MyAlertDialog() {
   //TODO add your code here
 }

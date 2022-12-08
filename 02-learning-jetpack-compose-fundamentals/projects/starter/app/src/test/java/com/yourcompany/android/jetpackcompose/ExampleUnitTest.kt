@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,26 +32,20 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.jetpackcompose
+package com.yourcompany.android.jetpackcompose
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
+
+import org.junit.Assert.*
 
 /**
- * Instrumented test, which will execute on an Android device.
+ * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
-
+class ExampleUnitTest {
   @Test
-  fun useAppContext() {
-    // Context of the app under test.
-    val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    assertEquals("com.raywenderlich.android.jetpackcompose", appContext.packageName)
+  fun addition_isCorrect() {
+    assertEquals(4, 2 + 2)
   }
 }

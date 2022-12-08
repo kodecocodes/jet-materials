@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,26 +31,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package com.yourcompany.android.jetpackcompose.router
 
-package com.raywenderlich.android.jetpackcompose.screens
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 
-import androidx.compose.runtime.Composable
-import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
-import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
-import com.raywenderlich.android.jetpackcompose.router.Screen
-
-
-@Composable
-fun AlertDialogScreen() {
-
-  MyAlertDialog()
-
-  BackButtonHandler {
-    JetFundamentalsRouter.navigateTo(Screen.Navigation)
-  }
+/**
+ * Class defining the screens we have in the app.
+ *
+ * These objects should match files we have in the screens package
+ */
+sealed class Screen {
+  object Navigation : Screen()
+  object Text : Screen()
+  object TextField : Screen()
+  object Buttons : Screen()
+  object ProgressIndicator : Screen()
+  object AlertDialog : Screen()
 }
 
-@Composable
-fun MyAlertDialog() {
-  //TODO add your code here
+object JetFundamentalsRouter {
+  var currentScreen: MutableState<Screen> = mutableStateOf(Screen.Navigation)
+
+  fun navigateTo(destination: Screen) {
+    currentScreen.value = destination
+  }
 }

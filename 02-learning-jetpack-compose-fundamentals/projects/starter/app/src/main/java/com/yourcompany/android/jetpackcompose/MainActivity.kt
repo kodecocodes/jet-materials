@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,20 +32,21 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.jetpackcompose
+package com.yourcompany.android.jetpackcompose
 
-import org.junit.Test
+import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import com.yourcompany.android.jetpackcompose.app.JetFundamentalsApp
 
-import org.junit.Assert.*
+class MainActivity : AppCompatActivity() {
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-  @Test
-  fun addition_isCorrect() {
-    assertEquals(4, 2 + 2)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    setTheme(R.style.AppTheme)
+    super.onCreate(savedInstanceState)
+
+    setContent {
+      JetFundamentalsApp()
+    }
   }
 }

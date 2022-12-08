@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,35 +32,28 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.jetpackcompose.screens
+package com.yourcompany.android.jetpackcompose.app
 
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.animation.Crossfade
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
-import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
-import com.raywenderlich.android.jetpackcompose.router.Screen
+import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
+import com.yourcompany.android.jetpackcompose.router.Screen
+import com.yourcompany.android.jetpackcompose.screens.*
 
 @Composable
-fun TextFieldScreen() {
-  Column(
-      modifier = Modifier.fillMaxSize(),
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center
-  ) {
-    MyTextField()
+fun JetFundamentalsApp() {
+  Surface(color = MaterialTheme.colors.background) {
+    Crossfade(targetState = JetFundamentalsRouter.currentScreen) { screenState ->
+      when (screenState.value) {
+        is Screen.Navigation -> NavigationScreen()
+        is Screen.Text -> TextScreen()
+        is Screen.TextField -> TextFieldScreen()
+        is Screen.Buttons -> ExploreButtonsScreen()
+        is Screen.ProgressIndicator -> ProgressIndicatorScreen()
+        is Screen.AlertDialog -> AlertDialogScreen()
+      }
+    }
   }
-
-  BackButtonHandler {
-    JetFundamentalsRouter.navigateTo(Screen.Navigation)
-  }
-}
-
-@Composable
-fun MyTextField() {
-  //TODO add your code here
 }
