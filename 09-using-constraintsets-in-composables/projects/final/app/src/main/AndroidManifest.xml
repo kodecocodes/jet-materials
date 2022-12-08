@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  package="com.raywenderlich.android.jetreddit">
+  package="com.yourcompany.android.jetreddit">
 
   <application
     android:allowBackup="false"
@@ -14,7 +14,7 @@
 
     <!-- Main Activity -->
     <activity
-      android:name=".MainActivity"
+      android:name="com.yourcompany.android.jetreddit.MainActivity"
       android:theme="@style/SplashTheme"
         android:exported="true">
       <intent-filter>
