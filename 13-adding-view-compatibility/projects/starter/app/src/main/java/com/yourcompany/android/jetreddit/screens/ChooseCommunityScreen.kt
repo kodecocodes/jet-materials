@@ -51,8 +51,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yourcompany.android.jetreddit.R
-import com.yourcompany.android.jetreddit.routing.BackButtonAction
-import com.yourcompany.android.jetreddit.routing.JetRedditRouter
 import com.yourcompany.android.jetreddit.viewmodel.MainViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -63,7 +61,11 @@ private const val SEARCH_DELAY_MILLIS = 300L
 private val defaultCommunities = listOf("kodeco", "androiddev", "puppies")
 
 @Composable
-fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
+fun ChooseCommunityScreen(
+  viewModel: MainViewModel,
+  modifier: Modifier = Modifier,
+  onBackSelected: () -> Unit
+) {
   val scope = rememberCoroutineScope()
   val communities: List<String> by viewModel.subreddits.observeAsState(emptyList())
   var searchedText by remember { mutableStateOf("") }
@@ -75,7 +77,7 @@ fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifie
   }
 
   Column {
-    ChooseCommunityTopBar()
+    ChooseCommunityTopBar(onBackSelected = onBackSelected)
     TextField(
       value = searchedText,
       onValueChange = {
@@ -100,11 +102,7 @@ fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifie
         backgroundColor = MaterialTheme.colors.surface
       )
     )
-    SearchedCommunities(communities, viewModel, modifier)
-  }
-
-  BackButtonAction {
-    JetRedditRouter.goBack()
+    SearchedCommunities(communities, viewModel, modifier, onBackSelected)
   }
 }
 
@@ -112,7 +110,8 @@ fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifie
 fun SearchedCommunities(
   communities: List<String>,
   viewModel: MainViewModel?,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  onBackSelected: () -> Unit
 ) {
   communities.forEach {
     Community(
@@ -120,14 +119,17 @@ fun SearchedCommunities(
       modifier = modifier,
       onCommunityClicked = {
         viewModel?.selectedCommunity?.postValue(it)
-        JetRedditRouter.goBack()
+        onBackSelected.invoke()
       }
     )
   }
 }
 
 @Composable
-fun ChooseCommunityTopBar(modifier: Modifier = Modifier) {
+fun ChooseCommunityTopBar(
+  modifier: Modifier = Modifier,
+  onBackSelected: () -> Unit
+) {
 
   val colors = MaterialTheme.colors
 
@@ -141,7 +143,7 @@ fun ChooseCommunityTopBar(modifier: Modifier = Modifier) {
     },
     navigationIcon = {
       IconButton(
-        onClick = { JetRedditRouter.goBack() }
+        onClick = { onBackSelected.invoke() }
       ) {
         Icon(
           imageVector = Icons.Default.Close,
@@ -162,6 +164,6 @@ fun ChooseCommunityTopBar(modifier: Modifier = Modifier) {
 @Composable
 fun SearchedCommunitiesPreview() {
   Column {
-    SearchedCommunities(defaultCommunities, null, Modifier)
+    SearchedCommunities(defaultCommunities, null, Modifier) {}
   }
 }

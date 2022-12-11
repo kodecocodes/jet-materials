@@ -63,7 +63,6 @@ import com.yourcompany.android.jetreddit.R
 import com.yourcompany.android.jetreddit.appdrawer.ProfileInfo
 import com.yourcompany.android.jetreddit.components.PostAction
 import com.yourcompany.android.jetreddit.domain.model.PostModel
-import com.yourcompany.android.jetreddit.routing.JetRedditRouter
 import com.yourcompany.android.jetreddit.routing.MyProfileRouter
 import com.yourcompany.android.jetreddit.routing.MyProfileScreenType
 import com.yourcompany.android.jetreddit.viewmodel.MainViewModel
@@ -71,7 +70,11 @@ import com.yourcompany.android.jetreddit.viewmodel.MainViewModel
 private val tabNames = listOf(R.string.posts, R.string.about)
 
 @Composable
-fun MyProfileScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
+fun MyProfileScreen(
+  viewModel: MainViewModel,
+  modifier: Modifier = Modifier,
+  onBackSelected: () -> Unit
+) {
   ConstraintLayout(modifier = modifier.fillMaxSize()) {
     val (topAppBar, tabs, bodyContent) = createRefs()
 
@@ -87,7 +90,7 @@ fun MyProfileScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
       },
       navigationIcon = {
         IconButton(
-          onClick = { JetRedditRouter.goBack() }
+          onClick = { onBackSelected.invoke() }
         ) {
           Icon(
             imageVector = Icons.Default.ArrowBack,
