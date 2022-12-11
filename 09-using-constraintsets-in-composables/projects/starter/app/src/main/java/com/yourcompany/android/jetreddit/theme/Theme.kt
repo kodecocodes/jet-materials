@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,18 +42,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 
 private val LightThemeColors = lightColors(
-    primary = RwPrimary,
-    primaryVariant = RwPrimaryDark,
+    primary = ColorPrimary,
+    primaryVariant = ColorPrimaryDark,
     onPrimary = Color.Gray,
     secondary = Color.LightGray,
-    secondaryVariant = RwPrimaryDark,
+    secondaryVariant = ColorPrimaryDark,
     onSecondary = Color.Black,
     error = Red800
 )
 
 private val DarkThemeColors = darkColors(
-    primary = RwPrimaryDark,
-    primaryVariant = RwPrimary,
+    primary = ColorPrimaryDark,
+    primaryVariant = ColorPrimary,
     onPrimary = Color.Gray,
     secondary = Color.Black,
     onSecondary = Color.White,

@@ -1,6 +1,6 @@
 <resources>
   <string name="app_name">JetReddit</string>
-  <string name="default_username">u/raywenderlich</string>
+  <string name="default_username">u/kodeco</string>
   <string name="home">Home</string>
   <string name="subreddits">Subreddits</string>
   <string name="new_post">New Post</string>
@@ -27,7 +27,7 @@
   <string name="cats">r/cats</string>
   <string name="all">All</string>
   <string name="public_network">Reddit Public Access Network</string>
-  <string name="raywenderlich">r/raywenderlich</string>
+  <string name="kodeco">r/kodeco</string>
   <string name="members_120k">120k members</string>
   <string name="members_600k">600k members</string>
   <string name="members_400k">400k members</string>
@@ -35,7 +35,7 @@
   <string name="hello_android_devs">Hello Android devs!</string>
   <string name="welcome_to_android">Welcome to Android!</string>
   <string name="hello_programmers">Hello programers!</string>
-  <string name="welcome_to_raywenderlich">Welcome to raywenderlich!</string>
+  <string name="welcome_to_kodeco">Welcome to Kodeco!</string>
   <string name="android">r/android</string>
   <string name="programming">r/programming</string>
   <string name="androiddev">r/androiddev</string>
@@ -64,5 +64,5 @@
   <string name="subreddit_image">Subreddit Image</string>
   <string name="subreddit_icon">Subreddit Icon</string>
   <string name="community_icon">Community Icon</string>
-  <string name="raywenderlich_com">r/raywenderlich.com</string>
+  <string name="kodeco_com">r/kodeco.com</string>
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Razeware LLC
+ * Copyright (c) 2022 Kodeco Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,9 @@ package com.yourcompany.android.jetreddit.theme
 import androidx.compose.ui.graphics.Color
 
 
-val RwPrimary = Color.White
-val RwPrimaryDark = Color.Black
-val RwAccent = Color(0xFF3F51B5)
+val ColorPrimary = Color.White
+val ColorPrimaryDark = Color.Black
+val ColorAccent = Color(0xFF3F51B5)
 val LightBlue = Color(0xFF2196F3)
 
 val Red800 = Color(0xffd00036)
