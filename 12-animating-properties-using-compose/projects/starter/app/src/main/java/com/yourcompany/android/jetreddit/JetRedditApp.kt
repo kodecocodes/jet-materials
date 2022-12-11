@@ -47,8 +47,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.yourcompany.android.jetreddit.appdrawer.AppDrawer
-import com.yourcompany.android.jetreddit.routing.JetRedditRouter
 import com.yourcompany.android.jetreddit.routing.Screen
 import com.yourcompany.android.jetreddit.screens.*
 import com.yourcompany.android.jetreddit.theme.JetRedditTheme
@@ -68,24 +73,35 @@ fun JetRedditApp(viewModel: MainViewModel) {
 private fun AppContent(viewModel: MainViewModel) {
   val scaffoldState: ScaffoldState = rememberScaffoldState()
   val coroutineScope: CoroutineScope = rememberCoroutineScope()
+  val navController = rememberNavController()
+  val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-  Crossfade(targetState = JetRedditRouter.currentScreen) { screenState: MutableState<Screen> ->
+  Crossfade(targetState = navBackStackEntry?.destination?.route) { route: String? ->
 
     Scaffold(
-      topBar = getTopBar(screenState.value, scaffoldState, coroutineScope),
+      topBar = getTopBar(Screen.fromRoute(route), scaffoldState, coroutineScope),
       drawerContent = {
         AppDrawer(
-          closeDrawerAction = { coroutineScope.launch { scaffoldState.drawerState.close() } }
+          onScreenSelected = { screen ->
+            navController.navigate(screen.route) {
+              popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+              }
+              launchSingleTop = true
+              restoreState = true
+            }
+            coroutineScope.launch { scaffoldState.drawerState.close() }
+          }
         )
       },
       scaffoldState = scaffoldState,
       bottomBar = {
-        BottomNavigationComponent(screenState = screenState)
+        BottomNavigationComponent(navController = navController)
       },
       content = {
         MainScreenContainer(
+          navController = navController,
           modifier = Modifier.padding(bottom = 56.dp),
-          screenState = screenState,
           viewModel = viewModel
         )
       }
@@ -101,7 +117,13 @@ fun getTopBar(
   if (screenState == Screen.MyProfile || screenState == Screen.ChooseCommunity) {
     return {}
   } else {
-    return { TopAppBar(scaffoldState = scaffoldState, coroutineScope = coroutineScope) }
+    return {
+      TopAppBar(
+        screen = screenState,
+        scaffoldState = scaffoldState,
+        coroutineScope = coroutineScope
+      )
+    }
   }
 }
 
@@ -109,14 +131,18 @@ fun getTopBar(
  * Represents top app bar on the screen
  */
 @Composable
-fun TopAppBar(scaffoldState: ScaffoldState, coroutineScope: CoroutineScope) {
+fun TopAppBar(
+  screen: Screen,
+  scaffoldState: ScaffoldState,
+  coroutineScope: CoroutineScope
+) {
 
   val colors = MaterialTheme.colors
 
   TopAppBar(
     title = {
       Text(
-        text = stringResource(JetRedditRouter.currentScreen.value.titleResId),
+        text = stringResource(screen.titleResId),
         color = colors.primaryVariant
       )
     },
@@ -137,20 +163,33 @@ fun TopAppBar(scaffoldState: ScaffoldState, coroutineScope: CoroutineScope) {
 
 @Composable
 private fun MainScreenContainer(
+  navController: NavHostController,
   modifier: Modifier = Modifier,
-  screenState: MutableState<Screen>,
   viewModel: MainViewModel
 ) {
   Surface(
     modifier = modifier,
     color = MaterialTheme.colors.background
   ) {
-    when (screenState.value) {
-      Screen.Home -> HomeScreen(viewModel)
-      Screen.Subscriptions -> SubredditsScreen()
-      Screen.NewPost -> AddScreen(viewModel)
-      Screen.MyProfile -> MyProfileScreen(viewModel)
-      Screen.ChooseCommunity -> ChooseCommunityScreen(viewModel)
+    NavHost(
+      navController = navController,
+      startDestination = Screen.Home.route
+    ) {
+      composable(Screen.Home.route) {
+        HomeScreen(viewModel)
+      }
+      composable(Screen.Subscriptions.route) {
+        SubredditsScreen()
+      }
+      composable(Screen.NewPost.route) {
+        AddScreen(viewModel, navController)
+      }
+      composable(Screen.MyProfile.route) {
+        MyProfileScreen(viewModel) { navController.popBackStack() }
+      }
+      composable(Screen.ChooseCommunity.route) {
+        ChooseCommunityScreen(viewModel) { navController.popBackStack() }
+      }
     }
   }
 }
@@ -158,7 +197,7 @@ private fun MainScreenContainer(
 @Composable
 private fun BottomNavigationComponent(
   modifier: Modifier = Modifier,
-  screenState: MutableState<Screen>
+  navController: NavHostController
 ) {
   var selectedItem by remember { mutableStateOf(0) }
 
@@ -184,7 +223,13 @@ private fun BottomNavigationComponent(
         selected = selectedItem == it.index,
         onClick = {
           selectedItem = it.index
-          screenState.value = it.screen
+          navController.navigate(it.screen.route) {
+            popUpTo(navController.graph.findStartDestination().id) {
+              saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+          }
         }
       )
     }

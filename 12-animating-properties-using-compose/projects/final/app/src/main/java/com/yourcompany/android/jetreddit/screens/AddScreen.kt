@@ -46,14 +46,14 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.yourcompany.android.jetreddit.R
 import com.yourcompany.android.jetreddit.domain.model.PostModel
-import com.yourcompany.android.jetreddit.routing.JetRedditRouter
 import com.yourcompany.android.jetreddit.routing.Screen
 import com.yourcompany.android.jetreddit.viewmodel.MainViewModel
 
 @Composable
-fun AddScreen(viewModel: MainViewModel) {
+fun AddScreen(viewModel: MainViewModel, navHostController: NavHostController) {
 
   val selectedCommunity: String by viewModel.selectedCommunity.observeAsState("")
 
@@ -61,7 +61,7 @@ fun AddScreen(viewModel: MainViewModel) {
 
   Column(modifier = Modifier.fillMaxSize()) {
 
-    CommunityPicker(selectedCommunity)
+    CommunityPicker(selectedCommunity, navHostController)
 
     TitleTextField(post.title) { newTitle -> post = post.copy(title = newTitle) }
 
@@ -69,7 +69,7 @@ fun AddScreen(viewModel: MainViewModel) {
 
     AddPostButton(selectedCommunity.isNotEmpty() && post.title.isNotEmpty()) {
       viewModel.savePost(post)
-      JetRedditRouter.navigateTo(Screen.Home)
+      navHostController.popBackStack()
     }
   }
 }
@@ -145,7 +145,10 @@ private fun AddPostButton(isEnabled: Boolean, onSaveClicked: () -> Unit) {
 }
 
 @Composable
-private fun CommunityPicker(selectedCommunity: String) {
+private fun CommunityPicker(
+  selectedCommunity: String,
+  navHostController: NavHostController
+) {
 
   val selectedText =
     if (selectedCommunity.isEmpty()) stringResource(R.string.choose_community) else selectedCommunity
@@ -157,7 +160,7 @@ private fun CommunityPicker(selectedCommunity: String) {
       .padding(horizontal = 8.dp)
       .padding(top = 16.dp)
       .clickable {
-        JetRedditRouter.navigateTo(Screen.ChooseCommunity)
+        navHostController.navigate(Screen.ChooseCommunity.route)
       },
   ) {
     Image(
