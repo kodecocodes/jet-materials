@@ -58,27 +58,6 @@ class JetRedditAppTest {
     }
 
     @Test
-    fun app_shows_new_post_screen() {
-        composeTestRule.activity.setContent {
-            JetRedditApp(
-                allPosts = PostDataFactory.createPosts(),
-                myPosts = PostDataFactory.createPosts(),
-                communities = PostDataFactory.createCommunities(),
-                selectedCommunity = PostDataFactory.randomString(),
-                savePost = {},
-                searchCommunities = {},
-                communitySelected ={}
-            )
-        }
-
-        composeTestRule.onNodeWithTag(
-            Screen.NewPost.route
-        ).performClick()
-
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.new_post)).assertIsDisplayed()
-    }
-
-    @Test
     fun app_shows_drawer() {
         composeTestRule.activity.setContent {
             JetRedditApp(
@@ -118,6 +97,27 @@ class JetRedditAppTest {
         ).onFirst().performClick()
 
         composeTestRule.onNodeWithTag(Tags.JOINED_TOAST).assertIsDisplayed()
+    }
+    
+    @Test
+    fun app_shows_new_post_screen() {
+        composeTestRule.activity.setContent {
+            JetRedditApp(
+                allPosts = PostDataFactory.createPosts(),
+                myPosts = PostDataFactory.createPosts(),
+                communities = PostDataFactory.createCommunities(),
+                selectedCommunity = PostDataFactory.randomString(),
+                savePost = {},
+                searchCommunities = {},
+                communitySelected ={}
+            )
+        }
+
+        composeTestRule.onNodeWithTag(
+            Screen.NewPost.route
+        ).performClick()
+
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.new_post)).assertIsDisplayed()
     }
 
 }
