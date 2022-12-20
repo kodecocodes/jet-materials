@@ -38,6 +38,9 @@ import androidx.compose.ui.Modifier
 import com.yourcompany.android.jetreddit.viewmodel.MainViewModel
 
 @Composable
-fun MyProfileScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
+fun MyProfileScreen(
+  viewModel: MainViewModel,
+  modifier: Modifier = Modifier,
+  onBackSelected: () -> Unit) {
 
 }
