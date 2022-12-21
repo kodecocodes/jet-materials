@@ -52,6 +52,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yourcompany.android.jetreddit.R
+import com.yourcompany.android.jetreddit.routing.Screen
 import com.yourcompany.android.jetreddit.theme.JetRedditThemeSettings
 
 /**
@@ -60,7 +61,7 @@ import com.yourcompany.android.jetreddit.theme.JetRedditThemeSettings
 @Composable
 fun AppDrawer(
   modifier: Modifier = Modifier,
-  closeDrawerAction: () -> Unit
+  onScreenSelected: (Screen) -> Unit
 ) {
   Column(
     modifier = modifier
@@ -69,7 +70,7 @@ fun AppDrawer(
   ) {
     AppDrawerHeader()
 
-    AppDrawerBody(closeDrawerAction)
+    AppDrawerBody(onScreenSelected)
 
     AppDrawerFooter(modifier)
   }
@@ -104,7 +105,9 @@ private fun ProfileInfoItem(
  * * app light/dark mode
  */
 @Composable
-private fun AppDrawerBody(closeDrawerAction: () -> Unit) {
+private fun AppDrawerBody(
+  onScreenSelected: (Screen) -> Unit
+) {
   //TODO add your code here
 }
 

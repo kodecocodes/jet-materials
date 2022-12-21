@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.yourcompany.android.jetreddit.R
+import com.yourcompany.android.jetreddit.routing.Screen
 import com.yourcompany.android.jetreddit.theme.JetRedditThemeSettings
 
 /**
@@ -63,7 +64,7 @@ import com.yourcompany.android.jetreddit.theme.JetRedditThemeSettings
 @Composable
 fun AppDrawer(
   modifier: Modifier = Modifier,
-  closeDrawerAction: () -> Unit
+  onScreenSelected: (Screen) -> Unit
 ) {
   Column(
     modifier = modifier
@@ -72,7 +73,7 @@ fun AppDrawer(
   ) {
     AppDrawerHeader()
 
-    AppDrawerBody(closeDrawerAction)
+    AppDrawerBody(onScreenSelected)
 
     AppDrawerFooter(modifier)
   }
@@ -218,13 +219,15 @@ private fun ProfileInfoItem(
  * * app light/dark mode
  */
 @Composable
-private fun AppDrawerBody(closeDrawerAction: () -> Unit) {
+private fun AppDrawerBody(
+  onScreenSelected: (Screen) -> Unit
+) {
   Column {
     ScreenNavigationButton(
       icon = Icons.Filled.AccountBox,
       label = stringResource(R.string.my_profile),
       onClickAction = {
-        closeDrawerAction()
+        onScreenSelected.invoke(Screen.MyProfile)
       }
     )
 
@@ -232,7 +235,7 @@ private fun AppDrawerBody(closeDrawerAction: () -> Unit) {
       icon = Icons.Filled.Home,
       label = stringResource(R.string.saved),
       onClickAction = {
-        closeDrawerAction()
+        onScreenSelected.invoke(Screen.Subscriptions)
       }
     )
   }
