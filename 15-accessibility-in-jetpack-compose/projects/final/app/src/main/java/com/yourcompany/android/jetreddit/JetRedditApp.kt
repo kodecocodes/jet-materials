@@ -51,6 +51,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -166,6 +168,9 @@ fun TopAppBar(
     },
     actions = {
       if (screen == Screen.Home) {
+
+        // Touch Target Size
+
 //        Step 1
 //        Icon(
 //          modifier = Modifier
@@ -188,15 +193,63 @@ fun TopAppBar(
 //        )
 
 //        This is the end result for "Touch Target Size"
-        IconButton(onClick = {
-          context.startActivity(Intent(context, ChatActivity::class.java))
-        }) {
-          Icon(
-            Icons.Filled.MailOutline,
-            tint = Color.LightGray,
-            contentDescription = null
-          )
-        }
+//        IconButton(onClick = {
+//          context.startActivity(Intent(context, ChatActivity::class.java))
+//        }) {
+//          Icon(
+//            Icons.Filled.MailOutline,
+//            tint = Color.LightGray,
+//            contentDescription = null
+//          )
+//        }
+
+        // Visual Element Descriptions
+
+//      This is the end result for "Visual Element Descriptions"
+//        IconButton(
+//          onClick = { context.startActivity(Intent(context, ChatActivity::class.java)) }
+//        ) {
+//          Icon(
+//            Icons.Filled.MailOutline,
+//            tint = Color.LightGray,
+//            contentDescription = "Navigate to Chat"
+//          )
+//        }
+
+        // Click Labels
+
+//      This is the end result for "Click Labels"
+//        IconButton(
+//          modifier = Modifier.semantics {
+//            onClick(label = "open Chat", action = null)
+//          },
+//          onClick = { context.startActivity(Intent(context, ChatActivity::class.java)) }
+//        ) {
+//          Icon(
+//            Icons.Filled.MailOutline,
+//            tint = Color.LightGray,
+//            contentDescription = "Navigate to Chat"
+//          )
+//        }
+
+//      Part of the "Click Labels"
+//      Code snippet not needed for the project, but for the content. Shows how to add label
+//      when using Modifier.clickable()
+//        Icon(
+//          modifier = Modifier
+//            .clickable(
+//              onClickLabel = "open Chat"
+//            ) {
+//              context.startActivity(Intent(context, ChatActivity::class.java))
+//            }
+//            .padding(12.dp)
+//            .size(24.dp),
+//          imageVector = Icons.Filled.MailOutline,
+//          tint = Color.LightGray,
+//          contentDescription = "Navigate to Chat"
+//        )
+
+
       }
     }
   )
