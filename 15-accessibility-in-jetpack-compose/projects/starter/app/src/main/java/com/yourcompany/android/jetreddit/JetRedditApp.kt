@@ -37,7 +37,10 @@ package com.yourcompany.android.jetreddit
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -49,6 +52,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -164,15 +168,14 @@ fun TopAppBar(
     },
     actions = {
       if (screen == Screen.Home) {
-        IconButton(onClick = {
-          context.startActivity(Intent(context, ChatActivity::class.java))
-        }) {
-          Icon(
-            Icons.Filled.MailOutline,
-            tint = Color.LightGray,
-            contentDescription = "Chat Icon"
-          )
-        }
+        Icon(
+          modifier = Modifier
+            .clickable { context.startActivity(Intent(context, ChatActivity::class.java)) }
+            .size(24.dp),
+          imageVector = Icons.Filled.MailOutline,
+          tint = Color.LightGray,
+          contentDescription = null
+        )
       }
     }
   )
@@ -251,6 +254,18 @@ private fun BottomNavigationComponent(
       )
     }
   }
+}
+
+@Composable
+@Preview
+fun PreviewTopbar() {
+  val scaffoldState: ScaffoldState = rememberScaffoldState()
+  val coroutineScope: CoroutineScope = rememberCoroutineScope()
+  TopAppBar(
+    screen = Screen.Home,
+    scaffoldState = scaffoldState,
+    coroutineScope = coroutineScope
+  )
 }
 
 private data class NavigationItem(

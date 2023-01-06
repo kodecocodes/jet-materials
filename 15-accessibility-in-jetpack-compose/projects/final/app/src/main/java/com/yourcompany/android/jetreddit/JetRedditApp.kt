@@ -37,7 +37,9 @@ package com.yourcompany.android.jetreddit
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -164,13 +166,35 @@ fun TopAppBar(
     },
     actions = {
       if (screen == Screen.Home) {
+//        Step 1
+//        Icon(
+//          modifier = Modifier
+//            .clickable { context.startActivity(Intent(context, ChatActivity::class.java)) }
+//            .size(24.dp),
+//          imageVector = Icons.Filled.MailOutline,
+//          tint = Color.LightGray,
+//          contentDescription = null
+//        )
+
+//        Step 2
+//        Icon(
+//          modifier = Modifier
+//            .clickable { context.startActivity(Intent(context, ChatActivity::class.java)) }
+//            .padding(12.dp)
+//            .size(24.dp),
+//          imageVector = Icons.Filled.MailOutline,
+//          tint = Color.LightGray,
+//          contentDescription = null
+//        )
+
+//        This is the end result for "Touch Target Size"
         IconButton(onClick = {
           context.startActivity(Intent(context, ChatActivity::class.java))
         }) {
           Icon(
             Icons.Filled.MailOutline,
             tint = Color.LightGray,
-            contentDescription = "Chat Icon"
+            contentDescription = null
           )
         }
       }
