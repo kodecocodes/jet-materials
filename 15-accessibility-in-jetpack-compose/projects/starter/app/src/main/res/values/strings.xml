@@ -58,6 +58,7 @@
   <string name="save">Saved</string>
   <string name="post_header_description">Post Header</string>
   <string name="upvote">Upvote</string>
+  <string name="downvote">Downvote</string>
   <string name="post_action">Post action</string>
   <string name="close">Close</string>
   <string name="back">Back</string>

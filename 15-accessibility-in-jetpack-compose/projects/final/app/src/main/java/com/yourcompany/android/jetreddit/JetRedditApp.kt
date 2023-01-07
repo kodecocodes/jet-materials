@@ -219,18 +219,18 @@ fun TopAppBar(
         // Click Labels
 
 //      This is the end result for "Click Labels"
-//        IconButton(
-//          modifier = Modifier.semantics {
-//            onClick(label = "open Chat", action = null)
-//          },
-//          onClick = { context.startActivity(Intent(context, ChatActivity::class.java)) }
-//        ) {
-//          Icon(
-//            Icons.Filled.MailOutline,
-//            tint = Color.LightGray,
-//            contentDescription = "Navigate to Chat"
-//          )
-//        }
+        IconButton(
+          modifier = Modifier.semantics {
+            onClick(label = "open Chat", action = null)
+          },
+          onClick = { context.startActivity(Intent(context, ChatActivity::class.java)) }
+        ) {
+          Icon(
+            Icons.Filled.MailOutline,
+            tint = Color.LightGray,
+            contentDescription = "Navigate to Chat"
+          )
+        }
 
 //      Part of the "Click Labels"
 //      Code snippet not needed for the project, but for the content. Shows how to add label

@@ -151,7 +151,7 @@ fun JoinButton(onClick: (Boolean) -> Unit = {}) {
     ) {
       Icon(
         imageVector = iconAsset,
-        contentDescription = "Plus Icon",
+        contentDescription = null,
         tint = iconTintColor,
         modifier = Modifier.size(16.dp)
       )

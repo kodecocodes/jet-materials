@@ -31,6 +31,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.yourcompany.android.jetreddit.components
 
 import androidx.annotation.DrawableRes
@@ -53,6 +55,8 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -85,9 +89,13 @@ fun ImagePost(
 fun Post(
   post: PostModel,
   onJoinButtonClick: (Boolean) -> Unit = {},
+  onPostClicked: () -> Unit = {},
   content: @Composable () -> Unit = {}
 ) {
-  Card(shape = MaterialTheme.shapes.large) {
+  Card(
+    shape = MaterialTheme.shapes.large,
+    onClick = { onPostClicked.invoke() }
+  ) {
     Column(
       modifier = Modifier.padding(
         top = 8.dp,
@@ -113,9 +121,9 @@ fun Header(
     verticalAlignment = Alignment.CenterVertically
   ) {
     Image(
-      ImageBitmap.imageResource(id = R.drawable.subreddit_placeholder),
-      contentDescription = stringResource(id = R.string.subreddits),
-      Modifier
+      bitmap = ImageBitmap.imageResource(id = R.drawable.subreddit_placeholder),
+      contentDescription = null,
+      modifier = Modifier
         .size(40.dp)
         .clip(CircleShape)
     )
@@ -149,8 +157,8 @@ fun Header(
 @Composable
 fun MoreActionsMenu() {
   var expanded by remember { mutableStateOf(false) }
-  Box(modifier = Modifier.wrapContentSize(Alignment.TopStart)) {
 
+  Box(modifier = Modifier.wrapContentSize(Alignment.TopStart)) {
     IconButton(onClick = { expanded = true }) {
       Icon(
         imageVector = Icons.Default.MoreVert,
@@ -243,6 +251,8 @@ fun PostActions(post: PostModel) {
     PostAction(
       vectorResourceId = R.drawable.ic_baseline_comment_24,
       text = post.comments,
+      actionContentDescription = "Navigate to comments",
+      actionValueContentDescription = "${post.comments} Comments",
       onClickAction = {}
     )
     PostAction(
@@ -264,24 +274,44 @@ fun VotingAction(
   onUpVoteAction: () -> Unit,
   onDownVoteAction: () -> Unit
 ) {
-  Row(verticalAlignment = Alignment.CenterVertically) {
-    ArrowButton(onUpVoteAction, R.drawable.ic_baseline_arrow_upward_24)
+  Row(
+    modifier = Modifier.semantics(mergeDescendants = true) {
+      contentDescription = "Submission score"
+    },
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    ArrowButton(
+      onClickAction = onUpVoteAction,
+      arrowResourceId = R.drawable.ic_baseline_arrow_upward_24,
+      contentDescriptionResourceId = R.string.upvote
+    )
     Text(
       text = text,
       color = Color.Gray,
       fontWeight = FontWeight.Medium,
       fontSize = 12.sp
     )
-    ArrowButton(onDownVoteAction, R.drawable.ic_baseline_arrow_downward_24)
+    ArrowButton(
+      onClickAction = onDownVoteAction,
+      arrowResourceId = R.drawable.ic_baseline_arrow_downward_24,
+      contentDescriptionResourceId = R.string.downvote
+    )
   }
 }
 
 @Composable
-fun ArrowButton(onClickAction: () -> Unit, arrowResourceId: Int) {
-  IconButton(onClick = onClickAction, modifier = Modifier.size(30.dp)) {
+fun ArrowButton(
+  onClickAction: () -> Unit,
+  arrowResourceId: Int,
+  contentDescriptionResourceId: Int
+) {
+  IconButton(
+    onClick = onClickAction,
+    modifier = Modifier.size(30.dp)
+  ) {
     Icon(
       imageVector = ImageVector.vectorResource(arrowResourceId),
-      contentDescription = stringResource(id = R.string.upvote),
+      contentDescription = stringResource(contentDescriptionResourceId),
       modifier = Modifier.size(20.dp),
       tint = Color.Gray
     )
@@ -292,18 +322,41 @@ fun ArrowButton(onClickAction: () -> Unit, arrowResourceId: Int) {
 fun PostAction(
   @DrawableRes vectorResourceId: Int,
   text: String,
+  actionContentDescription: String? = null,
+  actionValueContentDescription: String? = null,
   onClickAction: () -> Unit
 ) {
-  Box(modifier = Modifier.clickable(onClick = onClickAction)) {
+  Box(
+    modifier = Modifier
+      .clickable(
+        onClick = onClickAction,
+        onClickLabel = ""
+      )
+      .semantics {
+        if (actionContentDescription != null) {
+          contentDescription = actionContentDescription
+        }
+      }
+  ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
       Icon(
-        ImageVector.vectorResource(id = vectorResourceId),
-        contentDescription = stringResource(id = R.string.post_action),
+        imageVector = ImageVector.vectorResource(id = vectorResourceId),
+        contentDescription = null,
         tint = Color.Gray,
         modifier = Modifier.size(20.dp)
       )
       Spacer(modifier = Modifier.width(4.dp))
-      Text(text = text, fontWeight = FontWeight.Medium, color = Color.Gray, fontSize = 12.sp)
+      Text(
+        text = text,
+        fontWeight = FontWeight.Medium,
+        color = Color.Gray,
+        fontSize = 12.sp,
+        modifier = Modifier.semantics {
+          if (actionValueContentDescription != null) {
+            contentDescription = actionValueContentDescription
+          }
+        }
+      )
     }
   }
 }
@@ -329,7 +382,7 @@ fun HeaderPreview() {
 @Preview
 @Composable
 fun ArrowButtonPreview() {
-  ArrowButton({}, R.drawable.ic_baseline_arrow_upward_24)
+  ArrowButton({}, R.drawable.ic_baseline_arrow_upward_24, R.string.upvote)
 }
 
 @Preview
