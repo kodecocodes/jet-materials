@@ -55,6 +55,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -214,10 +215,12 @@ fun Title(text: String) {
 @Composable
 fun TextContent(text: String) {
   Text(
-    modifier = Modifier.padding(
-      start = 16.dp,
-      end = 16.dp
-    ),
+    modifier = Modifier
+      .padding(
+        start = 16.dp,
+        end = 16.dp
+      )
+      .clearAndSetSemantics { },
     text = text,
     color = Color.Gray,
     fontSize = 12.sp,
