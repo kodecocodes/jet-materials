@@ -124,7 +124,10 @@ private fun CommentVerticalSpacer() {
 private fun AuthorSection() {
   SectionDescriptor(text = "Author")
   Row(
-    modifier = Modifier.padding(start = 16.dp),
+    modifier = Modifier
+      .padding(start = 16.dp)
+      .semantics(mergeDescendants = true) { } // End step for "Custom merging" section
+    ,
     verticalAlignment = Alignment.CenterVertically
   ) {
     Image(
