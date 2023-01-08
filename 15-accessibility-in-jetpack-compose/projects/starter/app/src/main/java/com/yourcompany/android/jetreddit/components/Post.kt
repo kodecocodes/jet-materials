@@ -69,9 +69,14 @@ import com.yourcompany.android.jetreddit.domain.model.PostModel.Companion.DEFAUL
 @Composable
 fun TextPost(
   post: PostModel,
+  onPostClicked: () -> Unit = {},
   onJoinButtonClick: (Boolean) -> Unit = {}
 ) {
-  Post(post, onJoinButtonClick) {
+  Post(
+    post = post,
+    onJoinButtonClick = onJoinButtonClick,
+    onPostClicked = onPostClicked
+  ) {
     TextContent(post.text)
   }
 }
@@ -79,9 +84,14 @@ fun TextPost(
 @Composable
 fun ImagePost(
   post: PostModel,
+  onPostClicked: () -> Unit = {},
   onJoinButtonClick: (Boolean) -> Unit = {}
 ) {
-  Post(post, onJoinButtonClick) {
+  Post(
+    post = post,
+    onJoinButtonClick = onJoinButtonClick,
+    onPostClicked = onPostClicked
+  ) {
     ImageContent(post.image!!)
   }
 }

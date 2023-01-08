@@ -17,6 +17,10 @@
       android:name="com.yourcompany.android.jetreddit.screens.ChatActivity"
       android:exported="true"/>
 
+    <activity
+      android:name="com.yourcompany.android.jetreddit.screens.PostActivity"
+      android:exported="true"/>
+
     <!-- Main Activity -->
     <activity
       android:name="com.yourcompany.android.jetreddit.MainActivity"

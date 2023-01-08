@@ -33,12 +33,12 @@
  */
 package com.yourcompany.android.jetreddit.screens
 
+import android.content.Intent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -51,6 +51,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -96,7 +97,7 @@ private val trendingItems = listOf(
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
   val posts: List<PostModel>
-    by viewModel.allPosts.observeAsState(listOf())
+      by viewModel.allPosts.observeAsState(listOf())
 
   var isToastVisible by remember { mutableStateOf(false) }
 
@@ -117,9 +118,9 @@ fun HomeScreen(viewModel: MainViewModel) {
       modifier = Modifier
         .background(color = MaterialTheme.colors.secondary),
       content = {
-        items(
+        itemsIndexed(
           items = homeScreenItems,
-          itemContent = { item ->
+          itemContent = { index, item ->
             if (item.type == HomeScreenItemType.TRENDING) {
               TrendingTopics(
                 trendingTopics = trendingItems,
@@ -131,8 +132,17 @@ fun HomeScreen(viewModel: MainViewModel) {
             } else if (item.post != null) {
               val post = item.post
               if (post.type == PostType.TEXT) {
+
+                // For learning purposes, clicking on the first post will open Post screen
+                val context = LocalContext.current
+                val onPostClickedAction: () -> Unit = if (index == 1) {
+                  { context.startActivity(Intent(context, PostActivity::class.java)) }
+                } else {
+                  {}
+                }
                 TextPost(
                   post = post,
+                  onPostClicked = onPostClickedAction,
                   onJoinButtonClick = onJoinClickAction
                 )
               } else {

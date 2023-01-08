@@ -66,4 +66,12 @@
   <string name="subreddit_icon">Subreddit Icon</string>
   <string name="community_icon">Community Icon</string>
   <string name="kodeco_com">r/kodeco.com</string>
+  <string name="dummy_coment_1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed iaculis dui, sit amet vehicula.</string>
+  <string name="dummy_coment_2">Morbi consectetur fringilla tristique. Mauris sit amet condimentum neque. Phasellus posuere tellus ut eros malesuada.</string>
+  <string name="dummy_coment_3">Sed ultrices sem ut risus rutrum dictum. Nullam ex augue.</string>
+  <string name="dummy_coment_4">Nunc sed mi nec augue.</string>
+  <string name="dummy_coment_5">Sed at sapien sed risus sagittis porta. In in fermentum magna. Mauris pharetra ex mi, non congue ligula rhoncus euismod.</string>
+  <string name="dummy_coment_6">Aliquam magna sem, elementum eget lectus ut, iaculis hendrerit elit.</string>
+  <string name="dummy_coment_7">Nam eleifend eu magna et lacinia. Proin.</string>
+  <string name="dummy_coment_8">Aliquam mauris felis, facilisis vel fermentum vel, bibendum non justo. Integer non magna massa. Pellentesque habitant.</string>
 </resources>
