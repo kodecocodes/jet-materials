@@ -54,6 +54,8 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -254,11 +256,19 @@ fun Community(
     .fillMaxWidth()
 
   val rowModifier = if (showToggle) { // End step for "Switches and checkboxes" section
-    defaultRowModifier.toggleable(
-      value = checked,
-      onValueChange = { checked = it },
-      role = Role.Switch
-    )
+    defaultRowModifier
+      .toggleable(
+        value = checked,
+        onValueChange = { checked = it },
+        role = Role.Switch
+      )
+      .semantics {
+        stateDescription = if (checked) { // End step for "State descriptions" section
+          "Subscribed"
+        } else {
+          "Not subscribed"
+        }
+      }
   } else {
     defaultRowModifier.clickable { onCommunityClicked.invoke() }
   }
