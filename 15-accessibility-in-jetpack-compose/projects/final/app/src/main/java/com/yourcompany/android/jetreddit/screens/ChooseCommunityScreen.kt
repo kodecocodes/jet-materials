@@ -130,7 +130,6 @@ fun ChooseCommunityTopBar(
   modifier: Modifier = Modifier,
   onBackSelected: () -> Unit
 ) {
-
   val colors = MaterialTheme.colors
 
   TopAppBar(

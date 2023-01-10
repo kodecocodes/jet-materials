@@ -38,13 +38,11 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -55,6 +53,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -242,15 +241,35 @@ fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: In
 }
 
 @Composable
-fun Community(text: String, modifier: Modifier = Modifier, onCommunityClicked: () -> Unit = {}) {
-  Row(modifier = modifier
+fun Community(
+  text: String,
+  modifier: Modifier = Modifier,
+  showToggle: Boolean = false,
+  onCommunityClicked: () -> Unit = {}
+) {
+  var checked by remember { mutableStateOf(true) }
+
+  val defaultRowModifier = modifier
     .padding(start = 16.dp, end = 16.dp, top = 16.dp)
     .fillMaxWidth()
-    .clickable { onCommunityClicked.invoke() }
+
+  val rowModifier = if (showToggle) { // End step for "Switches and checkboxes" section
+    defaultRowModifier.toggleable(
+      value = checked,
+      onValueChange = { checked = it },
+      role = Role.Switch
+    )
+  } else {
+    defaultRowModifier.clickable { onCommunityClicked.invoke() }
+  }
+
+  Row(
+    modifier = rowModifier,
+    verticalAlignment = Alignment.CenterVertically
   ) {
     Image(
       bitmap = ImageBitmap.imageResource(id = R.drawable.subreddit_placeholder),
-      contentDescription = stringResource(id = R.string.community_icon),
+      contentDescription = null,
       modifier = modifier
         .size(24.dp)
         .clip(CircleShape)
@@ -263,14 +282,21 @@ fun Community(text: String, modifier: Modifier = Modifier, onCommunityClicked: (
       modifier = modifier
         .padding(start = 16.dp)
         .align(Alignment.CenterVertically)
+        .weight(1f)
     )
+    if (showToggle) {
+      Switch(
+        checked = checked,
+        onCheckedChange = { checked = !checked }
+      )
+    }
   }
 }
 
 @Composable
 fun Communities(modifier: Modifier = Modifier) {
   mainCommunities.forEach {
-    Community(text = stringResource(it))
+    Community(text = stringResource(it), showToggle = true)
   }
 
   Spacer(modifier = modifier.height(4.dp))
@@ -278,7 +304,7 @@ fun Communities(modifier: Modifier = Modifier) {
   BackgroundText(stringResource(R.string.communities))
 
   communities.forEach {
-    Community(text = stringResource(it))
+    Community(text = stringResource(it), showToggle = true)
   }
 }
 

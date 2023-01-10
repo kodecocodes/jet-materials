@@ -40,11 +40,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -242,15 +239,26 @@ fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: In
 }
 
 @Composable
-fun Community(text: String, modifier: Modifier = Modifier, onCommunityClicked: () -> Unit = {}) {
-  Row(modifier = modifier
-    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-    .fillMaxWidth()
-    .clickable { onCommunityClicked.invoke() }
+fun Community(
+  text: String,
+  modifier: Modifier = Modifier,
+  showToggle: Boolean = false,
+  onCommunityClicked: () -> Unit = {}
+) {
+  var checked by remember { mutableStateOf(true) }
+
+  Row(
+    modifier = modifier
+      .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+      .fillMaxWidth()
+      .clickable {
+        onCommunityClicked.invoke()
+      },
+    verticalAlignment = Alignment.CenterVertically
   ) {
     Image(
       bitmap = ImageBitmap.imageResource(id = R.drawable.subreddit_placeholder),
-      contentDescription = stringResource(id = R.string.community_icon),
+      contentDescription = null,
       modifier = modifier
         .size(24.dp)
         .clip(CircleShape)
@@ -263,14 +271,21 @@ fun Community(text: String, modifier: Modifier = Modifier, onCommunityClicked: (
       modifier = modifier
         .padding(start = 16.dp)
         .align(Alignment.CenterVertically)
+        .weight(1f)
     )
+    if (showToggle) {
+      Switch(
+        checked = checked,
+        onCheckedChange = { checked = !checked }
+      )
+    }
   }
 }
 
 @Composable
 fun Communities(modifier: Modifier = Modifier) {
   mainCommunities.forEach {
-    Community(text = stringResource(it))
+    Community(text = stringResource(it), showToggle = true)
   }
 
   Spacer(modifier = modifier.height(4.dp))
@@ -278,7 +293,7 @@ fun Communities(modifier: Modifier = Modifier) {
   BackgroundText(stringResource(R.string.communities))
 
   communities.forEach {
-    Community(text = stringResource(it))
+    Community(text = stringResource(it), showToggle = true)
   }
 }
 
