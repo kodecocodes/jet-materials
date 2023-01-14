@@ -255,15 +255,15 @@ fun Community(
     .padding(start = 16.dp, end = 16.dp, top = 16.dp)
     .fillMaxWidth()
 
-  val rowModifier = if (showToggle) { // End step for "Switches and checkboxes" section
+  val rowModifier = if (showToggle) {
     defaultRowModifier
       .toggleable(
         value = checked,
-        onValueChange = { checked = it },
+        onValueChange = { checked = !checked },
         role = Role.Switch
       )
       .semantics {
-        stateDescription = if (checked) { // End step for "State descriptions" section
+        stateDescription = if (checked) {
           "Subscribed"
         } else {
           "Not subscribed"
@@ -297,7 +297,7 @@ fun Community(
     if (showToggle) {
       Switch(
         checked = checked,
-        onCheckedChange = { checked = !checked }
+        onCheckedChange = null
       )
     }
   }
