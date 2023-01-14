@@ -21,8 +21,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -106,7 +104,6 @@ private fun TitleSection() {
     fontSize = 18.sp,
     modifier = Modifier
       .padding(horizontal = 16.dp)
-      .semantics { heading() }
   )
 }
 
@@ -124,9 +121,7 @@ private fun CommentVerticalSpacer() {
 private fun AuthorSection() {
   SectionDescriptor(text = "Author")
   Row(
-    modifier = Modifier
-      .padding(start = 16.dp)
-      .semantics(mergeDescendants = true) { },
+    modifier = Modifier.padding(start = 16.dp),
     verticalAlignment = Alignment.CenterVertically
   ) {
     Image(
@@ -192,7 +187,6 @@ private fun SectionDescriptor(text: String) {
     fontSize = 14.sp,
     modifier = Modifier
       .padding(horizontal = 16.dp)
-      .semantics { heading() } // End step for "Headings" section
   )
 }
 

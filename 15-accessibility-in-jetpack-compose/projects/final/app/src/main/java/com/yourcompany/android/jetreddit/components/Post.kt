@@ -104,7 +104,7 @@ fun Post(
   Card(
     shape = MaterialTheme.shapes.large,
     onClick = { onPostClicked.invoke() },
-    modifier = Modifier.semantics {
+    modifier = Modifier.semantics { // End step in "Custom actions" section
       customActions = listOf(
         CustomAccessibilityAction(
           label = "Join",
@@ -201,7 +201,7 @@ fun MoreActionsMenu() {
 
   Box(modifier = Modifier
     .wrapContentSize(Alignment.TopStart)
-    .clearAndSetSemantics { }
+    .clearAndSetSemantics { } // End step in "Custom actions" section
   ) {
     IconButton(onClick = { expanded = true }) {
       Icon(
@@ -290,7 +290,7 @@ fun PostActions(post: PostModel) {
     modifier = Modifier
       .fillMaxWidth()
       .padding(start = 16.dp, end = 16.dp)
-      .clearAndSetSemantics { },
+      .clearAndSetSemantics { }, // End step in "Custom actions" section
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
   ) {

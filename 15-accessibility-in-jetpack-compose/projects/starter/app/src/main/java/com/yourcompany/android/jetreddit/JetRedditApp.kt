@@ -54,8 +54,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.semantics.onClick
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -172,18 +170,14 @@ fun TopAppBar(
     },
     actions = {
       if (screen == Screen.Home) {
-        IconButton(
-          modifier = Modifier.semantics {
-            onClick(label = "open Chat", action = null)
-          },
-          onClick = { context.startActivity(Intent(context, ChatActivity::class.java)) }
-        ) {
-          Icon(
-            Icons.Filled.MailOutline,
-            tint = Color.LightGray,
-            contentDescription = "Navigate to Chat"
-          )
-        }
+        Icon(
+          modifier = Modifier
+            .clickable { context.startActivity(Intent(context, ChatActivity::class.java)) }
+            .size(24.dp),
+          imageVector = Icons.Filled.MailOutline,
+          tint = Color.LightGray,
+          contentDescription = null
+        )
       }
     }
   )

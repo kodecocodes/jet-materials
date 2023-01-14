@@ -55,7 +55,9 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.semantics.*
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -103,39 +105,7 @@ fun Post(
 ) {
   Card(
     shape = MaterialTheme.shapes.large,
-    onClick = { onPostClicked.invoke() },
-    modifier = Modifier.semantics { // End step in "Custom actions" section
-      customActions = listOf(
-        CustomAccessibilityAction(
-          label = "Join",
-          action = { /* Join / Leave */ true }
-        ),
-        CustomAccessibilityAction(
-          label = "Save post",
-          action = { /* Save post */ true }
-        ),
-        CustomAccessibilityAction(
-          label = "Upvote",
-          action = { /* Upvote */ true }
-        ),
-        CustomAccessibilityAction(
-          label = "Downvote",
-          action = { /* Downvote */ true }
-        ),
-        CustomAccessibilityAction(
-          label = "Navigate to comments",
-          action = { /* Navigate to comments */ true }
-        ),
-        CustomAccessibilityAction(
-          label = "Share",
-          action = { /* Share */ true }
-        ),
-        CustomAccessibilityAction(
-          label = "Award",
-          action = { /* Award */ true }
-        )
-      )
-    }
+    onClick = { onPostClicked.invoke() }
   ) {
     Column(
       modifier = Modifier.padding(
@@ -199,10 +169,7 @@ fun Header(
 fun MoreActionsMenu() {
   var expanded by remember { mutableStateOf(false) }
 
-  Box(modifier = Modifier
-    .wrapContentSize(Alignment.TopStart)
-    .clearAndSetSemantics { } // End step in "Custom actions" section
-  ) {
+  Box(modifier = Modifier.wrapContentSize(Alignment.TopStart)) {
     IconButton(onClick = { expanded = true }) {
       Icon(
         imageVector = Icons.Default.MoreVert,
@@ -289,8 +256,7 @@ fun PostActions(post: PostModel) {
   Row(
     modifier = Modifier
       .fillMaxWidth()
-      .padding(start = 16.dp, end = 16.dp)
-      .clearAndSetSemantics { }, // End step in "Custom actions" section
+      .padding(start = 16.dp, end = 16.dp),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
   ) {

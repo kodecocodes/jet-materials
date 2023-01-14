@@ -169,7 +169,7 @@ fun JoinButton(onClick: (Boolean) -> Unit = {}) {
             min = 0.dp,
             max = textMaxWidth
           )
-          .clearAndSetSemantics { }
+          .clearAndSetSemantics { } // End step in "Custom actions" section
       )
     }
   }

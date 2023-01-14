@@ -106,7 +106,7 @@ private fun TitleSection() {
     fontSize = 18.sp,
     modifier = Modifier
       .padding(horizontal = 16.dp)
-      .semantics { heading() }
+      .semantics { heading() } // End step for "Headings" section
   )
 }
 
@@ -126,7 +126,7 @@ private fun AuthorSection() {
   Row(
     modifier = Modifier
       .padding(start = 16.dp)
-      .semantics(mergeDescendants = true) { }
+      .semantics(mergeDescendants = true) { } // End step for "Custom merging" section
     ,
     verticalAlignment = Alignment.CenterVertically
   ) {
@@ -193,7 +193,7 @@ private fun SectionDescriptor(text: String) {
     fontSize = 14.sp,
     modifier = Modifier
       .padding(horizontal = 16.dp)
-      .semantics { heading() }
+      .semantics { heading() } // End step for "Headings" section
   )
 }
 
