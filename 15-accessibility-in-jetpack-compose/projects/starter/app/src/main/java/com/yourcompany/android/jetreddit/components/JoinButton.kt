@@ -57,6 +57,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -66,7 +67,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun JoinButton(onClick: (Boolean) -> Unit = {}) {
   var buttonState: JoinButtonState
-    by remember { mutableStateOf(JoinButtonState.IDLE) }
+      by remember { mutableStateOf(JoinButtonState.IDLE) }
 
   // Button shape
   val shape = RoundedCornerShape(corner = CornerSize(12.dp))
@@ -78,35 +79,35 @@ fun JoinButton(onClick: (Boolean) -> Unit = {}) {
 
   val duration = 600
   val buttonBackgroundColor: Color
-    by transition.animateColor(
-      transitionSpec = { tween(duration) },
-      label = "Button Background Color"
-    ) { state ->
-      when (state) {
-        JoinButtonState.IDLE -> Color.Blue
-        JoinButtonState.PRESSED -> Color.White
+      by transition.animateColor(
+        transitionSpec = { tween(duration) },
+        label = "Button Background Color"
+      ) { state ->
+        when (state) {
+          JoinButtonState.IDLE -> Color.Blue
+          JoinButtonState.PRESSED -> Color.White
+        }
       }
-    }
   val buttonWidth: Dp
-    by transition.animateDp(
-      transitionSpec = { tween(duration) },
-      label = "Button Width"
-    ) { state ->
-      when (state) {
-        JoinButtonState.IDLE -> 70.dp
-        JoinButtonState.PRESSED -> 32.dp
+      by transition.animateDp(
+        transitionSpec = { tween(duration) },
+        label = "Button Width"
+      ) { state ->
+        when (state) {
+          JoinButtonState.IDLE -> 70.dp
+          JoinButtonState.PRESSED -> 32.dp
+        }
       }
-    }
   val textMaxWidth: Dp
-    by transition.animateDp(
-      transitionSpec = { tween(duration) },
-      label = "Text Max Width"
-    ) { state ->
-      when (state) {
-        JoinButtonState.IDLE -> 40.dp
-        JoinButtonState.PRESSED -> 0.dp
+      by transition.animateDp(
+        transitionSpec = { tween(duration) },
+        label = "Text Max Width"
+      ) { state ->
+        when (state) {
+          JoinButtonState.IDLE -> 40.dp
+          JoinButtonState.PRESSED -> 0.dp
+        }
       }
-    }
 
   // Button icon
   val iconAsset: ImageVector =
@@ -115,15 +116,15 @@ fun JoinButton(onClick: (Boolean) -> Unit = {}) {
     else
       Icons.Default.Add
   val iconTintColor: Color
-    by transition.animateColor(
-      transitionSpec = { tween(duration) },
-      label = "Icon Tint Color"
-    ) { state ->
-      when (state) {
-        JoinButtonState.IDLE -> Color.White
-        JoinButtonState.PRESSED -> Color.Blue
+      by transition.animateColor(
+        transitionSpec = { tween(duration) },
+        label = "Icon Tint Color"
+      ) { state ->
+        when (state) {
+          JoinButtonState.IDLE -> Color.White
+          JoinButtonState.PRESSED -> Color.Blue
+        }
       }
-    }
 
   Box(
     modifier = Modifier
@@ -160,10 +161,12 @@ fun JoinButton(onClick: (Boolean) -> Unit = {}) {
         color = Color.White,
         fontSize = 14.sp,
         maxLines = 1,
-        modifier = Modifier.widthIn(
-          min = 0.dp,
-          max = textMaxWidth
-        )
+        modifier = Modifier
+          .widthIn(
+            min = 0.dp,
+            max = textMaxWidth
+          )
+          .clearAndSetSemantics {  }
       )
     }
   }
