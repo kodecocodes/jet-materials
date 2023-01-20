@@ -10,7 +10,9 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
 import com.yourcompany.android.jetreddit.factory.PostDataFactory
 import com.yourcompany.android.jetreddit.routing.Screen
 import com.yourcompany.android.jetreddit.util.Tags
@@ -126,7 +128,8 @@ class JetRedditAppTest {
     @Test
     fun chat_button_is_displayed() {
         composeTestRule.onNodeWithTag(Tags.CHAT_BUTTON).performClick()
-        Espresso.onView(ViewMatchers.withId(R.id.composeButton))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+
+        Espresso.onView(withId(R.id.composeButton))
+            .check(matches(isDisplayed()))
     }
 }

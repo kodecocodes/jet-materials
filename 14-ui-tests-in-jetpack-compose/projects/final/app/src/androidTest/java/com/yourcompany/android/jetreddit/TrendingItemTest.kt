@@ -22,7 +22,6 @@ class TrendingItemTest {
             R.drawable.jetpack_composer
         )
 
-        val post = PostModel.DEFAULT_POST
         composeTestRule.setContent {
             TrendingTopic(topic)
         }
