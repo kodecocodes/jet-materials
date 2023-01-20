@@ -2,12 +2,10 @@ package com.yourcompany.android.jetreddit.appwidget
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
@@ -31,8 +29,11 @@ import androidx.glance.unit.FixedColorProvider
 import com.yourcompany.android.jetreddit.R
 import com.yourcompany.android.jetreddit.dependencyinjection.dataStore
 import com.yourcompany.android.jetreddit.screens.communities
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private val toggledSubredditIdKey = ActionParameters.Key<String>("ToggledSubredditIdKey")
 
@@ -52,20 +53,13 @@ class SubredditsWidget : GlanceAppWidget() {
       ScrollableSubredditsList()
     }
   }
-
-  @Preview
-  @Composable
-  fun PreviewContent() {
-    Content()
-  }
 }
 
 @Composable
 fun WidgetTitle() {
   Text(
     text = "Subreddits",
-    modifier = GlanceModifier
-      .fillMaxWidth(),
+    modifier = GlanceModifier.fillMaxWidth(),
     style = TextStyle(
       fontWeight = FontWeight.Bold,
       fontSize = 18.sp,
@@ -85,8 +79,8 @@ fun ScrollableSubredditsList() {
 
 @Composable
 fun Subreddit(@StringRes id: Int) {
-  val prefs = currentState<Preferences>()
-  val checked = prefs[booleanPreferencesKey(id.toString())] ?: false
+  val preferences: Preferences = currentState()
+  val checked: Boolean = preferences[booleanPreferencesKey(id.toString())] ?: false
 
   Row(
     modifier = GlanceModifier
@@ -98,8 +92,7 @@ fun Subreddit(@StringRes id: Int) {
     Image(
       provider = ImageProvider(R.drawable.subreddit_placeholder),
       contentDescription = null,
-      modifier = GlanceModifier
-        .size(24.dp)
+      modifier = GlanceModifier.size(24.dp)
     )
 
     Text(
@@ -130,19 +123,15 @@ class SwitchToggleAction : ActionCallback {
     glanceId: GlanceId,
     parameters: ActionParameters
   ) {
-    Log.d("debug_log", "SwitchToggleAction")
+    val toggledSubredditId: String = requireNotNull(parameters[toggledSubredditIdKey])
+    val checked: Boolean = requireNotNull(parameters[ToggleableStateKey])
 
-    val toggleSubredditId = requireNotNull(parameters[toggledSubredditIdKey])
-    val checked = requireNotNull(parameters[ToggleableStateKey])
-
-    updateAppWidgetState(context, glanceId) { state ->
-      state[booleanPreferencesKey(toggleSubredditId)] = checked
+    updateAppWidgetState(context, glanceId) { glancePreferences ->
+      glancePreferences[booleanPreferencesKey(toggledSubredditId)] = checked
     }
 
-    context.dataStore.edit {
-      Log.d("debug_log", "edit data store")
-      Log.d("debug_log", "  toggleSubredditId: $toggleSubredditId: $checked")
-      it[booleanPreferencesKey(toggleSubredditId)] = checked
+    context.dataStore.edit { appPreferences ->
+      appPreferences[booleanPreferencesKey(toggledSubredditId)] = checked
     }
 
     SubredditsWidget().update(context, glanceId)
@@ -154,7 +143,6 @@ class SubredditsWidgetReceiver : GlanceAppWidgetReceiver() {
   override val glanceAppWidget: GlanceAppWidget = SubredditsWidget()
 
   private val coroutineScope = MainScope()
-  private var job: Job? = null
 
   override fun onUpdate(
     context: Context,
@@ -163,40 +151,33 @@ class SubredditsWidgetReceiver : GlanceAppWidgetReceiver() {
   ) {
     super.onUpdate(context, appWidgetManager, appWidgetIds)
 
-    Log.d("debug_log", "onUpdate()")
-    if (job != null) {
-      job!!.cancel()
-    }
-
-    job = coroutineScope.launch {
-
+    coroutineScope.launch {
       val glanceId: GlanceId? = GlanceAppWidgetManager(context)
         .getGlanceIds(SubredditsWidget::class.java)
         .firstOrNull()
 
       if (glanceId != null) {
+
         withContext(Dispatchers.IO) {
           context.dataStore.data
-            .map { preferences ->
-              communities.associateWith { communityId ->
-                val prefValue = preferences[booleanPreferencesKey(communityId.toString())] ?: false
-                prefValue
-              }
-            }
-            .collect { communityToToggle ->
-              Log.d("debug_log", "collect data store data")
-              communityToToggle.forEach { pair ->
-                Log.d("debug_log", "${pair.key} -> ${pair.value}")
+            .map { preferences -> preferences.toSubredditIdToCheckedMap() }
+            .collect { subredditIdToCheckedMap ->
+              subredditIdToCheckedMap.forEach { (subredditId, checked) ->
                 updateAppWidgetState(context, glanceId) { state ->
-                  state[booleanPreferencesKey(pair.key.toString())] = pair.value
+                  state[booleanPreferencesKey(subredditId.toString())] = checked
                 }
               }
 
-              Log.d("debug_log", "glanceAppWidget.")
               glanceAppWidget.update(context, glanceId)
             }
         }
       }
+    }
+  }
+
+  private fun Preferences.toSubredditIdToCheckedMap(): Map<Int, Boolean> {
+    return communities.associateWith { communityId ->
+      this[booleanPreferencesKey(communityId.toString())] ?: false
     }
   }
 }
