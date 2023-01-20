@@ -10,9 +10,4 @@
   android:targetCellWidth="3"
   android:targetCellHeight="3"
   android:widgetCategory="home_screen">
-
 </appwidget-provider>
-
-<!--
-android:previewImage="@drawable/todo_list_glance_widget_preview"
--->
