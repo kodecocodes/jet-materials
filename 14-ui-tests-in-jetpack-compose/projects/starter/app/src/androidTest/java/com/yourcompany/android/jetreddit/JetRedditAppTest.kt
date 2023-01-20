@@ -31,4 +31,8 @@ class JetRedditAppTest {
         TODO()
     }
 
+    @Test
+    fun chat_button_is_displayed() {
+        TODO()
+    }
 }
