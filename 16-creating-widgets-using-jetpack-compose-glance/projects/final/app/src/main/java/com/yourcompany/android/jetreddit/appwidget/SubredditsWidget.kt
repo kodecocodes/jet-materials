@@ -29,11 +29,8 @@ import androidx.glance.unit.FixedColorProvider
 import com.yourcompany.android.jetreddit.R
 import com.yourcompany.android.jetreddit.dependencyinjection.dataStore
 import com.yourcompany.android.jetreddit.screens.communities
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 private val toggledSubredditIdKey = ActionParameters.Key<String>("ToggledSubredditIdKey")
 
@@ -162,15 +159,22 @@ class SubredditsWidgetReceiver : GlanceAppWidgetReceiver() {
           context.dataStore.data
             .map { preferences -> preferences.toSubredditIdToCheckedMap() }
             .collect { subredditIdToCheckedMap ->
-              subredditIdToCheckedMap.forEach { (subredditId, checked) ->
-                updateAppWidgetState(context, glanceId) { state ->
-                  state[booleanPreferencesKey(subredditId.toString())] = checked
-                }
-              }
-
+              updateAppWidgetPreferences(subredditIdToCheckedMap, context, glanceId)
               glanceAppWidget.update(context, glanceId)
             }
         }
+      }
+    }
+  }
+
+  private suspend fun updateAppWidgetPreferences(
+    subredditIdToCheckedMap: Map<Int, Boolean>,
+    context: Context,
+    glanceId: GlanceId
+  ) {
+    subredditIdToCheckedMap.forEach { (subredditId, checked) ->
+      updateAppWidgetState(context, glanceId) { state ->
+        state[booleanPreferencesKey(subredditId.toString())] = checked
       }
     }
   }
@@ -179,5 +183,10 @@ class SubredditsWidgetReceiver : GlanceAppWidgetReceiver() {
     return communities.associateWith { communityId ->
       this[booleanPreferencesKey(communityId.toString())] ?: false
     }
+  }
+
+  override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+    super.onDeleted(context, appWidgetIds)
+    coroutineScope.cancel()
   }
 }
