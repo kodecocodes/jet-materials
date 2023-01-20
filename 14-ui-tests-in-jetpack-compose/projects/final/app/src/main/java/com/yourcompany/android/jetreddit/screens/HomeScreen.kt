@@ -179,7 +179,7 @@ private fun mapHomeScreenItems(
 }
 
 @Composable
-private fun TrendingTopics(
+fun TrendingTopics(
   trendingTopics: List<TrendingTopicModel>,
   modifier: Modifier = Modifier
 ) {
@@ -238,8 +238,8 @@ private fun TrendingTopicsPreview() {
 }
 
 @Composable
-private fun TrendingTopic(trendingTopic: TrendingTopicModel) {
-  AndroidView({ context ->
+fun TrendingTopic(trendingTopic: TrendingTopicModel) {
+  AndroidView(modifier = Modifier.testTag(Tags.TRENDING_ITEM), factory = { context ->
     TrendingTopicView(context).apply {
       text = trendingTopic.text
       image = trendingTopic.imageRes
@@ -268,7 +268,7 @@ private enum class HomeScreenItemType {
   POST
 }
 
-private data class TrendingTopicModel(
+data class TrendingTopicModel(
   val text: String,
   @DrawableRes val imageRes: Int = 0
 )

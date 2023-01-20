@@ -201,6 +201,7 @@ fun TopAppBar(
     actions = {
       if (screen == Screen.Home) {
         IconButton(
+          modifier = Modifier.testTag(Tags.CHAT_BUTTON),
           onClick = {
           context.startActivity(Intent(context, ChatActivity::class.java))
         }) {
