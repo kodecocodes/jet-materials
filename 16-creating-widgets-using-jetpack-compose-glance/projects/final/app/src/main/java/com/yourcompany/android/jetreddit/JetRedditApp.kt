@@ -203,7 +203,7 @@ private fun MainScreenContainer(
         HomeScreen(viewModel)
       }
       composable(Screen.Subscriptions.route) {
-        SubredditsScreen()
+        SubredditsScreen(viewModel)
       }
       composable(Screen.NewPost.route) {
         AddScreen(viewModel, navController)

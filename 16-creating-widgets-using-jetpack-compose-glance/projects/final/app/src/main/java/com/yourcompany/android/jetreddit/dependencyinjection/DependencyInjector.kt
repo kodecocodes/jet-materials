@@ -34,6 +34,10 @@
 package com.yourcompany.android.jetreddit.dependencyinjection
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.yourcompany.android.jetreddit.data.database.AppDatabase
 import com.yourcompany.android.jetreddit.data.database.dbmapper.DbMapper
@@ -44,9 +48,13 @@ import com.yourcompany.android.jetreddit.data.repository.RepositoryImpl
 /**
  * Provides dependencies across the app.
  */
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "JetRedditPrefs")
+
 class DependencyInjector(applicationContext: Context) {
 
   val repository: Repository by lazy { provideRepository(database) }
+  val dataStore: DataStore<Preferences> = applicationContext.dataStore
 
   private val database: AppDatabase by lazy { provideDatabase(applicationContext) }
   private val dbMapper: DbMapper = DbMapperImpl()

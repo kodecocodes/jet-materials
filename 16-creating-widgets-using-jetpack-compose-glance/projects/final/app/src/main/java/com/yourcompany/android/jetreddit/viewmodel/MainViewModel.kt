@@ -33,21 +33,39 @@
  */
 package com.yourcompany.android.jetreddit.viewmodel
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yourcompany.android.jetreddit.data.repository.Repository
 import com.yourcompany.android.jetreddit.domain.model.PostModel
+import com.yourcompany.android.jetreddit.screens.communities
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: Repository) : ViewModel() {
+class MainViewModel(
+  private val repository: Repository,
+  private val dataStore: DataStore<Preferences>
+) : ViewModel() {
 
   val allPosts by lazy { repository.getAllPosts() }
 
   val myPosts by lazy { repository.getAllOwnedPosts() }
 
   val subreddits by lazy { MutableLiveData<List<String>>() }
+
+  val subredditsToggle: Flow<Map<Int, Boolean>> = dataStore.data
+    .map { preferences ->
+      communities.associateWith { communityId ->
+        val prefValue = preferences[booleanPreferencesKey(communityId.toString())] ?: false
+        prefValue
+      }
+    }
 
   val selectedCommunity: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
@@ -60,6 +78,14 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
   fun savePost(post: PostModel) {
     viewModelScope.launch(Dispatchers.Default) {
       repository.insert(post.copy(subreddit = selectedCommunity.value ?: ""))
+    }
+  }
+
+  fun toggleSubreddit(value: Boolean, subredditId: Int) {
+    viewModelScope.launch(Dispatchers.IO) {
+      dataStore.edit {
+        it[booleanPreferencesKey(subredditId.toString())] = value
+      }
     }
   }
 }
