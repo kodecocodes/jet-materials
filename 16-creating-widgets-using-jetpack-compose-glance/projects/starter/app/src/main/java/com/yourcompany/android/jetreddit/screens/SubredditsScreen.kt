@@ -42,7 +42,9 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -65,6 +67,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.yourcompany.android.jetreddit.R
 import com.yourcompany.android.jetreddit.components.BackgroundText
 import com.yourcompany.android.jetreddit.models.SubredditModel
+import com.yourcompany.android.jetreddit.viewmodel.MainViewModel
 
 val subreddits = listOf(
   SubredditModel(
@@ -102,7 +105,10 @@ val communities = listOf(
 )
 
 @Composable
-fun SubredditsScreen(modifier: Modifier = Modifier) {
+fun SubredditsScreen(
+  mainViewModel: MainViewModel,
+  modifier: Modifier = Modifier
+) {
   Column(modifier = modifier.verticalScroll(rememberScrollState())) {
     Text(
       modifier = modifier.padding(16.dp),
@@ -116,7 +122,7 @@ fun SubredditsScreen(modifier: Modifier = Modifier) {
     ) {
       items(subreddits) { Subreddit(it) }
     }
-    Communities(modifier)
+    Communities(mainViewModel, modifier)
   }
 }
 
@@ -246,11 +252,11 @@ fun SubredditDescription(modifier: Modifier, @StringRes descriptionStringRes: In
 fun Community(
   text: String,
   modifier: Modifier = Modifier,
+  checked: Boolean = false,
   showToggle: Boolean = false,
-  onCommunityClicked: () -> Unit = {}
+  onCommunityClicked: () -> Unit = {},
+  onToggled: (Boolean) -> Unit = {}
 ) {
-  var checked by remember { mutableStateOf(true) }
-
   val defaultRowModifier = modifier
     .padding(start = 16.dp, end = 16.dp, top = 16.dp)
     .fillMaxWidth()
@@ -259,7 +265,9 @@ fun Community(
     defaultRowModifier
       .toggleable(
         value = checked,
-        onValueChange = { checked = !checked },
+        onValueChange = {
+          onToggled.invoke(!checked)
+        },
         role = Role.Switch
       )
       .semantics {
@@ -304,7 +312,7 @@ fun Community(
 }
 
 @Composable
-fun Communities(modifier: Modifier = Modifier) {
+fun Communities(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
   mainCommunities.forEach {
     Community(text = stringResource(it), showToggle = true)
   }
@@ -313,8 +321,18 @@ fun Communities(modifier: Modifier = Modifier) {
 
   BackgroundText(stringResource(R.string.communities))
 
-  communities.forEach {
-    Community(text = stringResource(it), showToggle = true)
+  val myCommunities: Map<Int, Boolean>
+      by mainViewModel.subredditsToggle.collectAsState(initial = emptyMap())
+
+  myCommunities.forEach { communityIdToToggle ->
+    Community(
+      text = stringResource(communityIdToToggle.key),
+      checked = communityIdToToggle.value,
+      showToggle = true,
+      onToggled = { newState ->
+        mainViewModel.toggleSubreddit(newState, communityIdToToggle.key)
+      }
+    )
   }
 }
 
@@ -340,6 +358,6 @@ fun CommunityPreview() {
 @Composable
 fun CommunitiesPreview() {
   Column {
-    Communities()
+//    Communities()
   }
 }

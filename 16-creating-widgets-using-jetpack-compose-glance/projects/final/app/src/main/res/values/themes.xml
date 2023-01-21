@@ -19,19 +19,11 @@
     <item name="android:windowBackground">@drawable/splash_background</item>
   </style>
 
+  <!-- App Widget Container Theme -->
   <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
     <item name="android:id">@android:id/background</item>
-    <item name="android:padding">?attr/appWidgetPadding</item>
+    <item name="android:padding">16dp</item>
     <item name="android:background">@drawable/app_widget_background</item>
-  </style>
-
-  <style name="Theme.AppWidget.AppWidgetContainerParent" parent="Theme.Material3.DynamicColors.DayNight">
-    <item name="appWidgetRadius">16dp</item>
-    <item name="appWidgetInnerRadius">8dp</item>
-  </style>
-
-  <style name="Theme.AppWidget.AppWidgetContainer" parent="Theme.AppWidget.AppWidgetContainerParent">
-    <item name="appWidgetPadding">16dp</item>
   </style>
 
 </resources>

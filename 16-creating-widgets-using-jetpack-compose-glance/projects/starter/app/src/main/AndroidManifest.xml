@@ -3,6 +3,10 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.yourcompany.android.jetreddit">
 
+  <uses-sdk
+    android:minSdkVersion="21"
+    tools:overrideLibrary="androidx.glance.wear.tiles, androidx.wear.tiles" />
+
   <application
     android:name="com.yourcompany.android.jetreddit.JetRedditApplication"
     android:allowBackup="false"
@@ -32,6 +36,21 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <!--  Glance Step Final  -->
+    <receiver
+      android:name=".appwidget.SubredditsWidgetReceiver"
+      android:enabled="@bool/glance_appwidget_available"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+
+      <meta-data
+        android:name="android.appwidget.provider"
+        android:resource="@xml/app_widget_subreddits" />
+    </receiver>
+
   </application>
 
 </manifest>

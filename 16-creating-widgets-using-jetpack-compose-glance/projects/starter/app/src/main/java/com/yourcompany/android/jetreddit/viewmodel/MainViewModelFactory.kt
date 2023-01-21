@@ -34,6 +34,8 @@
 package com.yourcompany.android.jetreddit.viewmodel
 
 import android.os.Bundle
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -44,6 +46,7 @@ import com.yourcompany.android.jetreddit.data.repository.Repository
 class MainViewModelFactory(
   owner: SavedStateRegistryOwner,
   private val repository: Repository,
+  private val dataStore: DataStore<Preferences>,
   private val defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
@@ -52,6 +55,6 @@ class MainViewModelFactory(
     modelClass: Class<T>,
     handle: SavedStateHandle
   ): T {
-    return MainViewModel(repository) as T
+    return MainViewModel(repository, dataStore) as T
   }
 }

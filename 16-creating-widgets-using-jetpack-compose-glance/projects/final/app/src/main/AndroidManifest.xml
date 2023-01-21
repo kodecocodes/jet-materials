@@ -37,6 +37,7 @@
       </intent-filter>
     </activity>
 
+    <!--  glance step final  -->
     <receiver
       android:name=".appwidget.SubredditsWidgetReceiver"
       android:enabled="@bool/glance_appwidget_available"

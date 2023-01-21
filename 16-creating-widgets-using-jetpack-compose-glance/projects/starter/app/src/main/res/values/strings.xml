@@ -74,4 +74,5 @@
   <string name="dummy_coment_6">Aliquam magna sem, elementum eget lectus ut, iaculis hendrerit elit.</string>
   <string name="dummy_coment_7">Nam eleifend eu magna et lacinia. Proin.</string>
   <string name="dummy_coment_8">Aliquam mauris felis, facilisis vel fermentum vel, bibendum non justo. Integer non magna massa. Pellentesque habitant.</string>
+  <string name="app_widget_description">Subreddits</string>
 </resources>
