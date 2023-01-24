@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  glance step 1  -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
   android:description="@string/app_widget_description"
-  android:minWidth="46dp"
-  android:minHeight="46dp"
+  android:minWidth="100dp"
+  android:minHeight="100dp"
+  android:minResizeHeight="100dp"
+  android:minResizeWidth="100dp"
   android:initialLayout="@layout/app_widget_loading"
   android:previewLayout="@layout/app_widget_subreddits_preview"
   android:resizeMode="horizontal|vertical"
