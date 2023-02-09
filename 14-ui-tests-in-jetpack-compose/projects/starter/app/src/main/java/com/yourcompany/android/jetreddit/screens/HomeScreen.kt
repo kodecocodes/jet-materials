@@ -246,7 +246,7 @@ private fun TrendingTopicsPreview() {
 }
 
 @Composable
-private fun TrendingTopic(trendingTopic: TrendingTopicModel) {
+fun TrendingTopic(trendingTopic: TrendingTopicModel) {
   AndroidView({ context ->
     TrendingTopicView(context).apply {
       text = trendingTopic.text
@@ -276,7 +276,7 @@ private enum class HomeScreenItemType {
   POST
 }
 
-private data class TrendingTopicModel(
+data class TrendingTopicModel(
   val text: String,
   @DrawableRes val imageRes: Int = 0
 )
