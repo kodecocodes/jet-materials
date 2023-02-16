@@ -1,30 +1,42 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+plugins {
+  id 'com.android.application'
+  id 'kotlin-android'
+}
 
 android {
-  compileSdkVersion rootProject.ext.compileSdkVersion
+  compileSdkVersion 33
+  buildToolsVersion "30.0.3"
 
   defaultConfig {
     applicationId "com.raywenderlich.android.jetpackcompose"
-    minSdkVersion rootProject.ext.minSdkVersion
-    targetSdkVersion rootProject.ext.targetSdkVersion
+
+    minSdkVersion 21
+    targetSdkVersion 33
+
     versionCode 1
     versionName "1.0"
+
+    vectorDrawables {
+      useSupportLibrary true
+    }
+
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
 
   buildTypes {
     release {
       minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
   }
 
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
   kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
+    jvmTarget = '1.8'
   }
 
   buildFeatures {
@@ -32,41 +44,32 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerVersion kotlin_version
-    kotlinCompilerExtensionVersion compose_version
+    kotlinCompilerExtensionVersion compose_compiler_version
   }
-}
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-  kotlinOptions {
-    jvmTarget = "1.8"
-    freeCompilerArgs += ["-Xskip-prerelease-check"]
+  packagingOptions {
+    resources {
+      excludes += '/META-INF/{AL2.0,LGPL2.1}'
+    }
   }
 }
 
 dependencies {
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  // Default
+  implementation "androidx.appcompat:appcompat:1.5.1"
+  implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+  implementation "androidx.activity:activity-compose:1.6.0"
 
-  // Kotlin
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
 
-  // Support Libraries
-  implementation 'androidx.appcompat:appcompat:1.2.0'
-  implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-
-  // Testing Dependencies
-  testImplementation 'junit:junit:4.13.2'
-  androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-  // TUTORIAL DEPENDENCIES HERE
+  // Compose
   implementation "androidx.compose.runtime:runtime:$compose_version"
   implementation "androidx.compose.ui:ui:$compose_version"
   implementation "androidx.compose.foundation:foundation-layout:$compose_version"
   implementation "androidx.compose.material:material:$compose_version"
   implementation "androidx.compose.material:material-icons-extended:$compose_version"
-  implementation "androidx.compose.foundation:foundation:$compose_version"
   implementation "androidx.compose.ui:ui-tooling:$compose_version"
+  implementation "androidx.compose.compiler:compiler:$compose_compiler_version"
 
-  implementation "androidx.activity:activity-compose:$compose_ui_version"
+  // SplashScreen compat library
+  implementation 'androidx.core:core-splashscreen:1.0.0'
 }
