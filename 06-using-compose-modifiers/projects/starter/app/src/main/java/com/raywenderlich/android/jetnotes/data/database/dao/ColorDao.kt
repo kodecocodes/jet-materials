@@ -59,5 +59,5 @@ interface ColorDao {
   fun findByIdSync(id: Long): ColorDbModel
 
   @Insert
-  fun insertAll(vararg colorDbModels: ColorDbModel)
+  suspend fun insertAll(vararg colorDbModels: ColorDbModel)
 }

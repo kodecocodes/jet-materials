@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Razeware LLC
+ * Copyright (c) 2021 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,44 +31,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.raywenderlich.android.jetnotes
-
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.appcompat.app.AppCompatActivity
+package com.raywenderlich.android.jetnotes.routing
 
 /**
- * Splash Screen with the app icon and name at the center.
- *
- * This is also the launch screen.
- *
- * It will open the [MainActivity] after certain delay.
+ * Class defining all possible screens in the app.
  */
-class SplashActivity : AppCompatActivity() {
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
-    setContentView(R.layout.activity_splash)
-
-    showMainActivityWithDelay()
-  }
-
-  private fun showMainActivityWithDelay() {
-    // Using a handler to delay loading the MainActivity
-    Handler(Looper.getMainLooper()).postDelayed({
-
-      // Start activity
-      startActivity(Intent(this, MainActivity::class.java))
-
-      // Animate the loading of new activity
-      overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
-      // Close this activity
-      finish()
-
-    }, 2000)
-  }
+sealed class Screen(val route: String) {
+  object Notes : Screen("Notes")
+  object SaveNote : Screen("SaveNote")
+  object Trash : Screen("Trash")
 }

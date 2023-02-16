@@ -62,7 +62,7 @@ interface NoteDao {
   fun insert(noteDbModel: NoteDbModel)
 
   @Insert
-  fun insertAll(vararg noteDbModel: NoteDbModel)
+  suspend fun insertAll(vararg noteDbModel: NoteDbModel)
 
   @Query("DELETE FROM NoteDbModel WHERE id LIKE :id")
   fun delete(id: Long)

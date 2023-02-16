@@ -12,9 +12,9 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.JetNotes">
 
-    <!-- Splash Activity -->
     <activity
-      android:name=".SplashActivity"
+      android:name=".MainActivity"
+      android:exported="true"
       android:screenOrientation="portrait"
       tools:ignore="LockedOrientationActivity">
       <intent-filter>
@@ -23,8 +23,6 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-
-    <activity android:name=".MainActivity" />
 
   </application>
 
