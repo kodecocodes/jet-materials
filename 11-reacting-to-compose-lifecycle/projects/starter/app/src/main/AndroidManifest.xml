@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  package="com.raywenderlich.android.jetreddit">
+  package="com.yourcompany.android.jetreddit">
 
   <application
-    android:name=".JetRedditApplication"
+    android:name="com.yourcompany.android.jetreddit.JetRedditApplication"
     android:allowBackup="false"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
@@ -15,8 +15,9 @@
 
     <!-- Main Activity -->
     <activity
-      android:name=".MainActivity"
-      android:theme="@style/SplashTheme">
+      android:name="com.yourcompany.android.jetreddit.MainActivity"
+      android:theme="@style/SplashTheme"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
