@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="160dp"
+  android:layout_height="80dp"
+  app:cardCornerRadius="8dp"
+  tools:parentTag="androidx.cardview.widget.CardView">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/contentContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+      android:id="@+id/image"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:contentDescription="Trending Image"
+      android:scaleType="centerCrop"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:src="@drawable/jetpack_composer" />
+
+    <View
+      android:id="@+id/gradient"
+      android:layout_width="0dp"
+      android:layout_height="40dp"
+      android:background="@drawable/trending_gradient"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+      android:id="@+id/text"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:paddingBottom="4dp"
+      android:paddingEnd="8dp"
+      android:paddingStart="8dp"
+      android:textColor="#FFFFFF"
+      android:textSize="12sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      tools:text="Jetpack Compose" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>
