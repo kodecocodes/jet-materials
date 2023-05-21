@@ -7,6 +7,8 @@ android {
   compileSdkVersion 33
   buildToolsVersion "30.0.3"
 
+  namespace 'com.yourcompany.android.jetpackcompose'
+
   defaultConfig {
     applicationId "com.yourcompany.android.jetpackcompose"
 

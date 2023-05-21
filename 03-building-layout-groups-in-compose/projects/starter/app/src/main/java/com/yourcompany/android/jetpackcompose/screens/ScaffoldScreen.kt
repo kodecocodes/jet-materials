@@ -34,11 +34,30 @@
 
 package com.yourcompany.android.jetpackcompose.screens
 
+import android.annotation.SuppressLint
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.yourcompany.android.jetpackcompose.R
 import com.yourcompany.android.jetpackcompose.router.BackButtonHandler
 import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
 import com.yourcompany.android.jetpackcompose.router.Screen
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ScaffoldScreen() {
@@ -49,18 +68,60 @@ fun ScaffoldScreen() {
   }
 }
 
+@Preview(showBackground=true)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MyScaffold() {
-  //TODO write your code here
+  val scaffoldState: ScaffoldState = rememberScaffoldState()
+  val scope: CoroutineScope = rememberCoroutineScope()
+
+  Scaffold(
+    scaffoldState = scaffoldState,
+    contentColor = colorResource(id = R.color.colorPrimary),
+    content = { MyRow() },
+    topBar = { MyTopAppBar(scaffoldState = scaffoldState, scope = scope) },
+    bottomBar = { MyBottomAppBar() },
+    drawerContent = { MyColumn() }
+  )
 }
 
 @Composable
-fun MyTopAppBar(scaffoldState: ScaffoldState) {
-  //TODO write your code here
+fun MyTopAppBar(scaffoldState: ScaffoldState, scope: CoroutineScope) {
+  val drawerState = scaffoldState.drawerState
+
+  TopAppBar(
+    title = {
+      Text(
+        text = stringResource(id = R.string.app_name),
+        color = Color.White
+      )
+    },
+    backgroundColor = colorResource(id = R.color.colorPrimary),
+    navigationIcon = {
+      IconButton(onClick = {
+        scope.launch {
+          if (drawerState.isClosed) {
+            drawerState.open()
+          } else {
+            drawerState.close()
+          }
+        }
+      }) {
+        Icon(
+          Icons.Default.ArrowBack,
+          contentDescription = stringResource(id = R.string.menu),
+          tint = Color.White
+        )
+      }
+    }
+  )
 }
 
 @Composable
 fun MyBottomAppBar() {
-  //TODO write your code here
+  BottomAppBar(
+    backgroundColor = colorResource(id = R.color.colorAccent),
+    content = { MyRow() }
+  )
 }
 
