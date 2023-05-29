@@ -46,6 +46,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
 import com.yourcompany.android.jetpackcompose.R
 import com.yourcompany.android.jetpackcompose.router.BackButtonHandler
@@ -68,6 +70,7 @@ fun TextScreen() {
 }
 
 @Composable
+@Preview
 fun MyText() {
     Text(
         text = stringResource(id = R.string.jetpack_compose),
