@@ -60,10 +60,12 @@ fun RowScreen() {
 }
 
 @Composable
-fun MyRow() {
-  Row(verticalAlignment = Alignment.CenterVertically,
+fun MyRow(modifier: Modifier = Modifier) {
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.SpaceEvenly,
-    modifier = Modifier.fillMaxSize()) {
+    modifier = modifier.fillMaxSize()
+  ) {
 
     THREE_ELEMENT_LIST.forEach { textResId ->
       Text(
