@@ -35,6 +35,7 @@
 package com.yourcompany.android.jetpackcompose.screens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.yourcompany.android.jetpackcompose.router.BackButtonHandler
 import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
 import com.yourcompany.android.jetpackcompose.router.Screen
@@ -49,6 +50,6 @@ fun ColumnScreen() {
 }
 
 @Composable
-fun MyColumn() {
+fun MyColumn(modifier: Modifier = Modifier) {
   //TODO write your code here
 }
