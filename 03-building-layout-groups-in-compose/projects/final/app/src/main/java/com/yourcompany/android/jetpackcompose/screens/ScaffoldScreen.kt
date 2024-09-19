@@ -34,11 +34,13 @@
 
 package com.yourcompany.android.jetpackcompose.screens
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -66,7 +68,12 @@ fun MyScaffold() {
   Scaffold(
     scaffoldState = scaffoldState,
     contentColor = colorResource(id = R.color.colorPrimary),
-    content = { MyRow() },
+    content = { paddingValues ->
+      MyRow(
+        modifier = Modifier
+          .padding(bottom = paddingValues.calculateBottomPadding())
+      )
+    },
     topBar = { MyTopAppBar(scaffoldState = scaffoldState, scope = scope) },
     bottomBar = { MyBottomAppBar() },
     drawerContent = { MyColumn() }
